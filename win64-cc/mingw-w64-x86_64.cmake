@@ -49,7 +49,7 @@ set(PYTHON_EXECUTABLE ${BINARY_PATH}python3)
 # Manually set
 #set(PYTHON_INCLUDE_DIR /usr/include/python3.6m)
 #set(PYTHON_LIBRARY /usr/lib/)
-#set(PYTHON_LIBRARIES /usr/lib/)
+set(PYTHON_LIBRARIES /usr/lib/)
 
 
 # NYAN
