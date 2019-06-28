@@ -29,7 +29,8 @@ Specializations:
 * `CostEffect`: Makes effects cost attribute points or resources.
 * `DiplomaticEffect`: Effects only apply to specified diplomatic stances.
 
-## effect.continuous.ContinuousEffect
+## Continous effects (effect.continuous)
+### .ContinuousEffect
 
 ```python
 ContinuousEffect(Effect):
@@ -38,7 +39,7 @@ ContinuousEffect(Effect):
 Generalization object for effects that are applied at a per-second rate.
 
 
-## effect.continuous.flat_attribute_change.FlatAttributeChange
+### .flat_attribute_change.FlatAttributeChange
 
 ```python
 FlatAttributeChange(ContinuousEffect):
@@ -74,7 +75,7 @@ The applied rate is further bound by the interval defined by `min_change_rate` a
 **ignore_protection**
 Ignores the `ProtectingAttribute`s in the set when changing the attributes of the target.
 
-## effect.continuous.flat_attribute_change.type.FlatAttributeChangeDecrease
+### .flat_attribute_change.type.FlatAttributeChangeDecrease
 
 ```python
 FlatAttributeChangeDecrease(FlatAttributeChange):
@@ -83,7 +84,7 @@ FlatAttributeChangeDecrease(FlatAttributeChange):
 Specialization of the continuous `FlatAttributeChange` effect that decreases the resistor's current attribute value at a per-second rate.
 
 
-## effect.continuous.flat_attribute_change.type.FlatAttributeChangeIncrease
+### .flat_attribute_change.type.FlatAttributeChangeIncrease
 
 ```python
 FlatAttributeChangeIncrease(FlatAttributeChange):
@@ -91,7 +92,7 @@ FlatAttributeChangeIncrease(FlatAttributeChange):
 
 Specialization of the continuous `FlatAttributeChange` effect that increases the resistor's current attribute value at a per-second rate.
 
-## effect.continuous.type.Lure
+### .type.Lure
 
 ```python
 Lure(ContinuousEffect):
@@ -111,7 +112,7 @@ The possible destinations the target can move to. Whichever game entity is close
 **min_range_to_destination**
 The minimum distance to the destination the target has to have before it will stop.
 
-## effect.continuous.time_relative_attribute_change.TimeRelativeAttributeChange
+### .time_relative_attribute_change.TimeRelativeAttributeChange
 
 ```python
 TimeRelativeAttributeChange(ContinuousEffect):
@@ -137,7 +138,7 @@ The total time needed to change the resistors attribute points from `max_value` 
 **ignore_protection**
 Ignores the `ProtectingAttribute`s in the set when changing the attributes of the target.
 
-## effect.continuous.time_relative_attribute_change.type.TimeRelativeAttributeDecrease
+### .time_relative_attribute_change.type.TimeRelativeAttributeDecrease
 
 ```python
 TimeRelativeAttributeDecrease(TimeRelativeAttributeChange):
@@ -145,7 +146,7 @@ TimeRelativeAttributeDecrease(TimeRelativeAttributeChange):
 
 Specialization of the continuous `TimeRelativeAttributeChange` effect that decreases the resistor's current attribute value in a fixed amount of time relative to their attribute's `max_value`.
 
-## effect.continuous.time_relative_attribute_change.type.TimeRelativeAttributeIncrease
+### .time_relative_attribute_change.type.TimeRelativeAttributeIncrease
 
 ```python
 TimeRelativeAttributeIncrease(TimeRelativeAttributeChange):
@@ -153,7 +154,7 @@ TimeRelativeAttributeIncrease(TimeRelativeAttributeChange):
 
 Specialization of the continuous `TimeRelativeAttributeChange` effect that increases the resistor's current attribute value in a fixed amount of time relative to their attribute's `max_value`.
 
-## effect.continuous.time_relative_progress.TimeRelativeProgress
+### .time_relative_progress.TimeRelativeProgress
 
 ```python
 TimeRelativeProgress(ContinuousEffect):
@@ -175,7 +176,7 @@ The effect will be matched with a `Resistance.ContinuousResistance.TimeRelativeP
 **total_change_time**
 The total time needed to change the resistors attribute points from 100% to 0 (for `TimeRelativeProgressDecrease`) or from 0 to 100% (for `TimeRelativeProgressIncrease`).
 
-## effect.continuous.time_relative_progress.type.TimeRelativeProgressDecrease
+### .time_relative_progress.type.TimeRelativeProgressDecrease
 
 ```python
 TimeRelativeProgressDecrease(TimeRelativeProgress):
@@ -183,7 +184,7 @@ TimeRelativeProgressDecrease(TimeRelativeProgress):
 
 Specialization of the continuous `TimeRelativeProgress` effect that decreases the resistor's progress amount in a fixed amount of time relative to 100%.
 
-## effect.continuous.time_relative_progress.type.TimeRelativeProgressIncrease
+### .time_relative_progress.type.TimeRelativeProgressIncrease
 
 ```python
 TimeRelativeProgressIncrease(TimeRelativeProgress):
@@ -191,7 +192,9 @@ TimeRelativeProgressIncrease(TimeRelativeProgress):
 
 Specialization of the continuous `TimeRelativeProgress` effect that increases the resistor's progress amount in a fixed amount of time relative to 100%.
 ´
-## effect.discrete.DiscreteEffect
+
+## Discrete Effects (effect.discrete)
+### .DiscreteEffect
 
 ```python
 DiscreteEffect(Effect):
@@ -199,7 +202,7 @@ DiscreteEffect(Effect):
 
 Generalization object for effects that are applied immediately.
 
-## effect.discrete.convert.Convert
+### .convert.Convert
 
 ```python
 Convert(DiscreteEffect):
@@ -233,7 +236,7 @@ Any value below *0.0* is an automatic fail, while any value above *1.0* is an au
 **cost_fail**
 The amount of attribute points or resources removed from the effector if the conversion fails. Does not have to be set.
 
-## effect.discrete.convert.type.AoE2Convert
+### .convert.type.AoE2Convert
 
 ```python
 AoE2Convert(Convert):
@@ -251,7 +254,7 @@ Lowers the number of rounds that the resistor is guaranteed to resist every time
 **skip_protected_rounds**
 Lowers the number of rounds that are needed for the success chance to always be *1.0*.
 
-## effect.discrete.flat_attribute_change.FlatAttributeChange
+### .flat_attribute_change.FlatAttributeChange
 
 ```python
 FlatAttributeChange(DiscreteEffect):
@@ -287,7 +290,7 @@ The applied rate is further bound by the interval defined by `min_change_value` 
 **ignore_protection**
 Ignores the `ProtectingAttribute`s in the set when changing the attributes of the target.
 
-## effect.discrete.flat_attribute_change.type.FlatAttributeChangeDecrease
+### .flat_attribute_change.type.FlatAttributeChangeDecrease
 
 ```python
 FlatAttributeChangeDecrease(FlatAttributeChange):
@@ -296,7 +299,7 @@ FlatAttributeChangeDecrease(FlatAttributeChange):
 Specialization of the discrete `FlatAttributeChange` effect that decreases the resistor's current attribute value by a flat amount.
 
 
-## effect.discrete.flat_attribute_change.type.FlatAttributeChangeIncrease
+### .flat_attribute_change.type.FlatAttributeChangeIncrease
 
 ```python
 FlatAttributeChangeIncrease(FlatAttributeChange):
@@ -304,7 +307,7 @@ FlatAttributeChangeIncrease(FlatAttributeChange):
 
 Specialization of the discrete `FlatAttributeChange` effect that increases the resistor's current attribute value by a flat amount.
 
-## effect.discrete.type.MakeHarvestable
+### .type.MakeHarvestable
 
 ```python
 MakeHarvestable(DiscreteEffect):
@@ -316,7 +319,7 @@ Makes a resource spot harvestable, if it is not already harbestable by default.
 **resource_spot**
 Resource spot that should be made harvestable. The effect will be matched with a `Resistance.DiscreteResistance.MakeHarvestable` object that stores the same `ResourceSpot` object in its `resource_spot` member. Additionally, the target needs to have a `Harvestable` ability that contains the resource spot.
 
-## effect.discrete.type.SendToContainer
+### .type.SendToContainer
 
 ```python
 SendToContainer(DiscreteEffect):
