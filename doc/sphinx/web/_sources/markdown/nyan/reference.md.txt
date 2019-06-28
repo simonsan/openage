@@ -66,7 +66,7 @@ The applied change rate can never go higher than the specified rate. Does not ha
 The gross per-second rate at which the attribute points of the resistor change. The net change rate (applied rate) is calculated by subtracting the effector's `change_rate` from the resistor's `block_rate`.
 
 ```math
-applied_rate = change_rate - block_rate
+applied\_rate = change\_rate - block\_rate
 ```
 
 The applied rate is further bound by the interval defined by `min_change_rate` and `max_change_rate`, if these members are set.
@@ -225,7 +225,7 @@ The applied chance can never go higher than the specified percentage. Does not h
 Gross chance for the conversion to succeed as a percentage chance. The percentage should be stored as a float value between *0.0* and *1.0*. The net chance (applied chance) of success is calculated by subtracting the effector's `chance_success` from the resistor's `chance_resist`.
 
 ```math
-applied_chance = chance_success - chance_resist
+applied\_chance = chance\_success - chance\_resist
 ```
 
 Any value below *0.0* is an automatic fail, while any value above *1.0* is an automatic success. The applied chance is further bound by the interval defined by `min_chance_success` and `max_chance_success`, if these members are set.
@@ -279,7 +279,7 @@ The applied change value can never go higher than the specified amount. Does not
 The gross amount by that the attribute points of the resistor change. The net change value (applied value) is calculated by subtracting the effector's `change_value` from the resistor's `block_value`.
 
 ```math
-applied_value = change_value - block_value
+applied\_value = change\_value - block\_value
 ```
 
 The applied rate is further bound by the interval defined by `min_change_value` and `max_change_value`, if these members are set.
@@ -2007,7 +2007,7 @@ Effects of type `Effect.ContinuousEffect.FlatAttributeChange` are matched to thi
 The per-second attribute rate that is blocked by the resistor. The net change rate (applied rate) is calculated by subtracting the effector's `change_rate` from the resistor's `block_rate`.
 
 ```math
-applied_rate = change_rate - block_rate
+applied\_rate = change\_rate - block\_rate
 ```
 
 The applied rate is further bound by the interval defined by `min_change_rate` and `max_change_rate` in the effect, if these members are set.
@@ -2126,7 +2126,7 @@ Effects of type `Effect.ContinuousEffect.Convert` are matched to this resistance
 Percentage amount subtracted from the effector's success chance. The percentage should be stored as a float value between *0.0* and *1.0*. The net chance (applied chance) of success is calculated by subtracting the effector's `chance_success` from the resistor's `chance_resist`.
 
 ```math
-applied_chance = chance_success - chance_resist
+applied\_chance = chance\_success - chance\_resist
 ```
 
 Any value below *0.0* is an automatic fail, while any value above *1.0* is an automatic success. The applied chance is further bound by the interval defined by `min_chance_success` and `max_chance_success` in the effect, if these members are set.
@@ -2172,7 +2172,7 @@ Effects of type `Effect.DiscreteEffect.FlatAttributeChange` are matched to this 
 The flat attribute amount that is blocked by the resistor. The net change value (applied value) is calculated by subtracting the effector's `change_value` from the resistor's `block_value`.
 
 ```math
-applied_value = change_value - block_value
+applied\_value = change\_value - block\_value
 ```
 
 The applied value is further bound by the interval defined by `min_change_value` and `max_change_value` in the effect, if these members are set.

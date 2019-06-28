@@ -24,7 +24,7 @@ copyright = '2013-2019'
 author = 'openage-Team'
 
 # The full version, including alpha/beta/rc tags
-release = 'v0.3.1'
+release = 'v0.4.0'
 
 
 # The name of the Pygments (syntax highlighting) style to use.
@@ -45,6 +45,7 @@ extensions = [
     'breathe',
     'sphinx.ext.autodoc',
     'recommonmark',
+    'sphinx_markdown_tables',
     'sphinx.ext.napoleon',
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
@@ -64,9 +65,9 @@ import recommonmark
 from recommonmark.parser import CommonMarkParser
 from recommonmark.transform import AutoStructify
 
-#source_parsers = {
+# source_parsers = {
 #    '.md': CommonMarkParser,
-#}
+# }
 
 # The file extensions of source files. Sphinx considers the files with this suffix as sources.
 # The value can be a dictionary mapping file extensions to file types. For example:
@@ -119,9 +120,9 @@ html_theme_options = {
 # html_static_path = ['_static']
 
 # Breathe
-#sys.path.append( "C:/Program Files (x86)/Microsoft Visual Studio/Shared/Python37_64/Lib/site-packages/breathe" )
-breathe_projects = { "libopenage":"../doxygen/xml" }
+breathe_projects = {"libopenage": "../doxygen/xml" }
 breathe_default_project = "libopenage"
+
 
 # app setup hook
 def setup(app):

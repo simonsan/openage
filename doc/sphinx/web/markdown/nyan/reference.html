@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Reference &mdash; openage v0.3.1 documentation</title>
+  <title>Reference &mdash; openage v0.4.0 documentation</title>
   
 
   
@@ -1527,7 +1527,7 @@ The applied change rate can never go higher than the specified rate. Does not ha
 <p><strong>change_rate</strong>
 The gross per-second rate at which the attribute points of the resistor change. The net change rate (applied rate) is calculated by subtracting the effector’s <code class="docutils literal notranslate"><span class="pre">change_rate</span></code> from the resistor’s <code class="docutils literal notranslate"><span class="pre">block_rate</span></code>.</p>
 <div class="math notranslate nohighlight">
-\[applied_rate = change_rate - block_rate\]</div>
+\[applied\_rate = change\_rate - block\_rate\]</div>
 <p>The applied rate is further bound by the interval defined by <code class="docutils literal notranslate"><span class="pre">min_change_rate</span></code> and <code class="docutils literal notranslate"><span class="pre">max_change_rate</span></code>, if these members are set.</p>
 <p><strong>ignore_protection</strong>
 Ignores the <code class="docutils literal notranslate"><span class="pre">ProtectingAttribute</span></code>s in the set when changing the attributes of the target.</p>
@@ -1655,7 +1655,7 @@ The applied chance can never go higher than the specified percentage. Does not h
 <p><strong>chance_success</strong>
 Gross chance for the conversion to succeed as a percentage chance. The percentage should be stored as a float value between <em>0.0</em> and <em>1.0</em>. The net chance (applied chance) of success is calculated by subtracting the effector’s <code class="docutils literal notranslate"><span class="pre">chance_success</span></code> from the resistor’s <code class="docutils literal notranslate"><span class="pre">chance_resist</span></code>.</p>
 <div class="math notranslate nohighlight">
-\[applied_chance = chance_success - chance_resist\]</div>
+\[applied\_chance = chance\_success - chance\_resist\]</div>
 <p>Any value below <em>0.0</em> is an automatic fail, while any value above <em>1.0</em> is an automatic success. The applied chance is further bound by the interval defined by <code class="docutils literal notranslate"><span class="pre">min_chance_success</span></code> and <code class="docutils literal notranslate"><span class="pre">max_chance_success</span></code>, if these members are set.</p>
 <p><strong>cost_fail</strong>
 The amount of attribute points or resources removed from the effector if the conversion fails. Does not have to be set.</p>
@@ -1695,7 +1695,7 @@ The applied change value can never go higher than the specified amount. Does not
 <p><strong>change_value</strong>
 The gross amount by that the attribute points of the resistor change. The net change value (applied value) is calculated by subtracting the effector’s <code class="docutils literal notranslate"><span class="pre">change_value</span></code> from the resistor’s <code class="docutils literal notranslate"><span class="pre">block_value</span></code>.</p>
 <div class="math notranslate nohighlight">
-\[applied_value = change_value - block_value\]</div>
+\[applied\_value = change\_value - block\_value\]</div>
 <p>The applied rate is further bound by the interval defined by <code class="docutils literal notranslate"><span class="pre">min_change_value</span></code> and <code class="docutils literal notranslate"><span class="pre">max_change_value</span></code>, if these members are set.</p>
 <p><strong>ignore_protection</strong>
 Ignores the <code class="docutils literal notranslate"><span class="pre">ProtectingAttribute</span></code>s in the set when changing the attributes of the target.</p>
@@ -3106,7 +3106,7 @@ Effects of type <code class="docutils literal notranslate"><span class="pre">Eff
 <p><strong>block_rate</strong>
 The per-second attribute rate that is blocked by the resistor. The net change rate (applied rate) is calculated by subtracting the effector’s <code class="docutils literal notranslate"><span class="pre">change_rate</span></code> from the resistor’s <code class="docutils literal notranslate"><span class="pre">block_rate</span></code>.</p>
 <div class="math notranslate nohighlight">
-\[applied_rate = change_rate - block_rate\]</div>
+\[applied\_rate = change\_rate - block\_rate\]</div>
 <p>The applied rate is further bound by the interval defined by <code class="docutils literal notranslate"><span class="pre">min_change_rate</span></code> and <code class="docutils literal notranslate"><span class="pre">max_change_rate</span></code> in the effect, if these members are set.</p>
 </div>
 <div class="section" id="resistance-continuous-flat-attribute-change-type-flatattributechangedecrease">
@@ -3203,7 +3203,7 @@ Effects of type <code class="docutils literal notranslate"><span class="pre">Eff
 <p><strong>chance_resist</strong>
 Percentage amount subtracted from the effector’s success chance. The percentage should be stored as a float value between <em>0.0</em> and <em>1.0</em>. The net chance (applied chance) of success is calculated by subtracting the effector’s <code class="docutils literal notranslate"><span class="pre">chance_success</span></code> from the resistor’s <code class="docutils literal notranslate"><span class="pre">chance_resist</span></code>.</p>
 <div class="math notranslate nohighlight">
-\[applied_chance = chance_success - chance_resist\]</div>
+\[applied\_chance = chance\_success - chance\_resist\]</div>
 <p>Any value below <em>0.0</em> is an automatic fail, while any value above <em>1.0</em> is an automatic success. The applied chance is further bound by the interval defined by <code class="docutils literal notranslate"><span class="pre">min_chance_success</span></code> and <code class="docutils literal notranslate"><span class="pre">max_chance_success</span></code> in the effect, if these members are set.</p>
 </div>
 <div class="section" id="resistance-discrete-convert-type-aoe2convert">
@@ -3237,7 +3237,7 @@ Effects of type <code class="docutils literal notranslate"><span class="pre">Eff
 <p><strong>change_value</strong>
 The flat attribute amount that is blocked by the resistor. The net change value (applied value) is calculated by subtracting the effector’s <code class="docutils literal notranslate"><span class="pre">change_value</span></code> from the resistor’s <code class="docutils literal notranslate"><span class="pre">block_value</span></code>.</p>
 <div class="math notranslate nohighlight">
-\[applied_value = change_value - block_value\]</div>
+\[applied\_value = change\_value - block\_value\]</div>
 <p>The applied value is further bound by the interval defined by <code class="docutils literal notranslate"><span class="pre">min_change_value</span></code> and <code class="docutils literal notranslate"><span class="pre">max_change_value</span></code> in the effect, if these members are set.</p>
 </div>
 <div class="section" id="resistance-discrete-flat-attribute-change-type-flatattributechangedecrease">
