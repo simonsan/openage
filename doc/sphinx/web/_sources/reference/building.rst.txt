@@ -6,4 +6,4 @@ Building openage
    :caption: Contents:
    :glob:
 
-   ../markdown/build_instructions/*
+   ../build_instructions/*

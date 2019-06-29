@@ -1,0 +1,13 @@
+API reference
+=============
+
+.. toctree::
+  :maxdepth: 2
+  :glob:
+
+  reference_root.md
+  reference_effect.md
+  reference_ability.md
+  reference_modifier.md
+  reference_resistance.md
+  reference_aux.md
