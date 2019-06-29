@@ -17,7 +17,7 @@ Click on a link to view further examples and explanations about a data type.
 | Type                                  | Notation                   | Explanation
 |---------------------------------------|----------------------------|-------------
 | [nyan::Object](Objects)               | depends on object type     | Stores a reference to a non-abstract nyan object
-| [Set](Set-(data-type))                | `set(type)`                | Stores a set of values with a specific type
+| [Set](Set-(data-type))                | `set(type)`                | Stores a set of values with a specific type 
 | [Ordered Set](Orderedset-(data-type)) | `orderedset(type)`         | Stores a set of values with a specific type and stores the order they were inserted
 | [Dict](Dict-(data-type))\*            | `dict(keyType, valueType)` | Stores key-value pairs with a specific type of key and a specific type of values
 

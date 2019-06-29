@@ -1,0 +1,8 @@
+Handbooks
+=========
+
+.. toctree::
+  
+  handbook-user/index.rst
+  handbook-mod/index.rst
+  handbook-dev/index.rst

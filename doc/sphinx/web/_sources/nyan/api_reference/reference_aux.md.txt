@@ -1548,7 +1548,7 @@ AoE2TradeRoute(Entity):
 Uses Age of Empires 2 rules for trading. The trading game entity chooses the nearest possible `end_trade_post` from the `start_trade_post`. Calculation of the traded resource amount is based on this formula:
 
 ```math
-trade\_amount = 0.46 \cdot tiles_distance \cdot ((tiles\_distance / map\_size) + 0.3)
+trade\_amount = 0.46 \cdot tiles\_distance \cdot ((tiles\_distance / map\_size) + 0.3)
 ```
 
 ## aux.translated.TranslatedObject

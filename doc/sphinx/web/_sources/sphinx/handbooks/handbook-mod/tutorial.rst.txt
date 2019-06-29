@@ -1,0 +1,7 @@
+Tutorials
+^^^^^^^^^
+
+.. toctree::
+
+  ../../../media_convert.md
+  ../../../ext/openage-modding/tutorials/nyan/index.rst

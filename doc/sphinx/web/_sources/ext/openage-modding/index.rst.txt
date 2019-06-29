@@ -1,0 +1,8 @@
+Modding in openage
+^^^^^^^^^^^^^^^^^^
+
+.. toctree::
+  :maxdepth: 3
+
+  README.md
+ 

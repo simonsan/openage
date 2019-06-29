@@ -1,0 +1,22 @@
+Code documentation
+^^^^^^^^^^^^^^^^^^
+
+In here resides documentation of concepts and APIs implemented in source code
+already.
+
+This is to provide information about what the author thought of when the code
+was written so others can understand the ideas.
+
+
+.. toctree::
+  :maxdepth: 2
+  
+  exceptions.md
+  testing.md
+  logger.md
+  gui.md
+  pyinterface.md
+  pathfinding.md
+  coordinate-systems.md
+  terrain.md
+  renderer/README.md  

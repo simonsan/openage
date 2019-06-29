@@ -1,0 +1,14 @@
+Modding handbook
+^^^^^^^^^^^^^^^^
+
+.. toctree::
+
+  overview.rst
+  concepts.rst
+  ../assets_conversion.rst
+  ../../../nyan/index.rst
+  ../reverse_engineering.rst
+  ../../../ideas/index.rst
+  tutorial.rst
+  appendices.rst
+  

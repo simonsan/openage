@@ -1,0 +1,13 @@
+Modding in nyan 
+^^^^^^^^^^^^^^^
+
+.. toctree::
+  :maxdepth: 2
+
+  ../../../build/doc/openage\-modding/tutorials/nyan/quickstart_guide.md
+  ../../../build/doc/openage\-modding/tutorials/nyan/getting_started.md
+  ../../../build/doc/openage\-modding/tutorials/nyan/objects.md
+  ../../../build/doc/openage\-modding/tutorials/nyan/patches.md
+  ../../../build/doc/openage\-modding/tutorials/nyan/data_types.md
+  ../../../build/doc/openage\-modding/tutorials/nyan/data_types/index.rst
+  ../../../build/doc/openage\-modding/tutorials/nyan/namespace.md

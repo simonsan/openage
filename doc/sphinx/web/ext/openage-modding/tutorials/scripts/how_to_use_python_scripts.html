@@ -1,0 +1,952 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Python Scripts &mdash; openage v0.4.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> openage
+          
+
+          
+            
+            <img src="../../../../_static/banner.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sphinx/installation/index.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sphinx/installation/basic_installation.html">Basic Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/installation/basic_installation.html#linux-installation">Linux Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/installation/basic_installation.html#windows-installation">Windows Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/installation/basic_installation.html#macos-installation">macOS Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sphinx/installation/building.html">Building from Source</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../building.html">Building the project</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../building.html#buildsystem-design">Buildsystem Design</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../building.html#dependencies">Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../building.html#build-procedure">Build procedure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../building.html#faq">FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../build_instructions/index.html">Dependency installation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../build_instructions/arch_linux.html">Prerequisite steps for Arch Linux users</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../build_instructions/debian.html">Prerequisite steps for Debian Sid users</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../build_instructions/fedora.html">Prerequisite steps for Fedora users (Fedora &gt;= 27)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../build_instructions/freebsd.html">Prerequisite steps for FreeBSD users</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../build_instructions/gentoo.html">Installation for Gentoo users</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../build_instructions/opensuse_13.2.html">Prerequisite steps for openSUSE users (openSUSE 13.2)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../build_instructions/opensuse_tumbleweed.html">Prerequisite steps for openSUSE users (openSUSE Tumbleweed)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../build_instructions/os_x_10.10_yosemite.html">Prerequisite steps for Mac OS X users (OS X 10.10 Yosemite)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../build_instructions/ubuntu.html">Prerequisite steps for Ubuntu users (Ubuntu 18.04)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../build_instructions/windows_msvc.html">Procedure for Microsoft Windows users (Windows 10)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sphinx/installation/platform_support.html">Platform Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/installation/platform_support.html#continuous-integration-targets">Continuous Integration Targets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/installation/platform_support.html#other-platforms">Other Platforms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../troubleshooting.html#windows-installer">Windows Installer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../troubleshooting.html#more-than-one-python-installation">More than one python installation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../troubleshooting.html#asset-conversion">Asset Conversion</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../troubleshooting.html#conversion-fails-when-converting-from-aoe-ii-hd-edition">Conversion fails when converting from <em>AoE II: HD Edition</em></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../troubleshooting.html#conversion-fails-for-the-conquerors-1-0c">Conversion fails for <em>The Conquerors</em> 1.0c</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../troubleshooting.html#conversion-fails-for-age2-x1-xml-files-wololo-kingdoms">Conversion fails for <em>age2_x1.xml</em> files / Wololo Kingdoms</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../troubleshooting.html#ingame">Ingame</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../troubleshooting.html#ui-elements-are-visible-but-the-background-stays-black">UI elements are visible but the background stays black</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sphinx/handbooks/index.html">Handbooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sphinx/handbooks/handbook-user/index.html">User handbook</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/handbooks/handbook-user/overview.html">Overview</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/handbooks/handbook-user/tutorial.html">Tutorials</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../media_convert.html">How to use the original game assets?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../media_convert.html#conversion">Conversion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sphinx/handbooks/handbook-mod/index.html">Modding handbook</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/handbooks/handbook-mod/overview.html">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../project_structure.html">Project Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/handbooks/handbook-mod/concepts.html">Concepts</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture.html">openage architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../buildsystem.html">Concept</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../buildsystem.html#components">Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../buildsystem.html#procedure">Procedure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../buildsystem.html#phases">Phases</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../buildsystem.html#core-buildsystem-modules">Core buildsystem modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ai/index.html">AI</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/handbooks/assets_conversion.html">Assets &amp; Conversion</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../assets.html">openage assets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../convert/README.html">Convert Script</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../convert/README.html#conversion-procedure">Conversion Procedure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../convert/interactive.html">Interactive conversion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../convert/convert_single_file.html">Single file conversion</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../nyan/index.html">nyan - Entity-Component-System</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/openage-lib.html">openage nyan library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/conversion.html">nyan data conversion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/examples.html">openage nyan examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/index.html">API reference</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/handbooks/reverse_engineering.html">Reverse Engineering</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/civilizations.html">Civilization attributes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/scoring.html">Score system</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/unit_stats/unit_stats.html">Unit statistics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/01-general.html">General Structure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/02-header.html">Protocol Header</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/03-sync.html">Sync</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/04-lobby.html">Lobby</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/05-chat_protocol.html">Chat messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/05-chat_protocol.html#example">Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/05-chat_protocol.html#misaligned-memory-of-the-above-message">Misaligned memory of the above message</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/06-chat_message_spoofing.html">Spoofing and forging AoC chat messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/07-primary_action.html">Unit interaction - Primary action</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/08-movement.html">Unit interaction - Movement actions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/09-formation.html">Unit interaction - Formation actions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/10-unit_creation.html">Unit creation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/11-buildings.html">Buildings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/12-market.html">Market actions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/13-other.html">Others</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/14-ai.html">AI actions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/15-c-structs.html">C Structs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/technology_ids.html">Technology IDs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/accuracy.html">Accuracy and Projectiles</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/attacking_alarm.html">Attacking Alarms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/build_speed.html">Build speed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/building_placement.html">Building placement constraints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/building_placement.html#range-to-keep-building">Range to keep building</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/damage.html">Damage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/formations.html">Formations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/garrison.html">Garrison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/garrison.html#weird-aoe2-quirks">Weird AoE2 Quirks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/market.html">Market</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/monk_conversion.html">Monk Conversion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/pathfinding.html">Pathfinding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/ram_speed.html">Ram Speed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/rates.html">Rates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/rates.html#animals">Animals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/rates.html#relics">Relics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/repair.html">Repair</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/selection.html">Selecting and Deselecting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/switching_villager_tasks.html">Switching tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/town_bell.html">Town Bell</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/waypoints.html">Waypoints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/wolves.html">Wolves</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../ideas/index.html">Ideas</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ideas/ai.html">AI gameplay</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ideas/gameplay.html">Gameplay improvement ideas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ideas/interface.html">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ideas/technical.html">Technical Ideas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ideas/fr_technical_overview.html">Technical overview for requested features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ideas/editor/index.html">Editor</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/handbooks/handbook-mod/tutorial.html">Tutorials</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../media_convert.html">How to use the original game assets?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../media_convert.html#conversion">Conversion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../nyan/index.html">Modding in nyan</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sphinx/handbooks/handbook-dev/index.html">Developing handbook</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/handbooks/handbook-dev/overview.html">Overview</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../project_structure.html">Project Structure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../development.html">About development</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../contributing.html">Contributing to openage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/handbooks/handbook-dev/concepts.html">Concepts</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../architecture.html">openage architecture</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../buildsystem.html">Concept</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../buildsystem.html#components">Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../buildsystem.html#procedure">Procedure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../buildsystem.html#phases">Phases</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../buildsystem.html#core-buildsystem-modules">Core buildsystem modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ai/index.html">AI</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/handbooks/handbook-dev/code_style.html">Code-style</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../code_style/tabs_n_spaces.html">tabs vs spaces</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../code_style/tabs_n_spaces.html#python">python</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../code_style/tabs_n_spaces.html#conclusion">conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../code/index.html">Code documentation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../code/testing.html">Test system</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../code/logger.html">MSG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../code/logger.html#message">message</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../code/logger.html#logsource">LogSource</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../code/logger.html#logsink">LogSink</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../code/gui.html">QtQuick-based Graphical User Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../code/pyinterface.html">openage C++ &lt;-&gt; Python interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../code/pathfinding.html">Original algorithm</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../code/coordinate-systems.html">Comprehensive list of all coordinate systems</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../code/coordinate-systems.html#conversions">Conversions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../code/terrain.html">terrain implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../code/renderer/README.html">Openage graphics</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../nyan/index.html">nyan - Entity-Component-System</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/openage-lib.html">openage nyan library</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/conversion.html">nyan data conversion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/examples.html">openage nyan examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/index.html">API reference</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/handbooks/assets_conversion.html">Assets &amp; Conversion</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../assets.html">openage assets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../convert/README.html">Convert Script</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../convert/README.html#conversion-procedure">Conversion Procedure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../convert/interactive.html">Interactive conversion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../convert/convert_single_file.html">Single file conversion</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/handbooks/reverse_engineering.html">Reverse Engineering</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/civilizations.html">Civilization attributes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/scoring.html">Score system</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/unit_stats/unit_stats.html">Unit statistics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/01-general.html">General Structure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/02-header.html">Protocol Header</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/03-sync.html">Sync</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/04-lobby.html">Lobby</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/05-chat_protocol.html">Chat messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/05-chat_protocol.html#example">Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/05-chat_protocol.html#misaligned-memory-of-the-above-message">Misaligned memory of the above message</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/06-chat_message_spoofing.html">Spoofing and forging AoC chat messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/07-primary_action.html">Unit interaction - Primary action</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/08-movement.html">Unit interaction - Movement actions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/09-formation.html">Unit interaction - Formation actions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/10-unit_creation.html">Unit creation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/11-buildings.html">Buildings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/12-market.html">Market actions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/13-other.html">Others</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/14-ai.html">AI actions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/15-c-structs.html">C Structs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/networking/technology_ids.html">Technology IDs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/accuracy.html">Accuracy and Projectiles</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/attacking_alarm.html">Attacking Alarms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/build_speed.html">Build speed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/building_placement.html">Building placement constraints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/building_placement.html#range-to-keep-building">Range to keep building</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/damage.html">Damage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/formations.html">Formations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/garrison.html">Garrison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/garrison.html#weird-aoe2-quirks">Weird AoE2 Quirks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/market.html">Market</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/monk_conversion.html">Monk Conversion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/pathfinding.html">Pathfinding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/ram_speed.html">Ram Speed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/rates.html">Rates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/rates.html#animals">Animals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/rates.html#relics">Relics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/repair.html">Repair</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/selection.html">Selecting and Deselecting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/switching_villager_tasks.html">Switching tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/town_bell.html">Town Bell</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/waypoints.html">Waypoints</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../reverse_engineering/game_mechanics/wolves.html">Wolves</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../ideas/index.html">Ideas</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ideas/ai.html">AI gameplay</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ideas/gameplay.html">Gameplay improvement ideas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ideas/interface.html">Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ideas/technical.html">Technical Ideas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ideas/fr_technical_overview.html">Technical overview for requested features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ideas/editor/index.html">Editor</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/handbooks/handbook-dev/tutorial.html">Tutorials</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../media_convert.html">How to use the original game assets?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../media_convert.html#conversion">Conversion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../debug.html">How to debug openage?</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../ide.html">Developing openage in Integrated Development Environments (IDEs)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../releasing.html">Releasing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../nyan/index.html">Modding in nyan</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sphinx/reference/index.html">References</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../nyan/api_reference/index.html">API reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html">engine.ability</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-ability">ability.Ability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-specialization-animatedability">ability.specialization.AnimatedAbility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-specialization-animationoverrideability">ability.specialization.AnimationOverrideAbility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-specialization-commandsoundability">ability.specialization.CommandSoundAbility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-specialization-diplomaticability">ability.specialization.DiplomaticAbility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-specialization-executionsoundability">ability.specialization.ExecutionSoundAbility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-applycontinuouseffect">ability.type.ApplyContinuousEffect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-applydiscreteeffect">ability.type.ApplyDiscreteEffect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-cloak">ability.type.Cloak</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-collectstorage">ability.type.CollectStorage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-constructable">ability.type.Constructable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-create">ability.type.Create</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-damageable">ability.type.Damageable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-deletable">ability.type.Deletable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-depositresources">ability.type.DepositResources</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-despawn">ability.type.Despawn</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-die">ability.type.Die</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-dropsite">ability.type.DropSite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-entercontainer">ability.type.EnterContainer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-exchangeresources">ability.type.ExchangeResources</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-exitcontainer">ability.type.ExitContainer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-fly">ability.type.Fly</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-formformation">ability.type.FormFormation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-foundation">ability.type.Foundation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-gameentitystance">ability.type.GameEntityStance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-gate">ability.type.Gate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-gather">ability.type.Gather</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-harvestable">ability.type.Harvestable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-herd">ability.type.Herd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-herdable">ability.type.Herdable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-hitbox">ability.type.Hitbox</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-idle">ability.type.Idle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-lineofsight">ability.type.LineOfSight</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-live">ability.type.Live</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-move">ability.type.Move</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-named">ability.type.Named</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-passable">ability.type.Passable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-projectile">ability.type.Projectile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-providecontingent">ability.type.ProvideContingent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-rallypoint">ability.type.RallyPoint</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-rangedcontinuouseffect">ability.type.RangedContinuousEffect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-rangeddiscreteeffect">ability.type.RangedDiscreteEffect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-regenerateattribute">ability.type.RegenerateAttribute</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-regenerateresourcespot">ability.type.RegenerateResourceSpot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-removestorage">ability.type.RemoveStorage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-research">ability.type.Research</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-resistance">ability.type.Resistance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-restock">ability.type.Restock</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-selectable">ability.type.Selectable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-sendbacktotask">ability.type.SendBackToTask</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-shootprojectile">ability.type.ShootProjectile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-stop">ability.type.Stop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-storage">ability.type.Storage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-tilerequirement">ability.type.TileRequirement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-terrainrequirement">ability.type.TerrainRequirement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-trade">ability.type.Trade</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-tradepost">ability.type.TradePost</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-transferstorage">ability.type.TransferStorage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-transform">ability.type.Transform</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-transformto">ability.type.TransformTo</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-turn">ability.type.Turn</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-usecontingent">ability.type.UseContingent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_ability.html#ability-type-visibility">ability.type.Visibility</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html">engine.aux</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-accuracy-accuracy">aux.accuracy.Accuracy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-animation-override-animationoverride">aux.animation_override.AnimationOverride</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-attribute-attribute">aux.attribute.Attribute</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-attribute-attributeamount">aux.attribute.AttributeAmount</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-attribute-attributerate">aux.attribute.AttributeRate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-attribute-attributesetting">aux.attribute.AttributeSetting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-attribute-protectingattribute">aux.attribute.ProtectingAttribute</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-attribute-change-type-attributechangetype">aux.attribute_change_type.AttributeChangeType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-attribute-change-type-type-fallback">aux.attribute_change_type.type.Fallback</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-availability-prerequisite-availabilityprerequisite">aux.availability_prerequisite.AvailabilityPrerequisite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-availability-prerequisite-type-techresearched">aux.availability_prerequisite.type.TechResearched</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-availability-prerequisite-type-gameentityprogress">aux.availability_prerequisite.type.GameEntityProgress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-availability-requirement-availabilityrequirement">aux.availability_requirement.AvailabilityRequirement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-cheat-cheat">aux.cheat.Cheat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-civilization-civilization">aux.civilization.Civilization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-container-type-sendtocontainertype">aux.container_type.SendToContainerType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-convert-type-converttype">aux.convert_type.ConvertType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-cost-cost">aux.cost.Cost</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-cost-type-attributecost">aux.cost.type.AttributeCost</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-cost-type-resourcecost">aux.cost.type.ResourceCost</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-create-creatablegameentity">aux.create.CreatableGameEntity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-death-condition-deathcondition">aux.death_condition.DeathCondition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-death-condition-type-attributeinterval">aux.death_condition.type.AttributeInterval</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-death-condition-type-projectilehit">aux.death_condition.type.ProjectileHit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-death-condition-type-projectilehitterrain">aux.death_condition.type.ProjectileHitTerrain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-death-condition-type-projectilepassthrough">aux.death_condition.type.ProjectilePassThrough</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-despawn-condition-despawncondition">aux.despawn_condition.DespawnCondition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-despawn-condition-type-resourcespotsdepleted">aux.despawn_condition.type.ResourceSpotsDepleted</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-despawn-condition-type-timer">aux.despawn_condition.type.Timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-diplomatic-stance-diplomaticstance">aux.diplomatic_stance.DiplomaticStance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-diplomatic-stance-type-self">aux.diplomatic_stance.type.Self</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-dropoff-type-dropofftype">aux.dropoff_type.DropoffType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-dropoff-type-type-inverselinear">aux.dropoff_type.type.InverseLinear</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-dropoff-type-type-linear">aux.dropoff_type.type.Linear</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-dropoff-type-type-nodropoff">aux.dropoff_type.type.NoDropoff</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-exchange-mode-exchangemode">aux.exchange_mode.ExchangeMode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-exchange-mode-type-fixed">aux.exchange_mode.type.Fixed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-exchange-mode-volatile-volatile">aux.exchange_mode.volatile.Volatile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-exchange-mode-volatile-volatileflat">aux.exchange_mode.volatile.VolatileFlat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-exchange-scope-exchangescope">aux.exchange_scope.ExchangeScope</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-formation-formation">aux.formation.Formation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-formation-subformation">aux.formation.Subformation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-formation-preceedingsubformation">aux.formation.PreceedingSubformation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-game-entity-gameentity">aux.game_entity.GameEntity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-game-entity-type-ambient">aux.game_entity.type.Ambient</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-game-entity-type-building">aux.game_entity.type.Building</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-game-entity-type-buildingpart">aux.game_entity.type.BuildingPart</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-game-entity-type-multipartbuilding">aux.game_entity.type.MultiPartBuilding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-game-entity-type-item">aux.game_entity.type.Item</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-game-entity-type-unit">aux.game_entity.type.Unit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-game-entity-formation-gameentityformation">aux.game_entity_formation.GameEntityFormation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-game-entity-stance-gameentitystance">aux.game_entity_stance.GameEntityStance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-game-entity-stance-type-agressive">aux.game_entity_stance.type.Agressive</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-game-entity-stance-type-defensive">aux.game_entity_stance.type.Defensive</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-game-entity-stance-type-standground">aux.game_entity_stance.type.StandGround</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-game-entity-stance-type-passive">aux.game_entity_stance.type.Passive</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-graphics-animation">aux.graphics.Animation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-graphics-terrain">aux.graphics.Terrain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-language-language">aux.language.Language</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-language-languagemarkuppair">aux.language.LanguageMarkupPair</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-language-languagesoundpair">aux.language.LanguageSoundPair</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-language-languagetextpair">aux.language.LanguageTextPair</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-lure-type-luretype">aux.lure_type.LureType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-mod-mod">aux.mod.Mod</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-modifier-scope-modifierscope">aux.modifier_scope.ModifierScope</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-modifier-scope-type-gameentityscope">aux.modifier_scope.type.GameEntityScope</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-modifier-scope-type-standard">aux.modifier_scope.type.Standard</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-move-mode-movemode">aux.move_mode.MoveMode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-move-mode-type-attackmove">aux.move_mode.type.AttackMove</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-move-mode-type-follow">aux.move_mode.type.Follow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-move-mode-type-normal">aux.move_mode.type.Normal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-move-mode-type-patrol">aux.move_mode.type.Patrol</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-patch-patch">aux.patch.Patch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-patch-type-diplomaticpatch">aux.patch.type.DiplomaticPatch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-payment-mode-paymentmode">aux.payment_mode.PaymentMode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-payment-mode-type-adaptive">aux.payment_mode.type.Adaptive</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-payment-mode-type-advance">aux.payment_mode.type.Advance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-payment-mode-type-arrear">aux.payment_mode.type.Arrear</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-placement-mode-placementmode">aux.placement_mode.PlacementMode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-placement-mode-type-eject">aux.placement_mode.type.Eject</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-placement-mode-type-place">aux.placement_mode.type.Place</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-progress-progress">aux.progress.Progress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-progress-specialization-animatedprogress">aux.progress.specialization.AnimatedProgress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-progress-specialization-statechangeprogress">aux.progress.specialization.StateChangeProgress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-progress-specialization-terrainoverlayprogress">aux.progress.specialization.TerrainOverlayProgress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-progress-specialization-terrainprogress">aux.progress.specialization.TerrainProgress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-progress-type-carryprogress">aux.progress.type.CarryProgress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-progress-type-constructionprogress">aux.progress.type.ConstructionProgress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-progress-type-damageprogress">aux.progress.type.DamageProgress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-progress-type-harvestprogress">aux.progress.type.HarvestProgress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-progress-type-restockprogress">aux.progress.type.RestockProgress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-progress-type-transformprogress">aux.progress.type.TransformProgress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-progress-status-progressstatus">aux.progress_status.ProgressStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-progress-type-progresstype">aux.progress_type.ProgressType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-progress-type-type-construct">aux.progress_type.type.Construct</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-research-researchabletech">aux.research.ResearchableTech</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-resource-resource">aux.resource.Resource</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-resource-resourcecontingent">aux.resource.ResourceContingent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-resource-resourceamount">aux.resource.ResourceAmount</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-resource-resourcerate">aux.resource.ResourceRate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-resource-spot-resourcespot">aux.resource_spot.ResourceSpot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-resource-spot-restockableresourcespot">aux.resource_spot.RestockableResourceSpot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-sound-sound">aux.sound.Sound</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-state-machine-statechanger">aux.state_machine.StateChanger</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-storage-container">aux.storage.Container</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-storage-storageelement">aux.storage.StorageElement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-target-mode-targetmode">aux.target_mode.TargetMode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-target-mode-type-currentposition">aux.target_mode.type.CurrentPosition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-target-mode-type-expectedposition">aux.target_mode.type.ExpectedPosition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-taunt-taunt">aux.taunt.Taunt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-tech-tech">aux.tech.Tech</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-terrain-terrain">aux.terrain.Terrain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-terrain-terrainambient">aux.terrain.TerrainAmbient</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-trade-route-traderoute">aux.trade_route.TradeRoute</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-trade-route-type-aoe1traderoute">aux.trade_route.type.AoE1TradeRoute</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-trade-route-type-aoe2traderoute">aux.trade_route.type.AoE2TradeRoute</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-translated-translatedobject">aux.translated.TranslatedObject</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-translated-type-translatedmarkupfile">aux.translated.type.TranslatedMarkupFile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-translated-type-translatedsound">aux.translated.type.TranslatedSound</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-translated-type-translatedstring">aux.translated.type.TranslatedString</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-variant-variant">aux.variant.Variant</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-variant-type-adjacencyvariant">aux.variant.type.AdjacencyVariant</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-variant-type-randomvariant">aux.variant.type.RandomVariant</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_aux.html#aux-variant-type-perspectivevariant">aux.variant.type.PerspectiveVariant</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html">engine.effect</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-effect">effect.Effect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-continuous-continuouseffect">effect.continuous.ContinuousEffect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-continuous-flat-attribute-change-flatattributechange">effect.continuous.flat_attribute_change.FlatAttributeChange</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-continuous-flat-attribute-change-type-flatattributechangedecrease">effect.continuous.flat_attribute_change.type.FlatAttributeChangeDecrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-continuous-flat-attribute-change-type-flatattributechangeincrease">effect.continuous.flat_attribute_change.type.FlatAttributeChangeIncrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-continuous-type-lure">effect.continuous.type.Lure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-continuous-time-relative-attribute-change-timerelativeattributechange">effect.continuous.time_relative_attribute_change.TimeRelativeAttributeChange</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-continuous-time-relative-attribute-change-type-timerelativeattributedecrease">effect.continuous.time_relative_attribute_change.type.TimeRelativeAttributeDecrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-continuous-time-relative-attribute-change-type-timerelativeattributeincrease">effect.continuous.time_relative_attribute_change.type.TimeRelativeAttributeIncrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-continuous-time-relative-progress-timerelativeprogress">effect.continuous.time_relative_progress.TimeRelativeProgress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-continuous-time-relative-progress-type-timerelativeprogressdecrease">effect.continuous.time_relative_progress.type.TimeRelativeProgressDecrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-continuous-time-relative-progress-type-timerelativeprogressincrease">effect.continuous.time_relative_progress.type.TimeRelativeProgressIncrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-discrete-discreteeffect">effect.discrete.DiscreteEffect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-discrete-convert-convert">effect.discrete.convert.Convert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-discrete-convert-type-aoe2convert">effect.discrete.convert.type.AoE2Convert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-discrete-flat-attribute-change-flatattributechange">effect.discrete.flat_attribute_change.FlatAttributeChange</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-discrete-flat-attribute-change-type-flatattributechangedecrease">effect.discrete.flat_attribute_change.type.FlatAttributeChangeDecrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-discrete-flat-attribute-change-type-flatattributechangeincrease">effect.discrete.flat_attribute_change.type.FlatAttributeChangeIncrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-discrete-type-makeharvestable">effect.discrete.type.MakeHarvestable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-discrete-type-sendtocontainer">effect.discrete.type.SendToContainer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-specialization-areaeffect">effect.specialization.AreaEffect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-specialization-costeffect">effect.specialization.CostEffect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_effect.html#effect-specialization-diplomaticeffect">effect.specialization.DiplomaticEffect</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html">engine.modifier</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-modifier">modifier.Modifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-specialization-scopemodifier">modifier.specialization.ScopeModifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-multipliermodifier">modifier.multiplier.MultiplierModifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-effect-effectmultipliermodifier">modifier.multiplier.effect.EffectMultiplierModifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-effect-flat-attribute-change-flatatttributechangemodifier">modifier.multiplier.effect.flat_attribute_change.FlatAtttributeChangeModifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-effect-flat-attribute-change-type-elevationdifferencehigh">modifier.multiplier.effect.flat_attribute_change.type.ElevationDifferenceHigh</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-effect-flat-attribute-change-type-flyover">modifier.multiplier.effect.flat_attribute_change.type.Flyover</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-effect-flat-attribute-change-type-terrain">modifier.multiplier.effect.flat_attribute_change.type.Terrain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-effect-flat-attribute-change-type-unconditional">modifier.multiplier.effect.flat_attribute_change.type.Unconditional</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-effect-type-timerelativeattributechangetime">modifier.multiplier.effect.type.TimeRelativeAttributeChangeTime</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-effect-type-timerelativeprogresstime">modifier.multiplier.effect.type.TimeRelativeProgressTime</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-resistance-resistancemultipliermodifier">modifier.multiplier.resistance.ResistanceMultiplierModifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-resistance-flat-attribute-change-flatatttributechangemodifier">modifier.multiplier.resistance.flat_attribute_change.FlatAtttributeChangeModifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-resistance-flat-attribute-change-type-elevationdifferencelow">modifier.multiplier.resistance.flat_attribute_change.type.ElevationDifferenceLow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-resistance-flat-attribute-change-type-stray">modifier.multiplier.resistance.flat_attribute_change.type.Stray</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-resistance-flat-attribute-change-type-terrain">modifier.multiplier.resistance.flat_attribute_change.type.Terrain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-resistance-flat-attribute-change-type-unconditional">modifier.multiplier.resistance.flat_attribute_change.type.Unconditional</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-type-attributesettingsvalue">modifier.multiplier.type.AttributeSettingsValue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-type-containercapacity">modifier.multiplier.type.ContainerCapacity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-type-creationattributecost">modifier.multiplier.type.CreationAttributeCost</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-type-creationresourcecost">modifier.multiplier.type.CreationResourceCost</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-type-creationtime">modifier.multiplier.type.CreationTime</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-type-gatheringefficiency">modifier.multiplier.type.GatheringEfficiency</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-type-gatheringrate">modifier.multiplier.type.GatheringRate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-type-movespeed">modifier.multiplier.type.MoveSpeed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-type-reloadtime">modifier.multiplier.type.ReloadTime</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-type-researchattributecost">modifier.multiplier.type.ResearchAttributeCost</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-type-researchresourcecost">modifier.multiplier.type.ResearchResourceCost</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-type-researchtime">modifier.multiplier.type.ResearchTime</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-multiplier-type-storageelementcapacity">modifier.multiplier.type.StorageElementCapacity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-relative-projectile-amount-aoe2projectileamount">modifier.relative_projectile_amount.AoE2ProjectileAmount</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-relative-projectile-amount-type">modifier.relative_projectile_amount.type.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-type-absoluteprojectileamount">modifier.type.AbsoluteProjectileAmount</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-type-alwaysherd">modifier.type.AlwaysHerd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-type-continuousresource">modifier.type.ContinuousResource</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-type-depositresourcesonprogress">modifier.type.DepositResourcesOnProgress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-type-diplomaticlineofsight">modifier.type.DiplomaticLineOfSight</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-type-incontainercontinuouseffect">modifier.type.InContainerContinuousEffect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-type-incontainerdiscreteeffect">modifier.type.InContainerDiscreteEffect</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-type-instanttechresearch">modifier.type.InstantTechResearch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-type-refundondeath">modifier.type.RefundOnDeath</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_modifier.html#modifier-type-reveal">modifier.type.Reveal</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html">engine.resistance</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-resistance">resistance.Resistance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-continuous-continuousresistance">resistance.continuous.ContinuousResistance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-continuous-flat-attribute-change-flatattributechange">resistance.continuous.flat_attribute_change.FlatAttributeChange</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-continuous-flat-attribute-change-type-flatattributechangedecrease">resistance.continuous.flat_attribute_change.type.FlatAttributeChangeDecrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-continuous-flat-attribute-change-type-flatattributechangeincrease">resistance.continuous.flat_attribute_change.type.FlatAttributeChangeIncrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-continuous-type-lure">resistance.continuous.type.Lure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-continuous-time-relative-attribute-change-timerelativeattributechange">resistance.continuous.time_relative_attribute_change.TimeRelativeAttributeChange</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-continuous-time-relative-attribute-change-type-timerelativeattributedecrease">resistance.continuous.time_relative_attribute_change.type.TimeRelativeAttributeDecrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-continuous-time-relative-attribute-change-type-timerelativeattributeincrease">resistance.continuous.time_relative_attribute_change.type.TimeRelativeAttributeIncrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-continuous-time-relative-progress-timerelativeprogress">resistance.continuous.time_relative_progress.TimeRelativeProgress</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-continuous-time-relative-progress-type-timerelativeprogressdecrease">resistance.continuous.time_relative_progress.type.TimeRelativeProgressDecrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-continuous-time-relative-progress-type-timerelativeprogressincrease">resistance.continuous.time_relative_progress.type.TimeRelativeProgressIncrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-discrete-discreteresistance">resistance.discrete.DiscreteResistance</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-discrete-convert-convert">resistance.discrete.convert.Convert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-discrete-convert-type-aoe2convert">resistance.discrete.convert.type.AoE2Convert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-discrete-flat-attribute-change-flatattributechange">resistance.discrete.flat_attribute_change.FlatAttributeChange</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-discrete-flat-attribute-change-type-flatattributechangedecrease">resistance.discrete.flat_attribute_change.type.FlatAttributeChangeDecrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-discrete-flat-attribute-change-type-flatattributechangeincrease">resistance.discrete.flat_attribute_change.type.FlatAttributeChangeIncrease</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-discrete-type-makeharvestable">resistance.discrete.type.MakeHarvestable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-discrete-type-sendtocontainer">resistance.discrete.type.SendToContainer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_resistance.html#resistance-specialization-costresistance">resistance.specialization.CostResistance</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../nyan/api_reference/reference_root.html">engine.root</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../nyan/api_reference/reference_root.html#entity">Entity</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sphinx/reference/doxygen.html">openage c++/python reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sphinx/releasenotes/index.html">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sphinx/releasenotes/0.3.0.html">0.3.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/releasenotes/0.3.0.html#date">Date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/releasenotes/0.3.0.html#description">Description</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sphinx/releasenotes/0.2.3.html">0.2.3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/releasenotes/0.2.3.html#date">Date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/releasenotes/0.2.3.html#description">Description</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sphinx/releasenotes/0.2.2.html">0.2.2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/releasenotes/0.2.2.html#date">Date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/releasenotes/0.2.2.html#description">Description</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sphinx/releasenotes/0.2.1.html">0.2.1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/releasenotes/0.2.1.html#date">Date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/releasenotes/0.2.1.html#description">Description</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sphinx/releasenotes/0.2.0.html">0.2.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/releasenotes/0.2.0.html#date">Date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/releasenotes/0.2.0.html#description">Description</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../sphinx/releasenotes/0.2.0.html#milestone-2">Milestone 2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sphinx/releasenotes/0.1.0.html">0.1.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/releasenotes/0.1.0.html#date">Date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/releasenotes/0.1.0.html#description">Description</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../sphinx/releasenotes/0.1.0.html#milestone-1">Milestone 1</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../sphinx/releasenotes/0.0.0.html">0.0.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/releasenotes/0.0.0.html#date">Date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../sphinx/releasenotes/0.0.0.html#description">Description</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../sphinx/about.html">About</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../README.html">Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../README.html#static-docs">Static Docs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../README.html#dynamic-docs">Dynamic Docs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../README.html#doc-generation">Doc Generation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../status.html">openage status</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../status.html#the-list-must-grow">The list must grow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../status.html#working-features">Working features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../status.html#missing-functionality">Missing functionality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../status.html#under-the-hood">Under the hood</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../status.html#python-interface">Python interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../status.html#inotify-file-reloading">Inotify file reloading</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../status.html#terminal-emulator">Terminal emulator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../status.html#buildsystem">Buildsystem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../status.html#job-management">Job management</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../milestones.html">Milestones</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">openage</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Python Scripts</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/ext/openage-modding/tutorials/scripts/how_to_use_python_scripts.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="python-scripts">
+<h1>Python Scripts<a class="headerlink" href="#python-scripts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installing-python-3-6">
+<h2>Installing Python 3.6<a class="headerlink" href="#installing-python-3-6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<p>Download the latest version of Python 3.6 from <a class="reference external" href="https://www.python.org/downloads/">here</a>, then run the installer. We will guide you through the installation.</p>
+<p><img alt="../../../../_images/python36_windows_1.png" src="../../../../_images/python36_windows_1.png" />pic1</p>
+<p>Make sure the option “Add Python 3.6 to PATH” is checked. Otherwise you won’t be able to run scripts from anywhere in the filesystem. Choose “Customize installation” for the next step.</p>
+<p><img alt="../../../../_images/python36_windows_2.png" src="../../../../_images/python36_windows_2.png" />pic2</p>
+<p>The option “pip” has to be checked. All other options are not mandatory, but can be helpful when working with Python. Click “Next” to continue.</p>
+<p><img alt="../../../../_images/python36_windows_3.png" src="../../../../_images/python36_windows_3.png" />pic3</p>
+<p>The option “Add Python to environment variables” has to be checked. This is required to get access to the Python package management <code class="docutils literal notranslate"><span class="pre">pip</span></code>. Click “Install”.</p>
+<p>To check if everything was installed correctly type <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">--version</span></code> into <em>Powershell</em>. It should display the Python 3.6 version.</p>
+</div>
+<div class="section" id="linux">
+<h3>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
+<p><strong>Ubuntu/Debian</strong></p>
+<p>Open you terminal and type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">python3</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span>
+</pre></div>
+</div>
+<p><strong>Fedora</strong></p>
+<p>Open you terminal and type</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">dnf</span> <span class="n">install</span> <span class="n">python3</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span>
+</pre></div>
+</div>
+<p><strong>Arch Linux</strong></p>
+<p>Everything should already be installed.</p>
+</div>
+</div>
+<div class="section" id="installing-additional-requirements-with-pip">
+<h2>Installing additional requirements with <code class="docutils literal notranslate"><span class="pre">pip</span></code><a class="headerlink" href="#installing-additional-requirements-with-pip" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes our scripts depend on packages from the Python repositories. You can check for these requirements by opening the script with text editor. There should be a section at the start of the script that lists the dependencies and gives you the command to aquire them.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Pillow is required for image manipulation. Install with pip:
+
+    $ pip install pillow
+</pre></div>
+</div>
+<div class="section" id="id1">
+<h3>Windows<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Open <em>Powershell</em> or <code class="docutils literal notranslate"><span class="pre">cmd.exe</span></code> (only if the former is not installed). Type <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span></code> and paste everything after the <code class="docutils literal notranslate"><span class="pre">Dollar</span></code> symbol behind it.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">pillow</span>
+</pre></div>
+</div>
+<p>Press Enter. If successful, it will print the following lines.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Collecting markdown
+  Downloading Pillow-5.0.0-cp36-cp36m-manylinux1_x86_64.whl (78kB)
+    100% |████████████████████████████████| 81kB 1.2MB/s
+Installing collected packages: pillow
+Successfully installed pillow-5.0.0
+</pre></div>
+</div>
+<p>The script can now be used properly.</p>
+</div>
+<div class="section" id="id2">
+<h3>Linux<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Open the terminal and paste everything after the <code class="docutils literal notranslate"><span class="pre">Dollar</span></code> symbol into the terminal.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pillow</span>
+</pre></div>
+</div>
+<p>Press Enter. If successful, it will print the following lines.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Collecting markdown
+  Downloading Pillow-5.0.0-cp36-cp36m-manylinux1_x86_64.whl (78kB)
+    100% |████████████████████████████████| 81kB 1.2MB/s
+Installing collected packages: pillow
+Successfully installed pillow-5.0.0
+</pre></div>
+</div>
+<p>The script can now be used properly.</p>
+</div>
+</div>
+<div class="section" id="running-a-script">
+<h2>Running a script<a class="headerlink" href="#running-a-script" title="Permalink to this headline">¶</a></h2>
+<p><em><strong>Windows</strong></em>: Use <em>Powershell</em> or <code class="docutils literal notranslate"><span class="pre">cmd.exe</span></code> (only if the former is not installed) to run python scripts. <strong>Do not</strong> use the <em>Python Console</em> that was installed with Python 3.</p>
+<p>Download the script. Open your terminal (Powershell or equivalent on Windows) and navigate to the folder where the script is located. To get an overview of what the script is doing and how to utilize it properly, use the <code class="docutils literal notranslate"><span class="pre">--help</span></code> argument.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">&lt;</span><span class="n">filename</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">the</span><span class="o">-</span><span class="n">script</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">help</span>
+</pre></div>
+</div>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">&lt;filename-of-the-script&gt;</span></code> with the filename of the script you want to run, e.g. <code class="docutils literal notranslate"><span class="pre">terrain_transform.py</span></code>. <code class="docutils literal notranslate"><span class="pre">--help</span></code> will print a short description of every (optional) argument.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python3 terrain_transform.py --help
+usage: terrain_transform.py [-h] [-i] [--legacy-mode PALETTE_FILE] inputfile
+
+Transforms an image from cartesian to dimetric projection.
+
+positional arguments:
+  inputfile             The image you want to transform
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i, --inverse         Transforms from dimetric to cartesian
+  --legacy-mode PALETTE_FILE
+                        Uses BMP instead of PNG as output format and the color
+                        PINK (255,0,255) for background instead of the ALPHA
+                        channel. Requires an image with the AoE2 palette.
+</pre></div>
+</div>
+<p><em>Positional arguments</em> must be specified when you run the script. <em>Optional arguments</em> are not required, but activate different functionality of the script. They sometimes have a short and a long version of which you can choose either (e.g. <code class="docutils literal notranslate"><span class="pre">-i</span></code> and <code class="docutils literal notranslate"><span class="pre">--inverse</span></code> both do the same thing). The first line (<code class="docutils literal notranslate"><span class="pre">usage</span></code>) tells you where you have to put positional or optional arguments. Once you have chosen the arguments, you can run the script from terminal.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="o">--</span><span class="n">inverse</span> <span class="n">terrain_transform</span><span class="o">.</span><span class="n">py</span> <span class="n">TERRAIN</span><span class="o">.</span><span class="n">png</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2013-2019 openage-Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

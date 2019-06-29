@@ -1,0 +1,10 @@
+Installation
+============
+
+.. toctree::
+   :maxdepth: 2
+   :titlesonly:
+
+
+   ../building.md
+   ../build_instructions/index.rst

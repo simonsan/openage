@@ -1,0 +1,11 @@
+Reverse Engineering
+===================
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+
+   ../../../reverse_engineering/*
+   ../../../reverse_engineering/unit_stats/unit_stats
+   ../../../reverse_engineering/networking/*
+   ../../../reverse_engineering/game_mechanics/*

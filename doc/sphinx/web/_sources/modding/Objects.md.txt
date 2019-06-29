@@ -9,14 +9,14 @@ ObjectName():
     # This is a comment
     member_name : type = value
     other_member : type = value
-    member_without_value : type # Comments can also be here
+    member_without_value : type # Comments can also be here 
     ...
 ```
 The example above shows the initial declaration of a nyan object. A nyan object is a named group of key-value pairs. The name of the group is the nyan object name (in this example: `ObjectName`). Key-value pairs assigned in this object are called *members*. The number of members per object is unlimited. Each initial definition of a member must be annotated with a name, which is used as an identifier, and a type. Members can have no value (see [Abstract objects](#abstract-objects)).
 
 There must not be two members with the same name in an object. The order of the members does not matter. A member's type determines which vales can be assigned to it. The chapter [Data Types](Data-Types) explains the types offered by nyan.
 
-Comments are denoted by a `#` and can be placed after the declaration of a member in the same line. The nyan interpreter will skip everything in the line after reading the `#` character.
+Comments are denoted by a `#` and can be placed after the declaration of a member in the same line. The nyan interpreter will skip everything in the line after reading the `#` character. 
 
 ## Inheritance
 
@@ -162,7 +162,7 @@ A special variation of a normal nyan object is the *patch*. Patches are used to 
 An object is called *abstract* when one of its members was not assigned a value. Abstract objects cannot be assigned as values to a member (but can be set as types). The values have to be specified by a child object.
 
 From a non-technical viewpoint, abstract objects are templates for the game entities players eventually interact with. An example is the abstract object `Unit` used in the openage engine. For example, `Unit` contains the members `hp` and `name`, but does not define values for them. That way one can guarantee that an ingame object derived from `Unit` always provides the members `hp` and `name` and has also assigned values for them.
-
+ 
 ## Nested Objects
 
 Objects can also be defined within another object. The inner one is a nested object, and can contain nested objects itself. The purpose of nested objects is to allow further grouping. In openage they are useful for specifying abiltiies and boni of units. Nested objects are allowed to have their own members and inherit from other objects. The name of a nested object is a combination of the name of its parent and the nested object name.

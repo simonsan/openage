@@ -15,12 +15,13 @@ Table of Contents
    :name: mastertoc
    :titlesonly:
 
-  reference/building.rst
-  reference/modding.rst
-  reference/reverse_engineering.rst
-  reference/doxygen.rst
-  releasenotes/index.rst
-  reference/todolist.rst
+  sphinx/installation/index.rst
+  sphinx/handbooks/index.rst
+  sphinx/reference/index.rst
+  sphinx/releasenotes/index.rst
+  changelog.md
+  sphinx/about.rst
+
 
 Indices and tables
 ==================

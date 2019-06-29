@@ -1,0 +1,15 @@
+Developing handbook
+^^^^^^^^^^^^^^^^^^
+
+.. toctree::
+
+  overview.rst
+  concepts.rst
+  code_style.rst
+  ../../../code/index.rst
+  ../../../nyan/index.rst
+  ../assets_conversion.rst
+  ../reverse_engineering.rst
+  ../../../ideas/index.rst
+  tutorial.rst
+  appendices.rst

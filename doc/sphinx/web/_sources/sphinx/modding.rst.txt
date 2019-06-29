@@ -1,0 +1,12 @@
+Modding API (nyan)
+===================================
+
+.. toctree::
+   :maxdepth: 2
+   
+   ../nyan/nyan.md
+   ../nyan/conversion.md
+   ../nyan/openage-lib.md
+   ../nyan/examples.md
+   ../modding/index.rst
+   ../nyan/api_reference/index.rst

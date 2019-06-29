@@ -1,0 +1,9 @@
+Code-style
+^^^^^^^^^^
+
+.. toctree::
+  :maxdepth: 2
+  
+  ../../../code_style/tabs_n_spaces.md
+  ../../../inttypes.md
+ 
