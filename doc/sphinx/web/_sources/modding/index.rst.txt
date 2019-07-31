@@ -1,8 +1,0 @@
-Quickstart
-=============
-
-.. toctree::
-  :maxdepth: 2
-  
-  getting_started.md
-  quickstart_guide.md
