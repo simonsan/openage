@@ -1,0 +1,8 @@
+Changelog
+=========
+
+.. note:: Work in progress.
+
+.. toctree::
+
+  ../../changelog.md

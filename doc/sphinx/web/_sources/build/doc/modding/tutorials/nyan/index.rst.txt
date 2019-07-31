@@ -2,7 +2,7 @@ Modding in nyan
 ^^^^^^^^^^^^^^^
 
 .. toctree::
-  :glob:
+  :maxdepth: 3
 
   quickstart_guide.md
   getting_started.md

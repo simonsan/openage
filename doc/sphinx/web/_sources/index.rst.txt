@@ -18,7 +18,7 @@ Table of Contents
   doc/sphinx/installation/index.rst
   doc/sphinx/handbooks/index.rst
   doc/sphinx/reference/index.rst
-  changelog.md
+  doc/sphinx/changelog.rst
   doc/sphinx/releasenotes.rst
   doc/sphinx/about.rst
 
