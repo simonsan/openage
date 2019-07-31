@@ -1,0 +1,11 @@
+Installation
+============
+
+.. toctree::
+  :maxdepth: 2
+  
+
+  basic_installation.rst
+  building.rst
+  platform_support.rst
+  ../../troubleshooting.md

@@ -1,0 +1,33 @@
+Basic Installation
+------------------
+
+.. note::
+
+    The following instructions will install a packaged version of openage
+    on your computer.
+
+
+Linux Installation
+^^^^^^^^^^^^^^^^^^
+
+We provide packages for different Linux distributions. Please take a
+look for distribution packages at `Repology <https://repology.org/project/openage/packages>`_
+
+
+Windows Installation
+^^^^^^^^^^^^^^^^^^^^
+
+We provide an installer package for Windows 64-bit versions. The latest 
+release installer you find at `Github <https://github.com/SFTtech/openage/releases>`_
+
+
+macOS Installation
+^^^^^^^^^^^^^^^^^^
+
+Running openage on macOS worked in the past, and might or might not work right now.
+
+Setting up continuous integration for this platform has some complications. Running a
+hackintosh VM seems to be not so legal, while buying dedicated hardware for it seems to
+be not so cheap. If you know of a legal and cost-free way of doing so or want to sponsor
+a semi-recent Mac Mini, please open a ticket in our issue tracker. Until then, PRs untested
+on macOS will make their way into the master branch and occasional breakage will occur.

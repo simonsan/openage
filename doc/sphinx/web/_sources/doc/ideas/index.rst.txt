@@ -1,0 +1,12 @@
+Ideas
+=====
+
+.. toctree::
+  :maxdepth: 3
+
+  ai.md
+  gameplay.md
+  interface.md
+  technical.md
+  fr_technical_overview.md
+  editor/index.rst

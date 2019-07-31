@@ -1,0 +1,14 @@
+Editor
+^^^^^^
+
+.. toctree::
+  :maxdepth: 3
+
+  README.md
+  scripting.md
+  tech.md
+  terrain.md
+  units.md
+  economy.md
+  campaigns.md
+  multiplayer.md

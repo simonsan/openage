@@ -15,12 +15,12 @@ Table of Contents
    :name: mastertoc
    :titlesonly:
 
-  sphinx/installation/index.rst
-  sphinx/handbooks/index.rst
-  sphinx/reference/index.rst
-  sphinx/releasenotes/index.rst
+  doc/sphinx/installation/index.rst
+  doc/sphinx/handbooks/index.rst
+  doc/sphinx/reference/index.rst
+  doc/sphinx/releasenotes/index.rst
   changelog.md
-  sphinx/about.rst
+  doc/sphinx/about.rst
 
 
 Indices and tables
