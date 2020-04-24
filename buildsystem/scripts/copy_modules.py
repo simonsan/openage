@@ -20,7 +20,7 @@ def copy_module(name, destination):
     if not isinstance(loader, importlib.abc.FileLoader):
         sys.exit("Loader for module %s is not handled" % (name))
 
-    print('Copying "%s" to "%s"' % (name, destination))
+    print('Copying Python module "%s" to "%s"' % (name, destination))
     filename = loader.get_filename(name)
     if loader.is_package(name):
         pkgdir, _ = os.path.split(filename)
