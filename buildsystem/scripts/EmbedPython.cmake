@@ -24,6 +24,7 @@ execute_process(COMMAND
 )
 
 message(STATUS "Copying Python modules ...")
+message(STATUS "PYTHON: ${PYTHON}")
 execute_process(COMMAND
 	"${PYTHON}" "${buildsystem_dir}/scripts/copy_modules.py"
 	numpy PIL pyreadline readline
