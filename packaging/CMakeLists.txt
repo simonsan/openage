@@ -28,6 +28,10 @@ if(MSVC)
 	set(vcpkg_dir "${_VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}")
 	find_program(windeployqt windeployqt.exe)
 
+	# Read back the values for Python
+	get_property(PYTHON GLOBAL PROPERTY PYTHON_EXECUTABLE)
+	get_property(PYTHONLIBS_VERSION_STRING GLOBAL PROPERTY PYTHON_VERSION)
+
 	configure_file(
 		"${BUILDSYSTEM_DIR}/templates/ForwardVariables.cmake.in"
 		"${CMAKE_CURRENT_BINARY_DIR}/ForwardVariables.cmake"

@@ -2,9 +2,6 @@
 
 # finds the python interpreter, install destination and extension flags.
 
-# PYTHON needs to be set for packaging
-set(PYTHON "")
-
 # the Python version number requirement is in modules/FindPython_test.cpp
 find_package(Python ${PYTHON_MIN_VERSION} REQUIRED)
 find_package(Cython ${CYTHON_MIN_VERSION} REQUIRED)
