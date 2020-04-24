@@ -17,12 +17,13 @@ download_cache(
 	"https://www.python.org/ftp/python/${py_version}/${python_embed_zip}"
 	"${python_zip_download_path}"
 )
-
+message(STATUS "Extracting ${python_zip_download_path} ...")
 execute_process(COMMAND
 	"${CMAKE_COMMAND}" -E tar xf "${python_zip_download_path}"
 	WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/${py_install_prefix}"
 )
 
+message(STATUS "Copying Python modules ...")
 execute_process(COMMAND
 	"${PYTHON}" "${buildsystem_dir}/scripts/copy_modules.py"
 	numpy PIL pyreadline readline
