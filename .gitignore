@@ -72,6 +72,10 @@ perf.data*
 # macOS
 .DS_Store
 
+# Virtual Environment
+/.venv/
+
 # copyrighted assets
 /assets/converted/
 /assets/terrain/
+
