@@ -1,0 +1,162 @@
+name: Windows-CI
+on: [push, pull_request]
+
+# TODO:
+# vcpkg upgrade after cache restore
+# Cache Qt
+# Cache pip?
+# get clcache to run 
+# after cache restore and updated builds inititate new caching
+# Add cache lock against the workflow file package lockfile vcpkg
+# key: ${{ runner.OS }}-python-${{ hashFiles('.github/workflows/windows-ci.yml') }}
+
+# Post job cleanup.
+# "C:\Program Files\Git\usr\bin\tar.exe" -cz --force-local -f d:/a/_temp/36a53af5-51d6-4616-aafd-abcb995c23e1/cache.tgz -C C:/Users/runneradmin/clcache .
+# /usr/bin/tar: C\:/Users/runneradmin/clcache: Cannot open: No such file or directory
+# /usr/bin/tar: Error is not recoverable: exiting now
+# #[warning]The process 'C:\Program Files\Git\usr\bin\tar.exe' failed with exit code 2
+
+
+jobs:
+   windows-msvc:
+    strategy:
+      matrix:
+        arch: [x64] #[Win32, x64]
+    runs-on: windows-latest
+    steps:
+      - name: Set Environment variables
+        uses: allenevans/set-env@v1.0.0
+        with:
+          PreferredToolArchitecture: '${{matrix.arch}}'
+          CC: "clcache"
+          CXX: "clcache"
+          CLCACHE_DIR: "~/clcache"
+          CLCACHE_LOG: "true"
+          CLCACHE_BASEDIR: "%GITHUB_WORKSPACE%/openage/"
+          CLCACHE_CL: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Tools/MSVC/14.23.28105/bin/Hostx64/x64/cl.exe"
+          overwrite: true
+      - name: Checkout sources
+        uses: actions/checkout@v1
+      - name: Cache (Python)
+        uses: actions/cache@v1.0.2
+        id: cache-python-dl
+        with:
+          path: 'Python38-x64-dbg'
+          key: ${{ runner.OS }}-python
+          restore-keys: |
+            ${{ runner.OS }}-python
+      - name: Cache (clcache)
+        uses: actions/cache@v1.0.2
+        id: cache-clcache
+        with:
+          path: ~/clcache
+          key: ${{ runner.OS }}-clcache
+          restore-keys: |
+            ${{ runner.OS }}-clcache
+      - name: Cache (vcpkg)
+        uses: actions/cache@v1.0.2
+        id: cache-vcpkg
+        with:
+          path: '~/../../vcpkg/installed'
+          key: ${{ runner.OS }}-vcpkg
+          restore-keys: |
+            ${{ runner.OS }}-vcpkg
+      - name: Prepare Environment (x64)
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          set PATH=%GITHUB_WORKSPACE%\Python38-x64-dbg;%GITHUB_WORKSPACE%\Python38-x64-dbg\Scripts;C:\Program Files\Mercurial\;C:\ProgramData\kind;C:\vcpkg;C:\vcpkg\installed\x64-windows\bin\;C:\cf-cli;C:\Program Files (x86)\NSIS\;C:\Program Files\Mercurial\;C:\Program Files\Boost\1.69.0;C:\Program Files\dotnet;C:\mysql-5.7.21-winx64\bin;C:\Program Files\Java\zulu-8-azure-jdk_8.40.0.25-8.0.222-win_x64\bin;C:\npm\prefix;C:\Rust\.cargo\bin;C:\hostedtoolcache\windows\Ruby\2.5.5\x64\bin;C:\Go1.12.7\bin;C:\Program Files\Git\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\ProgramData\Chocolatey\bin;C:\Program Files\Docker;C:\Program Files\PowerShell\6\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;c:\tools\php;C:\Program Files (x86)\Subversion\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\Program Files\OpenSSL\bin;C:\Users\runneradmin\.dotnet\tools;C:\Program Files\Microsoft SQL Server\Client SDK\O
+        shell: cmd
+        if: matrix.arch == 'x64'
+      - name: Prepare Environment (x86)
+        run: |
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
+          set PATH=%GITHUB_WORKSPACE%\Python38-x86-dbg;%GITHUB_WORKSPACE%\Python38-x86-dbg\Scripts;C:\Program Files\Mercurial\;C:\ProgramData\kind;C:\vcpkg;C:\vcpkg\installed\x86-windows\bin\;C:\cf-cli;C:\Program Files (x86)\NSIS\;C:\Program Files\Mercurial\;C:\Program Files\Boost\1.69.0;C:\Program Files\dotnet;C:\mysql-5.7.21-winx64\bin;C:\Program Files\Java\zulu-8-azure-jdk_8.40.0.25-8.0.222-win_x64\bin;C:\npm\prefix;C:\Rust\.cargo\bin;C:\hostedtoolcache\windows\Ruby\2.5.5\x64\bin;C:\Go1.12.7\bin;C:\Program Files\Git\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\ProgramData\Chocolatey\bin;C:\Program Files\Docker;C:\Program Files\PowerShell\6\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;c:\tools\php;C:\Program Files (x86)\Subversion\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\Program Files\OpenSSL\bin;C:\Users\runneradmin\.dotnet\tools;C:\Program Files\Microsoft SQL Server\Client SDK\O
+        shell: cmd
+        if: matrix.arch == 'Win32'
+      - name: Download Python (x64)
+        run: |
+          IF NOT EXIST "%GITHUB_WORKSPACE%\Python38-x64-dbg\python.exe" curl --create-dirs -o "%GITHUB_WORKSPACE%\python-for-openage\python-3.8.0-amd64.exe" "https://www.python.org/ftp/python/3.8.0/python-3.8.0-amd64.exe"
+        if: matrix.arch == 'x64' && steps.cache-python-dl.outputs.cache-hit != 'true'
+        shell: cmd
+      - name: Uninstall/Install Python debug (x64) # we need debug binaries and precompiled standard libraries
+        run: |
+          %GITHUB_WORKSPACE%\python-for-openage\python-3.8.0-amd64.exe /quiet /uninstall
+          %GITHUB_WORKSPACE%\python-for-openage\python-3.8.0-amd64.exe /quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=1 TargetDir=%GITHUB_WORKSPACE%\Python38-x64-dbg\
+          set PATH=%GITHUB_WORKSPACE%\Python38-x64-dbg;%GITHUB_WORKSPACE%\Python38-x64-dbg\Scripts;C:\Program Files\Mercurial\;C:\ProgramData\kind;C:\vcpkg;C:\vcpkg\installed\x64-windows\bin\;C:\cf-cli;C:\Program Files (x86)\NSIS\;C:\Program Files\Mercurial\;C:\Program Files\Boost\1.69.0;C:\Program Files\dotnet;C:\mysql-5.7.21-winx64\bin;C:\Program Files\Java\zulu-8-azure-jdk_8.40.0.25-8.0.222-win_x64\bin;C:\npm\prefix;C:\Rust\.cargo\bin;C:\hostedtoolcache\windows\Ruby\2.5.5\x64\bin;C:\Go1.12.7\bin;C:\Program Files\Git\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\ProgramData\Chocolatey\bin;C:\Program Files\Docker;C:\Program Files\PowerShell\6\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;c:\tools\php;C:\Program Files (x86)\Subversion\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\Program Files\OpenSSL\bin;C:\Users\runneradmin\.dotnet\tools;C:\Program Files\Microsoft SQL Server\Client SDK\O
+        if: matrix.arch == 'x64' && steps.cache-python-dl.outputs.cache-hit != 'true'
+        shell: cmd
+      - name: Download Python (x86)
+        run: |
+          IF NOT EXIST "%GITHUB_WORKSPACE%\python-for-openage\python-3.8.0.exe" curl --create-dirs -o "%GITHUB_WORKSPACE%\python-for-openage\python-3.8.0.exe" "https://www.python.org/ftp/python/3.8.0/python-3.8.0.exe"
+        if: matrix.arch == 'Win32'
+        shell: cmd
+      - name: Uninstall/Install Python debug (x86) # we need debug binaries and precompiled standard libraries
+        run: |
+          %GITHUB_WORKSPACE%\python-for-openage\python-3.8.0.exe /quiet /uninstall
+          %GITHUB_WORKSPACE%\python-for-openage\python-3.8.0.exe /quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=1 TargetDir=%GITHUB_WORKSPACE%\Python38-x86-dbg\
+          set PATH=%GITHUB_WORKSPACE%\Python38-x86-dbg;%GITHUB_WORKSPACE%\Python38-x86-dbg\Scripts;C:\Program Files\Mercurial\;C:\ProgramData\kind;C:\vcpkg;C:\vcpkg\installed\x86-windows\bin\;C:\cf-cli;C:\Program Files (x86)\NSIS\;C:\Program Files\Mercurial\;C:\Program Files\Boost\1.69.0;C:\Program Files\dotnet;C:\mysql-5.7.21-winx64\bin;C:\Program Files\Java\zulu-8-azure-jdk_8.40.0.25-8.0.222-win_x64\bin;C:\npm\prefix;C:\Rust\.cargo\bin;C:\hostedtoolcache\windows\Ruby\2.5.5\x64\bin;C:\Go1.12.7\bin;C:\Program Files\Git\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\ProgramData\Chocolatey\bin;C:\Program Files\Docker;C:\Program Files\PowerShell\6\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;c:\tools\php;C:\Program Files (x86)\Subversion\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\Program Files\OpenSSL\bin;C:\Users\runneradmin\.dotnet\tools;C:\Program Files\Microsoft SQL Server\Client SDK\O
+        if: matrix.arch == 'Win32' 
+        shell: cmd
+      - name: Show Python version
+        run: |
+          set PATH=%GITHUB_WORKSPACE%\Python38-x64-dbg;%GITHUB_WORKSPACE%\Python38-x64-dbg\Scripts;C:\Program Files\Mercurial\;C:\ProgramData\kind;C:\vcpkg;C:\vcpkg\installed\x64-windows\bin\;C:\cf-cli;C:\Program Files (x86)\NSIS\;C:\Program Files\Mercurial\;C:\Program Files\Boost\1.69.0;C:\Program Files\dotnet;C:\mysql-5.7.21-winx64\bin;C:\Program Files\Java\zulu-8-azure-jdk_8.40.0.25-8.0.222-win_x64\bin;C:\npm\prefix;C:\Rust\.cargo\bin;C:\hostedtoolcache\windows\Ruby\2.5.5\x64\bin;C:\Go1.12.7\bin;C:\Program Files\Git\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\ProgramData\Chocolatey\bin;C:\Program Files\Docker;C:\Program Files\PowerShell\6\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;c:\tools\php;C:\Program Files (x86)\Subversion\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\Program Files\OpenSSL\bin;C:\Users\runneradmin\.dotnet\tools;C:\Program Files\Microsoft SQL Server\Client SDK\O
+          python --version
+        shell: cmd
+      - name: Upgrade Python pip
+        run: |
+          set PATH=%GITHUB_WORKSPACE%\Python38-x64-dbg;%GITHUB_WORKSPACE%\Python38-x64-dbg\Scripts;C:\Program Files\Mercurial\;C:\ProgramData\kind;C:\vcpkg;C:\vcpkg\installed\x64-windows\bin\;C:\cf-cli;C:\Program Files (x86)\NSIS\;C:\Program Files\Mercurial\;C:\Program Files\Boost\1.69.0;C:\Program Files\dotnet;C:\mysql-5.7.21-winx64\bin;C:\Program Files\Java\zulu-8-azure-jdk_8.40.0.25-8.0.222-win_x64\bin;C:\npm\prefix;C:\Rust\.cargo\bin;C:\hostedtoolcache\windows\Ruby\2.5.5\x64\bin;C:\Go1.12.7\bin;C:\Program Files\Git\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\ProgramData\Chocolatey\bin;C:\Program Files\Docker;C:\Program Files\PowerShell\6\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;c:\tools\php;C:\Program Files (x86)\Subversion\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\Program Files\OpenSSL\bin;C:\Users\runneradmin\.dotnet\tools;C:\Program Files\Microsoft SQL Server\Client SDK\O
+          python -m pip install --upgrade pip
+        shell: cmd
+      - name: Install Python dependencies
+        run: |
+          set PATH=%GITHUB_WORKSPACE%\Python38-x64-dbg;%GITHUB_WORKSPACE%\Python38-x64-dbg\Scripts;C:\Program Files\Mercurial\;C:\ProgramData\kind;C:\vcpkg;C:\vcpkg\installed\x64-windows\bin\;C:\cf-cli;C:\Program Files (x86)\NSIS\;C:\Program Files\Mercurial\;C:\Program Files\Boost\1.69.0;C:\Program Files\dotnet;C:\mysql-5.7.21-winx64\bin;C:\Program Files\Java\zulu-8-azure-jdk_8.40.0.25-8.0.222-win_x64\bin;C:\npm\prefix;C:\Rust\.cargo\bin;C:\hostedtoolcache\windows\Ruby\2.5.5\x64\bin;C:\Go1.12.7\bin;C:\Program Files\Git\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\ProgramData\Chocolatey\bin;C:\Program Files\Docker;C:\Program Files\PowerShell\6\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;c:\tools\php;C:\Program Files (x86)\Subversion\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\Program Files\OpenSSL\bin;C:\Users\runneradmin\.dotnet\tools;C:\Program Files\Microsoft SQL Server\Client SDK\O
+          pip3 install cython numpy pillow pygments pyreadline Jinja2
+          pip3 install git+https://github.com/frerich/clcache.git
+        shell: cmd
+      - name: Install Qt (x64)
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.13.2'
+          arch: 'win64_msvc2017_64' 
+        if: matrix.arch == 'x64'
+      - name: Install Qt (x86)
+        uses: jurplel/install-qt-action@v2
+        with:
+          arch: 'win32_msvc2015'
+        if: matrix.arch == 'Win32'
+      - name: Install Vcpkg dependencies (x64)
+        run: vcpkg install dirent eigen3 fontconfig freetype harfbuzz libepoxy libogg libpng opus opusfile sdl2 sdl2-image
+        env:
+          VCPKG_DEFAULT_TRIPLET: 'x64-windows'
+        if: matrix.arch == 'x64' && steps.cache-vcpkg.outputs.cache-hit != 'true'
+      - name: Install Vcpkg dependencies (x86) (no-cache)
+        run: vcpkg install dirent eigen3 fontconfig freetype harfbuzz libepoxy libogg libpng opus opusfile sdl2 sdl2-image
+        env:         
+          VCPKG_DEFAULT_TRIPLET: 'x86-windows'
+        if: matrix.arch == 'Win32'
+      - name: Install dependencies with Chocolatey
+        uses: crazy-max/ghaction-chocolatey@v1.0.1
+        with:
+          args: install winflexbison3
+      - name: Generate build files & run build procedure (x64)
+        env: 
+          CMAKE_VERBOSE_MAKEFILE: TRUE
+        if: matrix.arch == 'x64'
+        run: |
+          MD build
+          CD build
+          set PATH=%GITHUB_WORKSPACE%\Python38-x64-dbg;%GITHUB_WORKSPACE%\Python38-x64-dbg\Scripts;C:\Program Files\Mercurial\;C:\ProgramData\kind;C:\vcpkg;C:\vcpkg\installed\x64-windows\bin\;C:\cf-cli;C:\Program Files (x86)\NSIS\;C:\Program Files\Mercurial\;C:\Program Files\Boost\1.69.0;C:\Program Files\dotnet;C:\mysql-5.7.21-winx64\bin;C:\Program Files\Java\zulu-8-azure-jdk_8.40.0.25-8.0.222-win_x64\bin;C:\npm\prefix;C:\Rust\.cargo\bin;C:\hostedtoolcache\windows\Ruby\2.5.5\x64\bin;C:\Go1.12.7\bin;C:\Program Files\Git\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\ProgramData\Chocolatey\bin;C:\Program Files\Docker;C:\Program Files\PowerShell\6\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;c:\tools\php;C:\Program Files (x86)\Subversion\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\Program Files\OpenSSL\bin;C:\Users\runneradmin\.dotnet\tools;C:\Program Files\Microsoft SQL Server\Client SDK\O
+          cmake -DCMAKE_TOOLCHAIN_FILE=%VCPKG_INSTALLATION_ROOT%/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH=%Qt5_Dir% -DDOWNLOAD_NYAN=YES -G "Visual Studio 16 2019" -A "${{matrix.arch}}" -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_CXX_COMPILER="clcache" ..
+          cmake --build . --config RelWithDebInfo -- /nologo /m /v:m
+        shell: cmd
+      - name: Generate build files & run build procedure (x86)
+        env: 
+          CMAKE_VERBOSE_MAKEFILE: TRUE
+        if: matrix.arch == 'Win32'
+        run: |
+          MD build
+          CD build
+          set PATH=%GITHUB_WORKSPACE%\Python38-x86-dbg;%GITHUB_WORKSPACE%\Python38-x86-dbg\Scripts;C:\Program Files\Mercurial\;C:\ProgramData\kind;C:\vcpkg;C:\vcpkg\installed\x86-windows\bin\;C:\cf-cli;C:\Program Files (x86)\NSIS\;C:\Program Files\Mercurial\;C:\Program Files\Boost\1.69.0;C:\Program Files\dotnet;C:\mysql-5.7.21-winx64\bin;C:\Program Files\Java\zulu-8-azure-jdk_8.40.0.25-8.0.222-win_x64\bin;C:\npm\prefix;C:\Rust\.cargo\bin;C:\hostedtoolcache\windows\Ruby\2.5.5\x64\bin;C:\Go1.12.7\bin;C:\Program Files\Git\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\ProgramData\Chocolatey\bin;C:\Program Files\Docker;C:\Program Files\PowerShell\6\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;c:\tools\php;C:\Program Files (x86)\Subversion\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\Program Files\OpenSSL\bin;C:\Users\runneradmin\.dotnet\tools;C:\Program Files\Microsoft SQL Server\Client SDK\O
+          cmake -DCMAKE_TOOLCHAIN_FILE=%VCPKG_INSTALLATION_ROOT%/scripts/buildsystems/vcpkg.cmake -DPYTHON=%GITHUB_WORKSPACE%\Python38-x86-dbg\python.exe -DPYTHON_LIBRARIES=%GITHUB_WORKSPACE%\Python38-x86-dbg\ -DCMAKE_PREFIX_PATH=%Qt5_Dir% -G "Visual Studio 16 2019" -A "${{matrix.arch}}" -DDOWNLOAD_NYAN=YES -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+          cmake --build . --config RelWithDebInfo -- /nologo /m /v:m
+        shell: cmd
