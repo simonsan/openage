@@ -2,7 +2,7 @@ name: Windows-CI
 on: [push, pull_request]
 env:
   QT_INSTALL_VERSION: '5.14.2'
-  vcpkgResponseFile: '.github/workflows-support/response_file.txt'
+  vcpkgResponseFile: '${{ github.workspace }}/.github/workflows-support/response_file.txt'
   vcpkgGitCommitID: '28ab0b15cd7cdc1004cac9a28a5ecab198c161b9' # Updated 26/04/2020
 
 
@@ -117,6 +117,7 @@ jobs:
           vcpkgArguments: '@${{ env.vcpkgResponseFile }}'
           vcpkgTriplet: 'x64-windows'
           vcpkgGitCommitId: '${{ env.vcpkgGitCommitID }}'
+          vcpkgDirectory: '${{ runner.workspace }}/vcpkg'
           cleanAfterBuild: true
           appendedCacheKey: ${{ hashFiles(env.vcpkgResponseFile) }}
         if: matrix.arch == 'x64'
@@ -127,6 +128,7 @@ jobs:
           vcpkgArguments: '@${{ env.vcpkgResponseFile }}'
           vcpkgTriplet: 'x86-windows'
           vcpkgGitCommitId: '${{ env.vcpkgGitCommitID }}'
+          vcpkgDirectory: '${{ runner.workspace }}/vcpkg'
           cleanAfterBuild: true
           appendedCacheKey: ${{ hashFiles(env.vcpkgResponseFile) }}
         if: matrix.arch == 'Win32'
