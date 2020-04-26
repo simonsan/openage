@@ -1,11 +1,17 @@
 name: Windows-CI
 on: [push, pull_request]
+env:
+  QT_INSTALL_VERSION: '5.14.2'
+  vcpkgResponseFile: '.github/workflows-support/response_file.txt'
+  vcpkgGitCommitID: '28ab0b15cd7cdc1004cac9a28a5ecab198c161b9' # Updated 26/04/2020
+
 
 # TODO:
-# vcpkg upgrade after cache restore
-# Cache Qt
+# setup python action?
+# are debug binaries pre-installed?
+
+
 # Cache pip?
-# get clcache to run 
 # after cache restore and updated builds inititate new caching
 # Add cache lock against the workflow file package lockfile vcpkg
 # key: ${{ runner.OS }}-python-${{ hashFiles('.github/workflows/windows-ci.yml') }}
@@ -22,22 +28,33 @@ jobs:
     strategy:
       matrix:
         arch: [x64] #[Win32, x64]
+        qt64: [win64_msvc2017_64] # [win64_mingw73, win64_msvc2017_64]
+#       qt32: [win32_msvc2015, win32_mingw53] // For now we don't build on Win32
+        platforms: [x64] #[x64, x86]
     runs-on: windows-latest
     steps:
       - name: Set Environment variables
         uses: allenevans/set-env@v1.1.0
         with:
           PreferredToolArchitecture: '${{matrix.arch}}'
-          PATH: ${{ github.workspace }}\Python38-x64-dbg;${{ github.workspace }}\Python38-x64-dbg\Scripts;C:\Program Files\Mercurial\;C:\ProgramData\kind;C:\vcpkg;C:\vcpkg\installed\x64-windows\bin\;C:\cf-cli;C:\Program Files (x86)\NSIS\;C:\Program Files\Mercurial\;C:\Program Files\Boost\1.69.0;C:\Program Files\dotnet;C:\mysql-5.7.21-winx64\bin;C:\Program Files\Java\zulu-8-azure-jdk_8.40.0.25-8.0.222-win_x64\bin;C:\npm\prefix;C:\Rust\.cargo\bin;C:\hostedtoolcache\windows\Ruby\2.5.5\x64\bin;C:\Go1.12.7\bin;C:\Program Files\Git\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\ProgramData\Chocolatey\bin;C:\Program Files\Docker;C:\Program Files\PowerShell\6\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;c:\tools\php;C:\Program Files (x86)\Subversion\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\Program Files\OpenSSL\bin;C:\Users\runneradmin\.dotnet\tools;C:\Program Files\Microsoft SQL Server\Client SDK\O
+          PATH: ${{ github.workspace }}\Python38-${{matrix.platforms}}-dbg;${{ github.workspace }}\Python38-${{matrix.platforms}}-dbg\Scripts;C:\Program Files\Mercurial\;C:\ProgramData\kind;C:\vcpkg;C:\vcpkg\installed\x64-windows\bin\;C:\cf-cli;C:\Program Files (x86)\NSIS\;C:\Program Files\Mercurial\;C:\Program Files\Boost\1.69.0;C:\Program Files\dotnet;C:\mysql-5.7.21-winx64\bin;C:\Program Files\Java\zulu-8-azure-jdk_8.40.0.25-8.0.222-win_x64\bin;C:\npm\prefix;C:\Rust\.cargo\bin;C:\hostedtoolcache\windows\Ruby\2.5.5\x64\bin;C:\Go1.12.7\bin;C:\Program Files\Git\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\ProgramData\Chocolatey\bin;C:\Program Files\Docker;C:\Program Files\PowerShell\6\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;c:\tools\php;C:\Program Files (x86)\Subversion\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\Program Files\OpenSSL\bin;C:\Users\runneradmin\.dotnet\tools;C:\Program Files\Microsoft SQL Server\Client SDK\O
           overwrite: true
       - name: Checkout sources
-        uses: actions/checkout@v1.2
+        uses: actions/checkout@v2
       - name: Cache (Python)
         uses: actions/cache@v1.1.2
         id: cache-python
         with:
-          path: Python38-x86-dbg
-          key: ${{ runner.OS }}-python
+          path: Python38-${{matrix.platforms}}-dbg
+          key: ${{ runner.OS }}-python-
+      - name: Cache (Qt)
+        uses: actions/cache@v1.1.2
+        id: cache-qt
+        with:
+          path: ../Qt
+          key: ${{ runner.os }}-QtCache-${{ env.QT_INSTALL_VERSION }}
+      - name: Install latest CMake.
+        uses: lukka/get-cmake@latest
       - name: Prepare Environment (x64)
         run: |
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
@@ -94,47 +111,51 @@ jobs:
       - name: Install Qt (x64)
         uses: jurplel/install-qt-action@v2.6.2
         with:
-          version: '5.13.2'
-          arch: 'win64_msvc2017_64' 
+          host: 'windows'
+          version: '${{ env.QT_INSTALL_VERSION }}'
+          mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
+          arch: ${{ matrix.qt64 }}
+          cached: ${{ steps.cache-qt.outputs.cache-hit }}
         if: matrix.arch == 'x64'
       - name: Install Qt (x86)
         uses: jurplel/install-qt-action@v2.6.2
         with:
-          arch: 'win32_msvc2015'
+          host: 'windows'
+          version: '${{ env.QT_INSTALL_VERSION }}'
+          mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
+          arch: ${{ matrix.qt32 }}
+          cached: ${{ steps.cache-qt.outputs.cache-hit }}
         if: matrix.arch == 'Win32'
       - name: Install Vcpkg dependencies (x64)
-        run: vcpkg install dirent eigen3 fontconfig freetype harfbuzz libepoxy libogg libpng opus opusfile sdl2 sdl2-image
-        env:
-          VCPKG_DEFAULT_TRIPLET: 'x64-windows'
-        if: matrix.arch == 'x64' && steps.cache-vcpkg.outputs.cache-hit != 'true'
-      - name: Install Vcpkg dependencies (x86) (no-cache)
-        run: vcpkg install dirent eigen3 fontconfig freetype harfbuzz libepoxy libogg libpng opus opusfile sdl2 sdl2-image
-        env:         
-          VCPKG_DEFAULT_TRIPLET: 'x86-windows'
+        uses: lukka/run-vcpkg@v2.1
+        with:
+          vcpkgArguments: '${{ env.vcpkgResponseFile }}'
+          vcpkgTriplet: 'x64-windows'
+          vcpkgGitCommitId: '${{ env.vcpkgGitCommitID }}'
+          cleanAfterBuild: true
+          appendedCacheKey: ${{ hashFiles(env.vcpkgResponseFile) }}
+        if: matrix.arch == 'x64'
+      - name: Install Vcpkg dependencies (x86)
+        uses: lukka/run-vcpkg@v2.1
+        with:
+          vcpkgArguments: '${{ env.vcpkgResponseFile }}'
+          vcpkgTriplet: 'x86-windows'
+          vcpkgGitCommitId: '${{ env.vcpkgGitCommitID }}'
+          cleanAfterBuild: true
+          appendedCacheKey: ${{ hashFiles(env.vcpkgResponseFile) }}
         if: matrix.arch == 'Win32'
       - name: Install dependencies with Chocolatey
-        uses: crazy-max/ghaction-chocolatey@v1.0.1
+        uses: crazy-max/ghaction-chocolatey@v1.1.0
         with:
           args: install winflexbison3
+
       - name: Generate build files & run build procedure (x64)
-        env: 
+        uses: lukka/run-cmake@v2.3
+        env:
           CMAKE_VERBOSE_MAKEFILE: TRUE
+        with:
+          useVcpkgToolchainFile: true
+          cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
+          buildDirectory: '${{ runner.workspace }}/build/'
+          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_PREFIX_PATH=${Qt5_DIR} -DDOWNLOAD_NYAN=YES -G "Visual Studio 16 2019"  -A "${{matrix.arch}}" -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
         if: matrix.arch == 'x64'
-        run: |
-          MD build
-          CD build
-          set PATH=%GITHUB_WORKSPACE%\Python38-x64-dbg;%GITHUB_WORKSPACE%\Python38-x64-dbg\Scripts;C:\Program Files\Mercurial\;C:\ProgramData\kind;C:\vcpkg;C:\vcpkg\installed\x64-windows\bin\;C:\cf-cli;C:\Program Files (x86)\NSIS\;C:\Program Files\Mercurial\;C:\Program Files\Boost\1.69.0;C:\Program Files\dotnet;C:\mysql-5.7.21-winx64\bin;C:\Program Files\Java\zulu-8-azure-jdk_8.40.0.25-8.0.222-win_x64\bin;C:\npm\prefix;C:\Rust\.cargo\bin;C:\hostedtoolcache\windows\Ruby\2.5.5\x64\bin;C:\Go1.12.7\bin;C:\Program Files\Git\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\ProgramData\Chocolatey\bin;C:\Program Files\Docker;C:\Program Files\PowerShell\6\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;c:\tools\php;C:\Program Files (x86)\Subversion\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\Program Files\OpenSSL\bin;C:\Users\runneradmin\.dotnet\tools;C:\Program Files\Microsoft SQL Server\Client SDK\O
-          cmake -DCMAKE_TOOLCHAIN_FILE=%VCPKG_INSTALLATION_ROOT%/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH=%Qt5_Dir% -DDOWNLOAD_NYAN=YES -G "Visual Studio 16 2019" -A "${{matrix.arch}}" -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_CXX_COMPILER="clcache" ..
-          cmake --build . --config RelWithDebInfo -- /nologo /m /v:m
-        shell: cmd
-      - name: Generate build files & run build procedure (x86)
-        env: 
-          CMAKE_VERBOSE_MAKEFILE: TRUE
-        if: matrix.arch == 'Win32'
-        run: |
-          MD build
-          CD build
-          set PATH=%GITHUB_WORKSPACE%\Python38-x86-dbg;%GITHUB_WORKSPACE%\Python38-x86-dbg\Scripts;C:\Program Files\Mercurial\;C:\ProgramData\kind;C:\vcpkg;C:\vcpkg\installed\x86-windows\bin\;C:\cf-cli;C:\Program Files (x86)\NSIS\;C:\Program Files\Mercurial\;C:\Program Files\Boost\1.69.0;C:\Program Files\dotnet;C:\mysql-5.7.21-winx64\bin;C:\Program Files\Java\zulu-8-azure-jdk_8.40.0.25-8.0.222-win_x64\bin;C:\npm\prefix;C:\Rust\.cargo\bin;C:\hostedtoolcache\windows\Ruby\2.5.5\x64\bin;C:\Go1.12.7\bin;C:\Program Files\Git\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\wbin;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\windows\System32\OpenSSH\;C:\ProgramData\Chocolatey\bin;C:\Program Files\Docker;C:\Program Files\PowerShell\6\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files\Microsoft Service Fabric\bin\Fabric\Fabric.Code;C:\Program Files\Microsoft SDKs\Service Fabric\Tools\ServiceFabricLocalClusterManager;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;c:\tools\php;C:\Program Files (x86)\Subversion\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\lib\maven\apache-maven-3.6.2\bin;C:\Program Files\CMake\bin;C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin;C:\Program Files\OpenSSL\bin;C:\Users\runneradmin\.dotnet\tools;C:\Program Files\Microsoft SQL Server\Client SDK\O
-          cmake -DCMAKE_TOOLCHAIN_FILE=%VCPKG_INSTALLATION_ROOT%/scripts/buildsystems/vcpkg.cmake -DPYTHON=%GITHUB_WORKSPACE%\Python38-x86-dbg\python.exe -DPYTHON_LIBRARIES=%GITHUB_WORKSPACE%\Python38-x86-dbg\ -DCMAKE_PREFIX_PATH=%Qt5_Dir% -G "Visual Studio 16 2019" -A "${{matrix.arch}}" -DDOWNLOAD_NYAN=YES -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
-          cmake --build . --config RelWithDebInfo -- /nologo /m /v:m
-        shell: cmd
