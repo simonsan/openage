@@ -3,7 +3,8 @@ on: [push, pull_request]
 env:
   QT_INSTALL_VERSION: '5.14.2'
   vcpkgResponseFile: '${{ github.workspace }}\.github\workflows-support\response_file.txt'
-  vcpkgGitCommitID: '28ab0b15cd7cdc1004cac9a28a5ecab198c161b9' # Updated 26/04/2020
+  vcpkgGitCommitID: '28ab0b15cd7cdc1004cac9a28a5ecab198c161b9'      # Updated 26/04/2020
+  nyanGitCommitID: ''
 
 jobs:
    windows-msvc:
@@ -149,41 +150,41 @@ jobs:
           Set-PSDebug -Trace 0
         shell: pwsh
 
-      # TODO: Include NYAN_CLONE_VERSION to clone special tag/commid ID
-      - name: Clone nyan repository
-        run: |
-          git clone https://github.com/SFTtech/nyan.git ${{ runner.workspace }}\deps\nyan
-
-      - name: Generate nyan build files & run nyan build procedure (x64)
-        uses: lukka/run-cmake@v2.3
-        env:
-          CMAKE_VERBOSE_MAKEFILE: TRUE
-          PATH: '${{ env.PYTHON_INSTALL_DIR }}; ${{ env.PYTHON_INSTALL_DIR }}\Scripts; C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\amd64; ${env:PATH}'
-        with:
-          cmakeSettingsJsonPath: CMakeListsTxtAdvanced
-          cmakeListsTxtPath: '${{ runner.workspace }}\deps\nyan\CMakeLists.txt'
-          buildDirectory: '${{ runner.workspace }}\deps\nyan\build\'
-          cmakeAppendedArgs: '-DCMAKE_TOOLCHAIN_FILE=${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake -DCMAKE_BUILD_TYPE=Debug -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
-          buildWithCMake: true
-          buildWithCMakeArgs: '--config Debug -- -j2 /nologo /m /v:m'
-
-      - name: Show directory tree (DEBUG)
-        run: Get-ChildItem -Path "${{ runner.workspace }}\deps\nyan\build\"
-        shell: pwsh
-
-#     TODO: Clone nyan in CMake
-#      - name: Generate build files & run build procedure (x64)
+#      # TODO: Include NYAN_CLONE_VERSION to clone special tag/commid ID
+#      - name: Clone nyan repository
+#        run: |
+#          git clone https://github.com/SFTtech/nyan.git ${{ runner.workspace }}\deps\nyan
+#
+#      - name: Generate nyan build files & run nyan build procedure (x64)
 #        uses: lukka/run-cmake@v2.3
 #        env:
 #          CMAKE_VERBOSE_MAKEFILE: TRUE
 #          PATH: '${{ env.PYTHON_INSTALL_DIR }}; ${{ env.PYTHON_INSTALL_DIR }}\Scripts; C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\amd64; ${env:PATH}'
 #        with:
 #          cmakeSettingsJsonPath: CMakeListsTxtAdvanced
-#          cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
-#          buildDirectory: '${{ runner.workspace }}\build-openage'
-#          cmakeAppendedArgs: '-DCMAKE_TOOLCHAIN_FILE=${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake -DCMAKE_BUILD_TYPE=Debug -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DPYTHON_DIR="${{ env.PYTHON_INSTALL_DIR }}\"  -DCMAKE_PREFIX_PATH=${Qt5_DIR} -DFORCE_DOWNLOAD_NYAN=YES -DNYAN_CLONE_VERSION="03a996994b87803b5a8ff6ed0e85ab730163aa2d" -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
+#          cmakeListsTxtPath: '${{ runner.workspace }}\deps\nyan\CMakeLists.txt'
+#          buildDirectory: '${{ runner.workspace }}\deps\nyan\build\'
+#          cmakeAppendedArgs: '-DCMAKE_TOOLCHAIN_FILE=${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake -DCMAKE_BUILD_TYPE=Debug -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
 #          buildWithCMake: true
 #          buildWithCMakeArgs: '--config Debug -- -j2 /nologo /m /v:m'
+#
+#      - name: Show directory tree (DEBUG)
+#        run: Get-ChildItem -Path "${{ runner.workspace }}\deps\nyan\build\"
+#        shell: pwsh
+
+#     TODO: Clone nyan in CMake
+      - name: Generate build files & run build procedure (x64)
+        uses: lukka/run-cmake@v2.3
+        env:
+          CMAKE_VERBOSE_MAKEFILE: TRUE
+          PATH: '${{ env.PYTHON_INSTALL_DIR }}; ${{ env.PYTHON_INSTALL_DIR }}\Scripts; C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\amd64; ${env:PATH}'
+        with:
+          cmakeSettingsJsonPath: CMakeListsTxtAdvanced
+          cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
+          buildDirectory: '${{ runner.workspace }}\build-openage'
+          cmakeAppendedArgs: '-DCMAKE_TOOLCHAIN_FILE=${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake -DCMAKE_BUILD_TYPE=Debug -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DPYTHON_DIR="${{ env.PYTHON_INSTALL_DIR }}\"  -DCMAKE_PREFIX_PATH=${Qt5_DIR} -DFORCE_DOWNLOAD_NYAN=YES -DNYAN_CLONE_VERSION="03a996994b87803b5a8ff6ed0e85ab730163aa2d" -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
+          buildWithCMake: true
+          buildWithCMakeArgs: '--config Debug -- -j2 /nologo /m /v:m'
 
 #      - name: Run tests
 #        run: |
