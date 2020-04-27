@@ -37,7 +37,7 @@ jobs:
         id: cache-vcpkg
         with:
          path: '${{ runner.workspace }}\deps\vcpkg'
-         key: '${{ runner.os }}-VcpkgCache-CommitHASH${{ env.vcpkgGitCommitID }}-DepHASH${{ hashFiles(".github/workflows-support/response_file.txt") }}'
+         key: ${{ runner.os }}-VcpkgCache-CommitHASH${{ env.vcpkgGitCommitID }}-DepHASH${{ hashFiles('.github/workflows-support/response_file.txt') }}
 
       - name: Cache (Qt)
         uses: actions/cache@v1.1.2
