@@ -53,12 +53,13 @@ jobs:
           path: '${{ env.PYTHON_INSTALL_DIR }}\'
           key: '${{ runner.os }}-PythonCache-v${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg'
 
+      # TODO: Set hashFiles to: .github/workflows/windows-ci.yml
       - name: Cache (Choco)
         uses: actions/cache@v1.1.2
         id: cache-choco
         with:
           path: 'C:\ProgramData\chocolatey\lib\winflexbison3'
-          key: ${{ runner.os }}-ChocoCache-${{ hashFiles('.github/workflows/windows-ci.yml') }}
+          key: ${{ runner.os }}-ChocoCache-${{ hashFiles('.github/workflows-support/response_file.txt') }}
 
       # Pulling in the minimum dependency here
       - name: Install pinned CMake Version
