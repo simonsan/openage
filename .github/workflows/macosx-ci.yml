@@ -1,5 +1,5 @@
 name: MacOSX-CI
-on: [push, pull_request]
+on: [pull_request]
 env: 
   QT_INSTALL_VERSION: '5.13.2'
   CCACHE_COMPRESS: 1
