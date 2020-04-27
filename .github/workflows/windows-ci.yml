@@ -54,7 +54,7 @@ jobs:
           key: '${{ runner.os }}-PythonCache-v${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg'
 
       # Pulling in the minimum dependency here
-      - name: Install latest CMake.
+      - name: Install pinned CMake Version
         uses: lukka/get-cmake@v3.17.1
 
       - name: Prepare Environment
