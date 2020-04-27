@@ -51,6 +51,13 @@ jobs:
           path: 'C:\ProgramData\chocolatey\lib\winflexbison3'
           key: ${{ runner.os }}-ChocoCache-${{ hashFiles('.github/workflows-support/response_file.txt') }}
 
+      - name: Cache (Nyan)
+        uses: actions/cache@v1.1.2
+        id: cache-nyan
+        with:
+          path: '${{ runner.workspace }}\deps\nyan\build\'
+          key: ${{ runner.os }}-ChocoCache-${{ env.nyanGitCommitID }
+
       # Pinned CMake here
       - name: Install pinned CMake Version
         uses: lukka/get-cmake@v3.17.1
@@ -155,6 +162,7 @@ jobs:
           git clone https://github.com/SFTtech/nyan.git ${{ runner.workspace }}\deps\nyan
           cd ${{ runner.workspace }}\deps\nyan
           git reset --hard ${{ env.nyanGitCommitID }}
+        if: steps.cache-nyan.outputs.cache-hit != 'true'
 
       - name: Generate nyan build files & run nyan build procedure (x64)
         uses: lukka/run-cmake@v2.3
@@ -169,9 +177,7 @@ jobs:
           cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=Debug -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
           buildWithCMake: true
           buildWithCMakeArgs: '--config Debug -- /nologo /m /v:m'
-
-#         -DCMAKE_TOOLCHAIN_FILE="${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake"
-
+        if: steps.cache-nyan.outputs.cache-hit != 'true'
 
       - name: Show directory tree (DEBUG)
         run: Get-ChildItem -Path "${{ runner.workspace }}\deps\nyan\build\"
@@ -191,6 +197,7 @@ jobs:
 #          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE="Debug" -G "Visual Studio 16 2019" -A "${{ matrix.arch }}" -DPYTHON_DIR="${{ env.PYTHON_INSTALL_DIR }}\" -DCMAKE_PREFIX_PATH="${Qt5_DIR}" -DFORCE_DOWNLOAD_NYAN="YES" -DNYAN_CLONE_VERSION="${{ env.nyanGitCommitID }}" -DFLEX_EXECUTABLE="C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe"'
 #          buildWithCMake: true
 #          buildWithCMakeArgs: '--config Debug -- /nologo /m /v:m'
+#         -DCMAKE_TOOLCHAIN_FILE="${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake"
 
 #      - name: Run tests
 #        run: |
