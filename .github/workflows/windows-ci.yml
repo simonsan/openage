@@ -65,6 +65,14 @@ jobs:
           path: '${{ runner.workspace }}\deps\nyan\'
           key: ${{ runner.os }}-NyanCache-${{ env.nyanGitCommitID }}
 
+      - name: Checkout nyan repository
+        uses: actions/checkout@v2
+        with:
+          repository: SFTtech/nyan
+          path: ${{ runner.workspace }}\deps\nyan
+          ref: '${{ env.nyanGitCommitID }}'
+        if: steps.cache-nyan.outputs.cache-hit != 'true'
+
       # Pinned CMake here
       - name: Install pinned CMake Version
         uses: lukka/get-cmake@v3.17.1
@@ -164,12 +172,12 @@ jobs:
 #          Set-PSDebug -Trace 0
 #        shell: pwsh
 
-      - name: Clone nyan repository
-        run: |
-          git clone https://github.com/SFTtech/nyan.git ${{ runner.workspace }}\deps\nyan
-          cd ${{ runner.workspace }}\deps\nyan
-          git reset --hard ${{ env.nyanGitCommitID }}
-        if: steps.cache-nyan.outputs.cache-hit != 'true'
+#      - name: Clone nyan repository
+#        run: |
+#          git clone https://github.com/SFTtech/nyan.git ${{ runner.workspace }}\deps\nyan
+#          cd ${{ runner.workspace }}\deps\nyan
+#          git reset --hard ${{ env.nyanGitCommitID }}
+#        if: steps.cache-nyan.outputs.cache-hit != 'true'
 
       - name: Generate nyan build files & run nyan build procedure (x64)
         uses: lukka/run-cmake@v2.3
