@@ -114,7 +114,7 @@ jobs:
 
       - name: Install Python debug (x64) # we need debug binaries and precompiled standard libraries
         run: |
-          Start-Process "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" -ArgumentList "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir=${{ env.PYTHON_INSTALL_DIR }}\"
+          Start-Process -FilePath "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" -ArgumentList "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir=${{ env.PYTHON_INSTALL_DIR }}\" -Verb runas -Wait
         if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
         shell: pwsh
 
