@@ -82,6 +82,17 @@ jobs:
 #         file-name: 'python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe'
 #         location: '${{ runner.workspace }}\dl\'
 #        if: steps.cache-python.outputs.cache-hit != 'true'
+#
+#      - name: Print the file path
+#        run: echo "The file was downloaded to ${{ steps.download-python.outputs.file-path }}"
+#        shell: cmd
+#        if: steps.cache-python.outputs.cache-hit != 'true'
+#
+#      - name: Install Python debug # we need debug binaries and precompiled standard libraries
+#        run: |
+#          ${{ steps.download-python.outputs.file-path }} /quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir="${{ env.PYTHON_INSTALL_DIR }}"
+#        shell: cmd
+#        if: steps.cache-python.outputs.cache-hit != 'true'
 
       - name: Download Python (x64) # TODO: Not working for x86, adopt to empty matrix.python-platform
         run: |
@@ -91,21 +102,9 @@ jobs:
 
       - name: Uninstall/Install Python debug (x64) # we need debug binaries and precompiled standard libraries
         run: |
-          ${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe /quiet /uninstall
-          ${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe /quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir='${{ env.PYTHON_INSTALL_DIR }}'
+          START "" /wait "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir='${{ env.PYTHON_INSTALL_DIR }}'"
         if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
         shell: cmd
-
-      - name: Print the file path
-        run: echo "The file was downloaded to ${{ steps.download-python.outputs.file-path }}"
-        shell: cmd
-        if: steps.cache-python.outputs.cache-hit != 'true'
-
-      - name: Install Python debug # we need debug binaries and precompiled standard libraries
-        run: |
-          ${{ steps.download-python.outputs.file-path }} /quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir="${{ env.PYTHON_INSTALL_DIR }}"
-        shell: cmd
-        if: steps.cache-python.outputs.cache-hit != 'true'
 
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
