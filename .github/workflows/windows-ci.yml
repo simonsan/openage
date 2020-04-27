@@ -176,6 +176,6 @@ jobs:
 #        run: |
 #          ${{ runner.workspace }}/build-openage/RelWithDebInfo/
 
-      - name: Show directory tree (DEBUG)
-        run: Get-ChildItem -Path "${{ runner.workspace }}\build-openage"
-        shell: pwsh
+#      - name: Show directory tree (DEBUG)
+#        run: Get-ChildItem -Path "${{ runner.workspace }}\build-openage"
+#        shell: pwsh
