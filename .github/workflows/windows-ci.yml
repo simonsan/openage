@@ -55,7 +55,7 @@ jobs:
 
       # Pulling in the minimum dependency here
       - name: Install latest CMake.
-        uses: lukka/get-cmake@v3.12.4
+        uses: lukka/get-cmake@v3.17.1
 
       - name: Prepare Environment
         run: |
