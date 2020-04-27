@@ -56,7 +56,7 @@ jobs:
         id: cache-nyan
         with:
           path: '${{ runner.workspace }}\deps\nyan\build\'
-          key: ${{ runner.os }}-ChocoCache-${{ env.nyanGitCommitID }
+          key: ${{ runner.os }}-ChocoCache-${{ env.nyanGitCommitID }}
 
       # Pinned CMake here
       - name: Install pinned CMake Version
