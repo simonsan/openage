@@ -93,9 +93,10 @@ jobs:
 
       - name: Uninstall/Install Python debug # we need debug binaries and precompiled standard libraries
         run: |
-#          ${{ steps.download-python.outputs.file-path }} /quiet /uninstall
           ${{ steps.download-python.outputs.file-path }} /quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir="${{ runner.temp }}\Python${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg\"
         shell: cmd
+
+# ^^ #          ${{ steps.download-python.outputs.file-path }} /quiet /uninstall
 
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
