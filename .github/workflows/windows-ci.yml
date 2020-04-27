@@ -53,6 +53,13 @@ jobs:
           path: '${{ env.PYTHON_INSTALL_DIR }}\'
           key: '${{ runner.os }}-PythonCache-v${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg'
 
+      - name: Cache (Choco)
+        uses: actions/cache@v1.1.2
+        id: cache-choco
+        with:
+          path: 'C:\ProgramData\chocolatey\'
+          key: '${{ runner.os }}-ChocoCache-${{ hashFiles(" .github/workflows/windows-ci.yml") }}'
+
       # Pulling in the minimum dependency here
       - name: Install pinned CMake Version
         uses: lukka/get-cmake@v3.17.1
@@ -156,6 +163,7 @@ jobs:
         uses: crazy-max/ghaction-chocolatey@v1.1.0
         with:
           args: install winflexbison3
+        if: ${{ steps.cache-choco.outputs.cache-hit }} != true
 
 #      - name: Generate build files & run build procedure (x64)
 #        uses: lukka/run-cmake@v2.3
