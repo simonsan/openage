@@ -5,6 +5,7 @@ env:
   vcpkgResponseFile: '${{ github.workspace }}\.github\workflows-support\response_file.txt'
   vcpkgGitCommitID: '28ab0b15cd7cdc1004cac9a28a5ecab198c161b9'      # Updated 26/04/2020
   nyanGitCommitID: '03a996994b87803b5a8ff6ed0e85ab730163aa2d'       # Updated 27/04/2020
+  CI_CFG_VERSION: 'github-0.1.0-dev'
 
 jobs:
    windows-msvc:
@@ -197,7 +198,7 @@ jobs:
           buildDirectory: '${{ runner.workspace }}\build-openage\'
           cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=Debug -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DPYTHON_DIR=${{ env.PYTHON_INSTALL_DIR }}\ -DCMAKE_PREFIX_PATH=${Qt5_DIR} -Dnyan_DIR=${{ runner.workspace }}\deps\nyan\build\ -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
           buildWithCMake: true
-          buildWithCMakeArgs: '--config Debug -- /nologo /m /v:m'
+          buildWithCMakeArgs: '--config Debug -- /nologo /m /v:diag'
 
 #      - name: Run tests
 #        run: |
