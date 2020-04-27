@@ -159,7 +159,7 @@ jobs:
 #        uses: lukka/run-cmake@v2.3
 #        env:
 #          CMAKE_VERBOSE_MAKEFILE: TRUE
-#          PATH: '${{ env.PYTHON_INSTALL_DIR }}; ${{ env.PYTHON_INSTALL_DIR }}\Scripts; C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\amd64; ${env:PATH}'
+#          PATH: '${{ env.PYTHON_INSTALL_DIR }}; ${{ env.PYTHON_INSTALL_DIR }}\Scripts; ${env:PATH}'
 #        with:
 #          cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
 #          cmakeListsTxtPath: '${{ runner.workspace }}\deps\nyan\CMakeLists.txt'
@@ -177,7 +177,7 @@ jobs:
         uses: lukka/run-cmake@v2.3
         env:
           CMAKE_VERBOSE_MAKEFILE: TRUE
-          PATH: '${{ env.PYTHON_INSTALL_DIR }}; ${{ env.PYTHON_INSTALL_DIR }}\Scripts; C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\amd64; ${env:PATH}'
+          PATH: '${{ env.PYTHON_INSTALL_DIR }}; ${{ env.PYTHON_INSTALL_DIR }}\Scripts; ${env:PATH}'
         with:
           cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
           cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
