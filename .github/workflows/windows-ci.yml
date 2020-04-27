@@ -149,13 +149,13 @@ jobs:
           args: install winflexbison3
         if: steps.cache-choco.outputs.cache-hit != 'true'
 
-      - name:  Show environment settings
-        run: |
-          Set-PSDebug -Trace 1
-          systeminfo
-          gci env:
-          Set-PSDebug -Trace 0
-        shell: pwsh
+#      - name:  Show environment settings
+#        run: |
+#          Set-PSDebug -Trace 1
+#          systeminfo
+#          gci env:
+#          Set-PSDebug -Trace 0
+#        shell: pwsh
 
       - name: Clone nyan repository
         run: |
@@ -179,9 +179,9 @@ jobs:
           buildWithCMakeArgs: '--config Debug -- /nologo /m /v:m'
         if: steps.cache-nyan.outputs.cache-hit != 'true'
 
-      - name: Show directory tree (DEBUG)
-        run: Get-ChildItem -Path "${{ runner.workspace }}\deps\nyan\build\"
-        shell: pwsh
+#      - name: Show directory tree (DEBUG)
+#        run: Get-ChildItem -Path "${{ runner.workspace }}\deps\nyan\build\"
+#        shell: pwsh
 
 #     TODO: Clone nyan in CMake
 #         -DCMAKE_TOOLCHAIN_FILE="${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake"
@@ -194,16 +194,15 @@ jobs:
           useVcpkgToolchainFile: True
           cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
           cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
-          buildDirectory: '${{ runner.workspace }}\build-openage'
-          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE="Debug" -G "Visual Studio 16 2019" -A "${{ matrix.arch }}" -DPYTHON_DIR="${{ env.PYTHON_INSTALL_DIR }}\" -DCMAKE_PREFIX_PATH="${Qt5_DIR}" -Dnyan_DIR="${{ runner.workspace }}\deps\nyan\build\" -DFLEX_EXECUTABLE="C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe"'
+          buildDirectory: '${{ runner.workspace }}\build-openage\'
+          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=Debug -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DPYTHON_DIR=${{ env.PYTHON_INSTALL_DIR }}\ -DCMAKE_PREFIX_PATH=${Qt5_DIR} -Dnyan_DIR=${{ runner.workspace }}\deps\nyan\build\ -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
           buildWithCMake: true
           buildWithCMakeArgs: '--config Debug -- /nologo /m /v:m'
-
 
 #      - name: Run tests
 #        run: |
 #          ${{ runner.workspace }}/build-openage/RelWithDebInfo/
 
-#      - name: Show directory tree (DEBUG)
-#        run: Get-ChildItem -Path "${{ runner.workspace }}\build-openage"
-#        shell: pwsh
+      - name: Show directory tree (DEBUG)
+        run: Get-ChildItem -Path "${{ runner.workspace }}\build-openage"
+        shell: pwsh
