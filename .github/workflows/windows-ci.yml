@@ -150,11 +150,12 @@ jobs:
           Set-PSDebug -Trace 0
         shell: pwsh
 
-#      # TODO: Include NYAN_CLONE_VERSION to clone special tag/commid ID
-#      - name: Clone nyan repository
-#        run: |
-#          git clone https://github.com/SFTtech/nyan.git ${{ runner.workspace }}\deps\nyan
-#
+      - name: Clone nyan repository
+        run: |
+          git clone https://github.com/SFTtech/nyan.git ${{ runner.workspace }}\deps\nyan
+          cd ${{ runner.workspace }}\deps\nyan
+          git reset --hard ${{ env.nyanGitCommitID }}
+
       - name: Generate nyan build files & run nyan build procedure (x64)
         uses: lukka/run-cmake@v2.3
         env:
