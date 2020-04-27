@@ -109,15 +109,15 @@ jobs:
 
       - name: Upgrade Python pip
         run: |
-          python -m pip install --upgrade pip
+          ${{ env.PYTHON_INSTALL_DIR }}\python.exe -m pip install --upgrade pip
         shell: cmd
 
       - name: Install Python dependencies
-        run: pip install -r ".github/workflows-support/requirements.txt"
+        run: ${{ env.PYTHON_INSTALL_DIR }}\Scripts\pip.exe install -r ".github/workflows-support/requirements.txt"
         if: steps.cache-python.outputs.cache-hit != 'true'
 
       - name: Upgrade Python dependencies
-        run: pip install --upgrade -r ".github/workflows-support/requirements.txt"
+        run: ${{ env.PYTHON_INSTALL_DIR }}\Scripts\pip.exe install --upgrade -r ".github/workflows-support/requirements.txt"
         if: steps.cache-python.outputs.cache-hit == 'true'
 
       - name: Install Qt (x64)
