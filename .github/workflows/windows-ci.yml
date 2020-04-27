@@ -6,9 +6,8 @@ env:
   vcpkgGitCommitID: '28ab0b15cd7cdc1004cac9a28a5ecab198c161b9' # Updated 26/04/2020
 
 # TODO:
-# setup python action? no debug binaries pre-installed => waiting for upstream issue
+# setup python action? no debug binaries pre-installed => waiting for upstream issues
 # caches in general in this workflow
-# VCPKG Dirs: C:\vcpkg;C:\vcpkg\installed\x64-windows\bin\
 
 jobs:
    windows-msvc:
@@ -89,28 +88,10 @@ jobs:
          location: '${{ runner.workspace }}\dl\'
         if: steps.cache-python.outputs.cache-hit != 'true'
 
-      - name: Print the file path
-        run: echo "The file was downloaded to ${{ steps.download-python.outputs.file-path }}"
-        shell: cmd
-        if: steps.cache-python.outputs.cache-hit != 'true'
-#
-#      - name: Install Python debug # we need debug binaries and precompiled standard libraries
-#        run: |
-#          ${{ steps.download-python.outputs.file-path }} /quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir="${{ env.PYTHON_INSTALL_DIR }}\"
+#      - name: Print the file path
+#        run: echo "The file was downloaded to ${{ steps.download-python.outputs.file-path }}"
 #        shell: cmd
 #        if: steps.cache-python.outputs.cache-hit != 'true'
-
-#      - name: Install Python debug (x64) # we need debug binaries and precompiled standard libraries
-#        run: |
-#          CALL "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir='${{ env.PYTHON_INSTALL_DIR }}\'"
-#        if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
-#        shell: cmd
-
-#      - name: Download Python (x64) # TODO: Not working for x86, adopt to empty matrix.python-platform
-#        run: |
-#          IF NOT EXIST "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" curl --create-dirs -o "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" "https://www.python.org/ftp/python/${{ matrix.python-version }}/python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe"
-#        if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
-#        shell: cmd
 
       - name: Install Python debug (x64) # we need debug binaries and precompiled standard libraries
         run: |
@@ -118,9 +99,9 @@ jobs:
         if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
         shell: pwsh
 
-      - name: Show directory tree (DEBUG)
-        run: Get-ChildItem -Path "${{ env.PYTHON_INSTALL_DIR }}\"
-        shell: pwsh
+#      - name: Show directory tree (DEBUG)
+#        run: Get-ChildItem -Path "${{ env.PYTHON_INSTALL_DIR }}\"
+#        shell: pwsh
 
       - name: Display Python version
         run: ${{ env.PYTHON_INSTALL_DIR }}\python.exe -c "import sys; print(sys.version)"
@@ -181,9 +162,17 @@ jobs:
           CMAKE_VERBOSE_MAKEFILE: TRUE
         with:
           useVcpkgToolchainFile: true
-          cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
-          buildDirectory: '${{ runner.workspace }}/build-openage'
-          cmakeAppendedArgs: '-DPYTHON=${{ env.PYTHON_INSTALL_DIR }} -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_PREFIX_PATH=${Qt5_DIR} -DDOWNLOAD_NYAN=YES -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
+          cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
+          buildDirectory: '${{ runner.workspace }}\build-openage'
+          cmakeAppendedArgs: '-DPYTHON="${{ env.PYTHON_INSTALL_DIR }}\python.exe" -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_PREFIX_PATH=${Qt5_DIR} -DDOWNLOAD_NYAN=YES -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
           cmakeGenerator: 'VS16Win${{ matrix.env-bit }}'
           buildWithCMake: true
           buildWithCMakeArgs: '--config RelWithDebInfo -- -j2 /nologo /m /v:m'
+
+#      - name: Run tests
+#        run: |
+#          ${{ runner.workspace }}/build-openage/RelWithDebInfo/
+
+      - name: Show directory tree (DEBUG)
+        run: Get-ChildItem -Path "${{ runner.workspace }}\build-openage"
+        shell: pwsh
