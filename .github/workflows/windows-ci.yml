@@ -57,7 +57,7 @@ jobs:
         uses: actions/cache@v1.1.2
         id: cache-choco
         with:
-          path: 'C:\ProgramData\chocolatey\'
+          path: 'C:\ProgramData\chocolatey\lib\winflexbison3'
           key: ${{ runner.os }}-ChocoCache-${{ hashFiles('.github/workflows/windows-ci.yml') }}
 
       # Pulling in the minimum dependency here
