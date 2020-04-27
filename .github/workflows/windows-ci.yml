@@ -81,19 +81,19 @@ jobs:
 #        with:
 #          python-version: ${{ matrix.python-version }}
 
-#      - name: Download Python
-#        uses: carlosperate/download-file-action@v1.0.3
-#        id: download-python
-#        with:
-#         file-url: 'https://www.python.org/ftp/python/${{ matrix.python-version }}/python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe'
-#         file-name: 'python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe'
-#         location: '${{ runner.workspace }}\dl\'
-#        if: steps.cache-python.outputs.cache-hit != 'true'
-#
-#      - name: Print the file path
-#        run: echo "The file was downloaded to ${{ steps.download-python.outputs.file-path }}"
-#        shell: cmd
-#        if: steps.cache-python.outputs.cache-hit != 'true'
+      - name: Download Python
+        uses: carlosperate/download-file-action@v1.0.3
+        id: download-python
+        with:
+         file-url: 'https://www.python.org/ftp/python/${{ matrix.python-version }}/python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe'
+         file-name: 'python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe'
+         location: '${{ runner.workspace }}\dl\'
+        if: steps.cache-python.outputs.cache-hit != 'true'
+
+      - name: Print the file path
+        run: echo "The file was downloaded to ${{ steps.download-python.outputs.file-path }}"
+        shell: cmd
+        if: steps.cache-python.outputs.cache-hit != 'true'
 #
 #      - name: Install Python debug # we need debug binaries and precompiled standard libraries
 #        run: |
@@ -107,15 +107,15 @@ jobs:
 #        if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
 #        shell: cmd
 
-      - name: Download Python (x64) # TODO: Not working for x86, adopt to empty matrix.python-platform
-        run: |
-          IF NOT EXIST "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" curl --create-dirs -o "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" "https://www.python.org/ftp/python/${{ matrix.python-version }}/python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe"
-        if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
-        shell: cmd
+#      - name: Download Python (x64) # TODO: Not working for x86, adopt to empty matrix.python-platform
+#        run: |
+#          IF NOT EXIST "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" curl --create-dirs -o "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" "https://www.python.org/ftp/python/${{ matrix.python-version }}/python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe"
+#        if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
+#        shell: cmd
 
       - name: Install Python debug (x64) # we need debug binaries and precompiled standard libraries
         run: |
-          Start-Process "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" -ArgumentList "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir=${{ env.PYTHON_INSTALL_DIR }}"
+          Start-Process "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" -ArgumentList "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir=${{ env.PYTHON_INSTALL_DIR }}"
         if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
         shell: pwsh
 
