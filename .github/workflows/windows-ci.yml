@@ -182,7 +182,7 @@ jobs:
           cmakeSettingsJsonPath: CMakeListsTxtAdvanced
           cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
           buildDirectory: '${{ runner.workspace }}\build-openage'
-          cmakeAppendedArgs: '-DCMAKE_TOOLCHAIN_FILE=${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake -DCMAKE_BUILD_TYPE=Debug -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DPYTHON_DIR="${{ env.PYTHON_INSTALL_DIR }}\"  -DCMAKE_PREFIX_PATH=${Qt5_DIR} -DFORCE_DOWNLOAD_NYAN=YES -DNYAN_CLONE_VERSION="03a996994b87803b5a8ff6ed0e85ab730163aa2d" -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
+          cmakeAppendedArgs: '-DCMAKE_TOOLCHAIN_FILE=${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake -DCMAKE_BUILD_TYPE=Debug -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DPYTHON_DIR="${{ env.PYTHON_INSTALL_DIR }}\" -DCMAKE_PREFIX_PATH=${Qt5_DIR} -DFORCE_DOWNLOAD_NYAN=YES -DNYAN_CLONE_VERSION="03a996994b87803b5a8ff6ed0e85ab730163aa2d" -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
           buildWithCMake: true
           buildWithCMakeArgs: '--config Debug -- -j2 /nologo /m /v:m'
 
