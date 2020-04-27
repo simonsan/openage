@@ -118,6 +118,10 @@ jobs:
         if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
         shell: pwsh
 
+      - name: Show directory tree (DEBUG)
+        run: Get-ChildItem -Path "${{ env.PYTHON_INSTALL_DIR }}\"
+        shell: pwsh
+
       - name: Display Python version
         run: ${{ env.PYTHON_INSTALL_DIR }}\python.exe -c "import sys; print(sys.version)"
         shell: cmd
