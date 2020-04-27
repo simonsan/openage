@@ -47,6 +47,14 @@ jobs:
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars${{ matrix.env-bit }}.bat"
         shell: cmd
 
+      - name:  Show environment settings
+        run: |
+          Set-PSDebug -Trace 1
+          systeminfo
+          gci env:
+          Set-PSDebug -Trace 0
+        shell: pwsh
+
 #       TODO: Waiting for Upstream Issue: https://github.com/actions/setup-python/issues/86
 #       To pull in debug binaries and stdlib
 #       TODO: Added another Upstream issue: https://github.com/actions/virtual-environments/issues/786
