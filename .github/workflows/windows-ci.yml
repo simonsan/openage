@@ -23,7 +23,7 @@ jobs:
         python-platform: [amd64] #[amd64, ""]
     runs-on: windows-latest
     steps:
-      - name: set-shell-env
+      - name: Export shell environment variables
         uses: lukka/set-shell-env@v1.0
         with:
           PreferredToolArchitecture: '${{matrix.arch}}'
@@ -165,20 +165,20 @@ jobs:
           args: install winflexbison3
         if: ${{ steps.cache-choco.outputs.cache-hit }} != true
 
-#      - name: Generate build files & run build procedure (x64)
-#        uses: lukka/run-cmake@v2.3
-#        env:
-#          CMAKE_VERBOSE_MAKEFILE: TRUE
+      - name: Generate build files & run build procedure (x64)
+        uses: lukka/run-cmake@v2.3
+        env:
+          CMAKE_VERBOSE_MAKEFILE: TRUE
 #          PATH: '${{ env.PYTHON_INSTALL_DIR }}; ${{ env.PYTHON_INSTALL_DIR }}\Scripts; C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\amd64'
-#        with:
-#          useVcpkgToolchainFile: true
-#          cmakeSettingsJsonPath: CMakeListsTxtAdvanced
-#          cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
-#          buildDirectory: '${{ runner.workspace }}\build-openage'
-#          cmakeAppendedArgs: '-DPYTHON_DIR="${{ env.PYTHON_INSTALL_DIR }}\" -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_PREFIX_PATH=${Qt5_DIR} -DDOWNLOAD_NYAN=YES -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
-#          cmakeGenerator: 'VS16Win${{ matrix.env-bit }}'
-#          buildWithCMake: true
-#          buildWithCMakeArgs: '--config RelWithDebInfo -- -j2 /nologo /m /v:m'
+        with:
+          useVcpkgToolchainFile: true
+          cmakeSettingsJsonPath: CMakeListsTxtAdvanced
+          cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
+          buildDirectory: '${{ runner.workspace }}\build-openage'
+          cmakeAppendedArgs: '-DPYTHON_DIR="${{ env.PYTHON_INSTALL_DIR }}\" -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_PREFIX_PATH=${Qt5_DIR} -DDOWNLOAD_NYAN=YES -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
+          cmakeGenerator: 'VS16Win${{ matrix.env-bit }}'
+          buildWithCMake: true
+          buildWithCMakeArgs: '--config RelWithDebInfo -- -j2 /nologo /m /v:m'
 
 
 #      - name: Run tests
@@ -188,7 +188,3 @@ jobs:
 #      - name: Show directory tree (DEBUG)
 #        run: Get-ChildItem -Path "${{ runner.workspace }}\build-openage"
 #        shell: pwsh
-
-      - name: Show directory tree (DEBUG)
-        run: Get-ChildItem -Path "${{ runner.workspace }}"
-        shell: pwsh
