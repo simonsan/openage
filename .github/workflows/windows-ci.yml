@@ -160,10 +160,8 @@ jobs:
           cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
           buildDirectory: '${{ runner.workspace }}\build-openage'
           cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=Debug -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DPYTHON_DIR="${{ env.PYTHON_INSTALL_DIR }}\"  -DCMAKE_PREFIX_PATH=${Qt5_DIR} -DDOWNLOAD_NYAN=YES -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
-          cmakeGenerator: 'VS16Win${{ matrix.env-bit }}'
           buildWithCMake: true
           buildWithCMakeArgs: '--config Debug -- -j2 /nologo /m /v:m'
-
 
 #      - name: Run tests
 #        run: |
