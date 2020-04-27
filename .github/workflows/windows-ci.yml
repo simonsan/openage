@@ -161,7 +161,7 @@ jobs:
 #          CMAKE_VERBOSE_MAKEFILE: TRUE
 #          PATH: '${{ env.PYTHON_INSTALL_DIR }}; ${{ env.PYTHON_INSTALL_DIR }}\Scripts; C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\amd64; ${env:PATH}'
 #        with:
-#          cmakeSettingsJsonPath: CMakeListsTxtAdvanced
+#          cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
 #          cmakeListsTxtPath: '${{ runner.workspace }}\deps\nyan\CMakeLists.txt'
 #          buildDirectory: '${{ runner.workspace }}\deps\nyan\build\'
 #          cmakeAppendedArgs: '-DCMAKE_TOOLCHAIN_FILE=${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake -DCMAKE_BUILD_TYPE=Debug -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
@@ -179,7 +179,7 @@ jobs:
           CMAKE_VERBOSE_MAKEFILE: TRUE
           PATH: '${{ env.PYTHON_INSTALL_DIR }}; ${{ env.PYTHON_INSTALL_DIR }}\Scripts; C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\amd64; ${env:PATH}'
         with:
-          cmakeSettingsJsonPath: CMakeListsTxtAdvanced
+          cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
           cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
           buildDirectory: '${{ runner.workspace }}\build-openage'
           cmakeAppendedArgs: '-DCMAKE_TOOLCHAIN_FILE="${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake" -DCMAKE_BUILD_TYPE="Debug" -G "Visual Studio 16 2019" -A "${{ matrix.arch }}" -DPYTHON_DIR="${{ env.PYTHON_INSTALL_DIR }}\" -DCMAKE_PREFIX_PATH="${Qt5_DIR}" -DFORCE_DOWNLOAD_NYAN="YES" -DNYAN_CLONE_VERSION="${{ env.nyanGitCommitID }}" -DFLEX_EXECUTABLE="C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe"'
