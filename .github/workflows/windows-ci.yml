@@ -53,8 +53,9 @@ jobs:
           path: '${{ env.PYTHON_INSTALL_DIR }}\'
           key: '${{ runner.os }}-PythonCache-v${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg'
 
+      # Pulling in the minimum dependency here
       - name: Install latest CMake.
-        uses: lukka/get-cmake@latest
+        uses: lukka/get-cmake@v3.12.4
 
       - name: Prepare Environment
         run: |
