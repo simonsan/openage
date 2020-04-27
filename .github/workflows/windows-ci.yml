@@ -17,6 +17,7 @@ jobs:
         arch: [x64] #[Win32, x64]
         qt64: [win64_msvc2017_64] # [win64_mingw73, win64_msvc2017_64]
         env-bit: [64] #[64, 32]
+        triplet: [x64-windows] #[x64-windows, x86-windows]
 #       qt32: [win32_msvc2015, win32_mingw53] // For now we don't build on Win32
 #       platforms: [x64] #[x64, x86]
         python-version: [3.8.0] #[3.6, 3.7]
@@ -39,6 +40,13 @@ jobs:
         with:
           path: ../Qt
           key: ${{ runner.os }}-QtCache-${{ env.QT_INSTALL_VERSION }}
+
+      - name: Cache (Python)
+        uses: actions/cache@v1.1.2
+        id: cache-python
+        with:
+          path: ${{ env.PYTHON_INSTALL_DIR }}
+          key: ${{ runner.os }}-PythonCache-v${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg
 
       - name: Install latest CMake.
         uses: lukka/get-cmake@latest
@@ -85,16 +93,18 @@ jobs:
         with:
          file-url: 'https://www.python.org/ftp/python/${{ matrix.python-version }}/python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe'
          location: '${{ runner.temp }}'
-#        if: steps.cache-python-dl.outputs.cache-hit != 'true'
+       if: steps.cache-python.outputs.cache-hit != 'true'
 
       - name: Print the file path
         run: echo "The file was downloaded to ${{ steps.download-python.outputs.file-path }}"
         shell: cmd
+        if: steps.cache-python.outputs.cache-hit != 'true'
 
-      - name: Uninstall/Install Python debug # we need debug binaries and precompiled standard libraries
+      - name: Install Python debug # we need debug binaries and precompiled standard libraries
         run: |
-          ${{ steps.download-python.outputs.file-path }} /quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir="${{ runner.temp }}\Python${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg\"
+          ${{ steps.download-python.outputs.file-path }} /quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir="${{ env.PYTHON_INSTALL_DIR }}"
         shell: cmd
+        if: steps.cache-python.outputs.cache-hit != 'true'
 
 # ^^ #          ${{ steps.download-python.outputs.file-path }} /quiet /uninstall
 
@@ -107,13 +117,13 @@ jobs:
           python -m pip install --upgrade pip
         shell: cmd
 
-      - name: Install python3 dependencies
+      - name: Install Python dependencies
         run: pip install -r ".github/workflows-support/requirements.txt"
-        if: steps.cache-pip-dep.outputs.cache-hit != 'true'
+        if: steps.cache-python.outputs.cache-hit != 'true'
 
-      - name: Upgrade python3 dependencies
+      - name: Upgrade Python dependencies
         run: pip install --upgrade -r ".github/workflows-support/requirements.txt"
-        if: steps.cache-pip-dep.outputs.cache-hit == 'true'
+        if: steps.cache-python.outputs.cache-hit == 'true'
 
       - name: Install Qt (x64)
         uses: jurplel/install-qt-action@v2.6.2
@@ -135,27 +145,15 @@ jobs:
           cached: ${{ steps.cache-qt.outputs.cache-hit }}
         if: matrix.arch == 'Win32'
 
-      - name: Install Vcpkg dependencies (x64)
+      - name: Install Vcpkg dependencies
         uses: lukka/run-vcpkg@v2.1
         with:
           vcpkgArguments: '@${{ env.vcpkgResponseFile }}'
-          vcpkgTriplet: 'x64-windows'
+          vcpkgTriplet: '${{ matrix.triplet }}'
           vcpkgGitCommitId: '${{ env.vcpkgGitCommitID }}'
           vcpkgDirectory: '${{ runner.workspace }}\vcpkg'
           cleanAfterBuild: 'true'
           appendedCacheKey: '${{ hashFiles(env.vcpkgResponseFile) }}'
-        if: matrix.arch == 'x64'
-
-      - name: Install Vcpkg dependencies (x86)
-        uses: lukka/run-vcpkg@v2.1
-        with:
-          vcpkgArguments: '@${{ env.vcpkgResponseFile }}'
-          vcpkgTriplet: 'x86-windows'
-          vcpkgGitCommitId: '${{ env.vcpkgGitCommitID }}'
-          vcpkgDirectory: '${{ runner.workspace }}\vcpkg'
-          cleanAfterBuild: true
-          appendedCacheKey: ${{ hashFiles(env.vcpkgResponseFile) }}
-        if: matrix.arch == 'Win32'
 
       - name: Install dependencies with Chocolatey
         uses: crazy-max/ghaction-chocolatey@v1.1.0
@@ -169,9 +167,8 @@ jobs:
         with:
           useVcpkgToolchainFile: true
           cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
-          buildDirectory: '${{ github.workspace }}/../../_temp/build-openage'
+          buildDirectory: '${{ runner.temp }}/build-openage'
           cmakeAppendedArgs: '-DPYTHON=${{ env.PYTHON_INSTALL_DIR }} -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_PREFIX_PATH=${Qt5_DIR} -DDOWNLOAD_NYAN=YES -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
           cmakeGenerator: 'VS16Win${{ matrix.env-bit }}'
           buildWithCMake: true
           buildWithCMakeArgs: '--config RelWithDebInfo -- -j2 /nologo /m /v:m'
-        if: matrix.arch == 'x64'
