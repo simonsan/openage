@@ -58,7 +58,7 @@ jobs:
         id: cache-choco
         with:
           path: 'C:\ProgramData\chocolatey\'
-          key: '${{ runner.os }}-ChocoCache-${{ hashFiles(".github/workflows/windows-ci.yml") }}'
+          key: ${{ runner.os }}-ChocoCache-${{ hashFiles('.github/workflows/windows-ci.yml') }}
 
       # Pulling in the minimum dependency here
       - name: Install pinned CMake Version
