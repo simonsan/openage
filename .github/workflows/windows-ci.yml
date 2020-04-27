@@ -5,10 +5,6 @@ env:
   vcpkgResponseFile: '${{ github.workspace }}\.github\workflows-support\response_file.txt'
   vcpkgGitCommitID: '28ab0b15cd7cdc1004cac9a28a5ecab198c161b9' # Updated 26/04/2020
 
-# TODO:
-# setup python action? no debug binaries pre-installed => waiting for upstream issues
-# caches in general in this workflow
-
 jobs:
    windows-msvc:
     strategy:
@@ -32,13 +28,6 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
 
-#      - name: Cache (vcpkg)
-#        uses: actions/cache@v1.1.2
-#        id: cache-vcpkg
-#        with:
-#         path: '${{ runner.workspace }}\deps\vcpkg'
-#         key: ${{ runner.os }}-VcpkgCache-CommitHASH${{ env.vcpkgGitCommitID }}-DepHASH${{ hashFiles('.github/workflows-support/response_file.txt') }}
-
       - name: Cache (Qt)
         uses: actions/cache@v1.1.2
         id: cache-qt
@@ -61,7 +50,7 @@ jobs:
           path: 'C:\ProgramData\chocolatey\lib\winflexbison3'
           key: ${{ runner.os }}-ChocoCache-${{ hashFiles('.github/workflows-support/response_file.txt') }}
 
-      # Pulling in the minimum dependency here
+      # Pinned CMake here
       - name: Install pinned CMake Version
         uses: lukka/get-cmake@v3.17.1
 
@@ -70,19 +59,10 @@ jobs:
           call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars${{ matrix.env-bit }}.bat"
         shell: cmd
 
-      - name:  Show environment settings
-        run: |
-          Set-PSDebug -Trace 1
-          systeminfo
-          gci env:
-          Set-PSDebug -Trace 0
-        shell: pwsh
-
 #       TODO: Waiting for Upstream Issue: https://github.com/actions/setup-python/issues/86
 #       To pull in debug binaries and stdlib
 #       TODO: Added another Upstream issue: https://github.com/actions/virtual-environments/issues/786
 #       To add it directly to the `hostedtoolcache` of github workflow environments
-
 #      - name: Set up Python
 #        uses: actions/setup-python@v1.2.0
 #        with:
@@ -97,7 +77,7 @@ jobs:
          location: '${{ runner.workspace }}\dl\'
         if: steps.cache-python.outputs.cache-hit != 'true'
 
-#      - name: Print the file path
+#      - name: Print downloaded the file path
 #        run: echo "The file was downloaded to ${{ steps.download-python.outputs.file-path }}"
 #        shell: cmd
 #        if: steps.cache-python.outputs.cache-hit != 'true'
@@ -166,11 +146,19 @@ jobs:
           args: install winflexbison3
         if: ${{ steps.cache-choco.outputs.cache-hit }} != true
 
+      - name:  Show environment settings
+        run: |
+          Set-PSDebug -Trace 1
+          systeminfo
+          gci env:
+          Set-PSDebug -Trace 0
+        shell: pwsh
+
       - name: Generate build files & run build procedure (x64)
         uses: lukka/run-cmake@v2.3
         env:
           CMAKE_VERBOSE_MAKEFILE: TRUE
-#          PATH: '${{ env.PYTHON_INSTALL_DIR }}; ${{ env.PYTHON_INSTALL_DIR }}\Scripts; C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\amd64'
+          PATH: '${{ env.PYTHON_INSTALL_DIR }}; ${{ env.PYTHON_INSTALL_DIR }}\Scripts; C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\amd64; ${env:PATH}'
         with:
           useVcpkgToolchainFile: true
           cmakeSettingsJsonPath: CMakeListsTxtAdvanced
