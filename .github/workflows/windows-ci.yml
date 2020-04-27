@@ -162,12 +162,14 @@ jobs:
           CMAKE_VERBOSE_MAKEFILE: TRUE
         with:
           useVcpkgToolchainFile: true
+          cmakeSettingsJsonPath: CMakeListsTxtAdvanced
           cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
           buildDirectory: '${{ runner.workspace }}\build-openage'
-          cmakeAppendedArgs: '-DPYTHON="${{ env.PYTHON_INSTALL_DIR }}\python.exe" -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_PREFIX_PATH=${Qt5_DIR} -DDOWNLOAD_NYAN=YES -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
+          cmakeAppendedArgs: '-DPYTHON_DIR="${{ env.PYTHON_INSTALL_DIR }}\" -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_PREFIX_PATH=${Qt5_DIR} -DDOWNLOAD_NYAN=YES -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
           cmakeGenerator: 'VS16Win${{ matrix.env-bit }}'
           buildWithCMake: true
           buildWithCMakeArgs: '--config RelWithDebInfo -- -j2 /nologo /m /v:m'
+
 
 #      - name: Run tests
 #        run: |
