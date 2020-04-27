@@ -138,13 +138,12 @@ jobs:
           vcpkgDirectory: '${{ runner.workspace }}\deps\vcpkg'
           cleanAfterBuild: 'true'
           appendedCacheKey: '${{ hashFiles(env.vcpkgResponseFile) }}'
-        if: steps.cache-vcpkg.outputs.cache-hit != 'true'
 
       - name: Install dependencies with Chocolatey
         uses: crazy-max/ghaction-chocolatey@v1.1.0
         with:
           args: install winflexbison3
-        if: ${{ steps.cache-choco.outputs.cache-hit }} != true
+        if: steps.cache-choco.outputs.cache-hit != 'true'
 
       - name:  Show environment settings
         run: |
