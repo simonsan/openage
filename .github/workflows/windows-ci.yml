@@ -184,20 +184,21 @@ jobs:
         shell: pwsh
 
 #     TODO: Clone nyan in CMake
-#      - name: Generate build files & run build procedure (x64)
-#        uses: lukka/run-cmake@v2.3
-#        env:
-#          CMAKE_VERBOSE_MAKEFILE: TRUE
-#          PATH: '${{ env.PYTHON_INSTALL_DIR }}; ${{ env.PYTHON_INSTALL_DIR }}\Scripts; ${env:PATH}'
-#        with:
-#          useVcpkgToolchainFile: True
-#          cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
-#          cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
-#          buildDirectory: '${{ runner.workspace }}\build-openage'
-#          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE="Debug" -G "Visual Studio 16 2019" -A "${{ matrix.arch }}" -DPYTHON_DIR="${{ env.PYTHON_INSTALL_DIR }}\" -DCMAKE_PREFIX_PATH="${Qt5_DIR}" -DFORCE_DOWNLOAD_NYAN="YES" -DNYAN_CLONE_VERSION="${{ env.nyanGitCommitID }}" -DFLEX_EXECUTABLE="C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe"'
-#          buildWithCMake: true
-#          buildWithCMakeArgs: '--config Debug -- /nologo /m /v:m'
 #         -DCMAKE_TOOLCHAIN_FILE="${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake"
+      - name: Generate build files & run build procedure (x64)
+        uses: lukka/run-cmake@v2.3
+        env:
+          CMAKE_VERBOSE_MAKEFILE: TRUE
+          PATH: '${{ env.PYTHON_INSTALL_DIR }}; ${{ env.PYTHON_INSTALL_DIR }}\Scripts; ${env:PATH}'
+        with:
+          useVcpkgToolchainFile: True
+          cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
+          cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
+          buildDirectory: '${{ runner.workspace }}\build-openage'
+          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE="Debug" -G "Visual Studio 16 2019" -A "${{ matrix.arch }}" -DPYTHON_DIR="${{ env.PYTHON_INSTALL_DIR }}\" -DCMAKE_PREFIX_PATH="${Qt5_DIR}" -Dnyan_DIR="${{ runner.workspace }}\deps\nyan\build\" -DFLEX_EXECUTABLE="C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe"'
+          buildWithCMake: true
+          buildWithCMakeArgs: '--config Debug -- /nologo /m /v:m'
+
 
 #      - name: Run tests
 #        run: |
