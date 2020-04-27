@@ -179,7 +179,7 @@ jobs:
           git reset --hard ${{ env.nyanGitCommitID }}
         if: steps.cache-nyan.outputs.cache-hit != 'true'
 
-      - name: Generate nyan build files & run nyan build procedure (x64)
+      - name: 'Nyan: Generate build files & run build procedure'
         uses: lukka/run-cmake@v2.3
         env:
           CMAKE_VERBOSE_MAKEFILE: TRUE
@@ -200,7 +200,7 @@ jobs:
 
 #     TODO: Clone nyan in CMake
 #         -DCMAKE_TOOLCHAIN_FILE="${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake"
-      - name: Generate build files & run build procedure (x64)
+      - name: 'openage: Generate build files & run build procedure'
         uses: lukka/run-cmake@v2.3
         env:
           CMAKE_VERBOSE_MAKEFILE: TRUE
