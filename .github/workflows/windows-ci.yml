@@ -39,21 +39,21 @@ jobs:
         id: cache-vcpkg
         with:
          path: '${{ runner.workspace }}\deps\vcpkg'
-         key: ${{ runner.os }}-VcpkgCache-CommitHASH${{ env.vcpkgGitCommitID }}-DepHASH{{ hashFiles('.github/workflows-support/response_file.txt') }}
+         key: '${{ runner.os }}-VcpkgCache-CommitHASH${{ env.vcpkgGitCommitID }}-DepHASH{{ hashFiles(".github/workflows-support/response_file.txt") }}'
 
       - name: Cache (Qt)
         uses: actions/cache@v1.1.2
         id: cache-qt
         with:
           path: '../Qt'
-          key: ${{ runner.os }}-QtCache-${{ env.QT_INSTALL_VERSION }}
+          key: '${{ runner.os }}-QtCache-${{ env.QT_INSTALL_VERSION }}'
 
       - name: Cache (Python)
         uses: actions/cache@v1.1.2
         id: cache-python
         with:
-          path: ${{ env.PYTHON_INSTALL_DIR }}
-          key: ${{ runner.os }}-PythonCache-v${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg
+          path: '${{ env.PYTHON_INSTALL_DIR }}'
+          key: '${{ runner.os }}-PythonCache-v${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg'
 
       - name: Install latest CMake.
         uses: lukka/get-cmake@latest
@@ -101,17 +101,23 @@ jobs:
 #        shell: cmd
 #        if: steps.cache-python.outputs.cache-hit != 'true'
 
+#      - name: Install Python debug (x64) # we need debug binaries and precompiled standard libraries
+#        run: |
+#          CALL "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir='${{ env.PYTHON_INSTALL_DIR }}'"
+#        if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
+#        shell: cmd
+
       - name: Download Python (x64) # TODO: Not working for x86, adopt to empty matrix.python-platform
         run: |
           IF NOT EXIST "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" curl --create-dirs -o "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" "https://www.python.org/ftp/python/${{ matrix.python-version }}/python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe"
         if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
         shell: cmd
 
-      - name: Uninstall/Install Python debug (x64) # we need debug binaries and precompiled standard libraries
+      - name: Install Python debug (x64) # we need debug binaries and precompiled standard libraries
         run: |
-          CALL "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir='${{ env.PYTHON_INSTALL_DIR }}'"
+          Start-Process "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" -ArgumentList "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir=${{ env.PYTHON_INSTALL_DIR }}"
         if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
-        shell: cmd
+        shell: pwsh
 
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
