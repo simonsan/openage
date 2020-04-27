@@ -28,7 +28,7 @@ jobs:
         uses: lukka/set-shell-env@v1.0
         with:
           PreferredToolArchitecture: '${{matrix.arch}}'
-          PYTHON_INSTALL_DIR: '${{ runner.workspace }}\deps\Python${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg\'
+          PYTHON_INSTALL_DIR: '${{ runner.workspace }}\deps\Python${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg'
 
       - name: Checkout sources
         uses: actions/checkout@v2
@@ -51,7 +51,7 @@ jobs:
         uses: actions/cache@v1.1.2
         id: cache-python
         with:
-          path: '${{ env.PYTHON_INSTALL_DIR }}'
+          path: '${{ env.PYTHON_INSTALL_DIR }}\'
           key: '${{ runner.os }}-PythonCache-v${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg'
 
       - name: Install latest CMake.
@@ -96,13 +96,13 @@ jobs:
 #
 #      - name: Install Python debug # we need debug binaries and precompiled standard libraries
 #        run: |
-#          ${{ steps.download-python.outputs.file-path }} /quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir="${{ env.PYTHON_INSTALL_DIR }}"
+#          ${{ steps.download-python.outputs.file-path }} /quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir="${{ env.PYTHON_INSTALL_DIR }}\"
 #        shell: cmd
 #        if: steps.cache-python.outputs.cache-hit != 'true'
 
 #      - name: Install Python debug (x64) # we need debug binaries and precompiled standard libraries
 #        run: |
-#          CALL "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir='${{ env.PYTHON_INSTALL_DIR }}'"
+#          CALL "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir='${{ env.PYTHON_INSTALL_DIR }}\'"
 #        if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
 #        shell: cmd
 
@@ -114,7 +114,7 @@ jobs:
 
       - name: Install Python debug (x64) # we need debug binaries and precompiled standard libraries
         run: |
-          Start-Process "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" -ArgumentList "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir=${{ env.PYTHON_INSTALL_DIR }}"
+          Start-Process "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" -ArgumentList "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir=${{ env.PYTHON_INSTALL_DIR }}\"
         if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
         shell: pwsh
 
