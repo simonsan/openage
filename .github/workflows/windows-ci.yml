@@ -105,10 +105,6 @@ jobs:
         run: ${{ env.PYTHON_INSTALL_DIR }}\Scripts\pip.exe install -r ".github/workflows-support/requirements.txt"
         if: steps.cache-python.outputs.cache-hit != 'true'
 
-      - name: Upgrade Python dependencies
-        run: ${{ env.PYTHON_INSTALL_DIR }}\Scripts\pip.exe install --upgrade -r ".github/workflows-support/requirements.txt"
-        if: steps.cache-python.outputs.cache-hit == 'true'
-
       - name: Install Qt (x64)
         uses: jurplel/install-qt-action@v2.6.2
         with:
