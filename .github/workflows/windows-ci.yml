@@ -92,8 +92,8 @@ jobs:
         id: download-python
         with:
          file-url: 'https://www.python.org/ftp/python/${{ matrix.python-version }}/python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe'
-         location: '${{ runner.temp }}'
-       if: steps.cache-python.outputs.cache-hit != 'true'
+         location: '${{ runner.temp }}\dl\'
+        if: steps.cache-python.outputs.cache-hit != 'true'
 
       - name: Print the file path
         run: echo "The file was downloaded to ${{ steps.download-python.outputs.file-path }}"
