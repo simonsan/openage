@@ -54,7 +54,7 @@ jobs:
 
       - name:  Install C++ compiler and libraries
         shell: python .github/workflows-support/msys-bash.py {0}
-        run:   .github/workflows-support/msys-deps.txt | xargs pacman -Syu --noconfirm
+        run:   pacman -Syuu --noconfirm - < .github/workflows-support/pkglist.txt
         if:    steps.cache-msys2.outputs.cache-hit != 'true'
 
       - name:  Shrink MSYS2 for cache
