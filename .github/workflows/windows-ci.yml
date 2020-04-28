@@ -192,15 +192,9 @@ jobs:
           buildDirectory: '${{ runner.workspace }}\deps\nyan\build\'
           cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
           buildWithCMake: true
-          buildWithCMakeArgs: '-- -nologo -m -v:m ${{ env.NOWARN_FLAGS }}'
-#        if: steps.cache-nyan.outputs.cache-hit != 'true'
+          buildWithCMakeArgs: '--config RelWithDebInfo -- -nologo -m -v:m ${{ env.NOWARN_FLAGS }}'
+#        if: steps.cache-nyan.outputs.cache-hit != 'true' # TODO: Uncomment for nyan caching, check if RelWithDebInfo is cached
 
-#      - name: Show directory tree (DEBUG)
-#        run: Get-ChildItem -Path "${{ runner.workspace }}\deps\nyan\build\"
-#        shell: pwsh
-
-#     TODO: Clone nyan in CMake
-#         -DCMAKE_TOOLCHAIN_FILE="${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake"
       - name: 'openage: Generate build files & run build procedure'
         uses: lukka/run-cmake@v2.3
         env:
@@ -213,7 +207,11 @@ jobs:
           buildDirectory: '${{ runner.workspace }}\build-openage\'
           cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DPYTHON_DIR=${{ env.PYTHON_INSTALL_DIR }}\ -DCMAKE_PREFIX_PATH=${Qt5_DIR} -Dnyan_DIR=${{ runner.workspace }}\deps\nyan\build\'
           buildWithCMake: true
-          buildWithCMakeArgs: '-- -nologo -m -v:m ${{ env.NOWARN_FLAGS }}'
+          buildWithCMakeArgs: '--config RelWithDebInfo -- -nologo -m -v:m ${{ env.NOWARN_FLAGS }}'
+
+      # Toolchain file for CMake could be also taken from here
+      # -DCMAKE_TOOLCHAIN_FILE="${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake"
+      # if useVcpkgToolchainFile is set to 'False'
 
       - name: Show directory tree (DEBUG)
         run: Get-ChildItem -Path "${{ runner.workspace }}\build-openage"
