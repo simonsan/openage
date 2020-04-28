@@ -217,6 +217,7 @@ jobs:
         run: Get-ChildItem -Path "${{ runner.workspace }}\build-openage"
         shell: pwsh
 
-      - name: Run tests
+      - name: Tests
         run: |
-          ${{ runner.workspace }}/build-openage/run.exe tests -a
+          Start-Process -FilePath "${{ runner.workspace }}/build-openage/run.exe" -ArgumentList "tests -a"
+        shell: pwsh
