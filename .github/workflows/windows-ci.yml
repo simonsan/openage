@@ -180,7 +180,7 @@ jobs:
           git reset --hard ${{ env.nyanGitCommitID }}
         if: steps.cache-nyan.outputs.cache-hit != 'true'
 
-      - name: 'Nyan: Generate build files & run build procedure'
+      - name: 'nyan: Generate build files & run build procedure'
         uses: lukka/run-cmake@v2.3
         env:
           CMAKE_VERBOSE_MAKEFILE: TRUE
@@ -215,10 +215,10 @@ jobs:
           buildWithCMake: true
           buildWithCMakeArgs: '-- -nologo -m -v:m ${{ env.NOWARN_FLAGS }}'
 
-#      - name: Run tests
-#        run: |
-#          ${{ runner.workspace }}/build-openage/Debug/
-
       - name: Show directory tree (DEBUG)
         run: Get-ChildItem -Path "${{ runner.workspace }}\build-openage"
         shell: pwsh
+
+      - name: Run tests
+        run: |
+          ${{ runner.workspace }}/build-openage/run.exe tests -a
