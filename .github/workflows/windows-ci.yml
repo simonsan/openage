@@ -8,24 +8,111 @@ env:
   CI_CFG_VERSION: 'github-0.1.0-dev'
 
 jobs:
-   windows-msvc:
+  build_windows_msys2:
+      name: ${{ matrix.conf.compiler }} ${{ matrix.conf.bits }}-bit
+      runs-on: windows-latest
+      if: github.event_name != 'pull_request' || contains('dreamer,kcgen,ant-222', github.actor) == false
+      strategy:
+        # Because Clang depends on GCC, we run the Clang-32/64bit jobs
+        # first to create combined caches that include both Clang and GCC.
+        # Running 2-jobs at once ensure the GCC jobs start after Clang.
+        max-parallel: 2
+        matrix:
+          conf:
+            - compiler: Clang
+              bits: 32
+              arch: i686
+              max_warnings: 9
+            - compiler: Clang
+              bits: 64
+              arch: x86_64
+              max_warnings: 41
+            - compiler: GCC
+              bits: 32
+              arch: i686
+              max_warnings: 26
+            - compiler: GCC
+              bits: 64
+              arch: x86_64
+              max_warnings: 58
+      env:
+        CHERE_INVOKING:  yes
+        CCACHE_DIR:      "${{ github.workspace }}/.ccache"
+        CCACHE_MAXSIZE:  "64M"
+        CCACHE_COMPRESS: "true"
+      steps:
+        - uses:  actions/checkout@v2
+        - name:  Get Date
+          id:    get-date
+          shell: bash
+          run:   echo "::set-output name=date::$(date +%Y-%W)"
+        - uses:  actions/cache@v1
+          id:    cache-msys2
+          with:
+            path: 'C:/tools/msys64'
+            key: msys2-${{ matrix.conf.bits }}-${{ steps.get-date.outputs.date }}
+        - name:  Install MSYS2
+          if:    steps.cache-msys2.outputs.cache-hit != 'true'
+          run:   choco install msys2 --no-progress
+        - name:  Install C++ compiler and libraries
+          if:    steps.cache-msys2.outputs.cache-hit != 'true'
+          shell: python scripts\msys-bash.py {0}
+          run:   ./scripts/list-build-dependencies.sh -m msys2 -c clang -b ${{ matrix.conf.bits }} | xargs pacman -S --noconfirm
+        - name:  Shrink MSYS2 for cache
+          if:    steps.cache-msys2.outputs.cache-hit != 'true'
+          shell: python scripts\msys-bash.py {0}
+          run:   ./.github/scripts/shrink-msys2.sh
+        - name:  Prepare compiler cache
+          id:    prep-ccache
+          shell: bash
+          run: |
+            mkdir -p "${CCACHE_DIR}"
+            echo "::set-output name=dir::$CCACHE_DIR"
+            echo "::set-output name=today::$(date -I)"
+            echo "::set-output name=yesterday::$(date --date=yesterday -I)"
+        - uses:  actions/cache@v1
+          id:    cache-ccache
+          with:
+            path: ${{ steps.prep-ccache.outputs.dir }}
+            key:  ccache-msys2-${{ matrix.conf.compiler }}-${{ matrix.conf.bits }}-${{ steps.prep-ccache.outputs.today }}
+            restore-keys: |
+              ccache-msys2-${{ matrix.conf.compiler }}-${{ matrix.conf.bits }}-${{ steps.prep-ccache.outputs.yesterday }}
+        - name:  Log environment
+          shell: python scripts\msys-bash.py {0}
+          run:   ./scripts/log-env.sh
+        - name:  Build
+          shell: python scripts\msys-bash.py {0}
+          run: |
+            # The following two MSYSTEM variables are used by auto-tools to determine host
+            # architecture so we override them to match the current build type (32-bit or 64-bit)
+            export MSYSTEM_CARCH=${{ matrix.conf.arch }}
+            export MSYSTEM_CHOST=${{ matrix.conf.arch }}-pc-msys
+            ./scripts/build.sh --compiler ${{ matrix.conf.compiler }} --build-type Debug --bin-path /mingw${{ matrix.conf.bits }}/bin
+        - name:  Summarize warnings
+          env:
+            MAX_WARNINGS: ${{ matrix.conf.max_warnings }}
+          run:   python scripts\count-warnings.py build.log
+
+  build_windows_msvc:
+    name: ${{ matrix.conf.compiler }} ${{ matrix.conf.bits }}-bit
     strategy:
       matrix:
-        arch: [x64] #[Win32, x64]
-        qt64: [win64_msvc2017_64] # [win64_mingw73, win64_msvc2017_64]
-        env-bit: [64] #[64, 32]
-        triplet: [x64-windows] #[x64-windows, x86-windows]
-#       qt32: [win32_msvc2015, win32_mingw53] // For now we don't build on Win32
-#       platforms: [x64] #[x64, x86]
-        python-version: [3.8.0] #[3.6, 3.7]
-        python-platform: [amd64] #[amd64, ""]
+        conf:
+          - arch: [x64] #[Win32, x64]
+          - qt64: [win64_msvc2017_64] # [win64_mingw73, win64_msvc2017_64]
+          - env-bit: [64] #[64, 32]
+          - triplet: [x64-windows] #[x64-windows, x86-windows]
+  #       - qt32: [win32_msvc2015, win32_mingw53] // For now we don't build on Win32
+  #       - platforms: [x64] #[x64, x86]
+          - python-version: [3.8.0] #[3.6, 3.7]
+          - python-platform: [amd64] #[amd64, ""]
     runs-on: windows-latest
     steps:
       - name: Export shell environment variables
         uses: lukka/set-shell-env@v1.0
         with:
-          PreferredToolArchitecture: '${{matrix.arch}}'
-          PYTHON_INSTALL_DIR: '${{ runner.workspace }}\deps\Python${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg'
+          PreferredToolArchitecture: '${{matrix.conf.arch}}'
+          PYTHON_INSTALL_DIR: '${{ runner.workspace }}\deps\Python${{ matrix.conf.python-version }}-${{ matrix.conf.python-platform }}-dbg'
           NOWARN_FLAGS: '-noWarn:C4251;C4101;C4275;D9002'
 
 #         -noWarn
@@ -49,7 +136,7 @@ jobs:
         id: cache-python
         with:
           path: '${{ env.PYTHON_INSTALL_DIR }}\'
-          key: '${{ runner.os }}-PythonCache-v${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg'
+          key: '${{ runner.os }}-PythonCache-v${{ matrix.conf.python-version }}-${{ matrix.conf.python-platform }}-dbg'
 
       # TODO: Set hashFiles to: .github/workflows/windows-ci.yml
       - name: Cache (Choco)
@@ -80,7 +167,7 @@ jobs:
 
       - name: Prepare Environment
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars${{ matrix.env-bit }}.bat"
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars${{ matrix.conf.env-bit }}.bat"
         shell: cmd
 
 #       TODO: Waiting for Upstream Issue: https://github.com/actions/setup-python/issues/86
@@ -90,14 +177,14 @@ jobs:
 #      - name: Set up Python
 #        uses: actions/setup-python@v1.2.0
 #        with:
-#          python-version: ${{ matrix.python-version }}
+#          python-version: ${{ matrix.conf.python-version }}
 
       - name: Download Python
         uses: carlosperate/download-file-action@v1.0.3
         id: download-python
         with:
-         file-url: 'https://www.python.org/ftp/python/${{ matrix.python-version }}/python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe'
-         file-name: 'python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe'
+         file-url: 'https://www.python.org/ftp/python/${{ matrix.conf.python-version }}/python-${{ matrix.conf.python-version }}-${{ matrix.conf.python-platform }}.exe'
+         file-name: 'python-${{ matrix.conf.python-version }}-${{ matrix.conf.python-platform }}.exe'
          location: '${{ runner.workspace }}\dl\'
         if: steps.cache-python.outputs.cache-hit != 'true'
 
@@ -108,8 +195,8 @@ jobs:
 
       - name: Install Python debug (x64) # we need debug binaries and precompiled standard libraries
         run: |
-          Start-Process -FilePath "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" -ArgumentList "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir=${{ env.PYTHON_INSTALL_DIR }}\" -Verb runas -Wait
-        if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
+          Start-Process -FilePath "${{ runner.workspace }}\dl\python-${{ matrix.conf.python-version }}-${{ matrix.conf.python-platform }}.exe" -ArgumentList "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir=${{ env.PYTHON_INSTALL_DIR }}\" -Verb runas -Wait
+        if: matrix.conf.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
         shell: pwsh
 
 #      - name: Show directory tree (DEBUG)
@@ -135,9 +222,9 @@ jobs:
           host: 'windows'
           version: '${{ env.QT_INSTALL_VERSION }}'
           mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
-          arch: ${{ matrix.qt64 }}
+          arch: ${{ matrix.conf.qt64 }}
           cached: ${{ steps.cache-qt.outputs.cache-hit }}
-        if: matrix.arch == 'x64'
+        if: matrix.conf.arch == 'x64'
 
       - name: Install Qt (x86)
         uses: jurplel/install-qt-action@v2.6.2
@@ -145,15 +232,15 @@ jobs:
           host: 'windows'
           version: '${{ env.QT_INSTALL_VERSION }}'
           mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
-          arch: ${{ matrix.qt32 }}
+          arch: ${{ matrix.conf.qt32 }}
           cached: ${{ steps.cache-qt.outputs.cache-hit }}
-        if: matrix.arch == 'Win32'
+        if: matrix.conf.arch == 'Win32'
 
       - name: Install Vcpkg dependencies
         uses: lukka/run-vcpkg@v2.1
         with:
           vcpkgArguments: '@${{ env.vcpkgResponseFile }}'
-          vcpkgTriplet: '${{ matrix.triplet }}'
+          vcpkgTriplet: '${{ matrix.conf.triplet }}'
           vcpkgGitCommitId: '${{ env.vcpkgGitCommitID }}'
           vcpkgDirectory: '${{ runner.workspace }}\deps\vcpkg'
           cleanAfterBuild: 'true'
@@ -190,7 +277,7 @@ jobs:
           cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
           cmakeListsTxtPath: '${{ runner.workspace }}\deps\nyan\CMakeLists.txt'
           buildDirectory: '${{ runner.workspace }}\deps\nyan\build\'
-          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
+          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 16 2019" -A ${{ matrix.conf.arch }} -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
           buildWithCMake: true
           buildWithCMakeArgs: '--config RelWithDebInfo -- -nologo -m -v:m ${{ env.NOWARN_FLAGS }}'
 #        if: steps.cache-nyan.outputs.cache-hit != 'true' # TODO: Uncomment for nyan caching, check if RelWithDebInfo is cached
@@ -205,7 +292,7 @@ jobs:
           cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
           cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
           buildDirectory: '${{ runner.workspace }}\build-openage\'
-          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DPYTHON_DIR=${{ env.PYTHON_INSTALL_DIR }}\ -DCMAKE_PREFIX_PATH=${Qt5_DIR} -Dnyan_DIR=${{ runner.workspace }}\deps\nyan\build\'
+          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 16 2019" -A ${{ matrix.conf.arch }} -DPYTHON_DIR=${{ env.PYTHON_INSTALL_DIR }}\ -DCMAKE_PREFIX_PATH=${Qt5_DIR} -Dnyan_DIR=${{ runner.workspace }}\deps\nyan\build\'
           buildWithCMake: true
           buildWithCMakeArgs: '--config RelWithDebInfo -- -nologo -m -v:m ${{ env.NOWARN_FLAGS }}'
 
@@ -213,9 +300,9 @@ jobs:
       # -DCMAKE_TOOLCHAIN_FILE="${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake"
       # if useVcpkgToolchainFile is set to 'False'
 
-      - name: Show directory tree (DEBUG)
-        run: Get-ChildItem -Path "${{ runner.workspace }}\build-openage"
-        shell: pwsh
+#      - name: Show directory tree (DEBUG)
+#        run: Get-ChildItem -Path "${{ runner.workspace }}\build-openage"
+#        shell: pwsh
 
       - name: Tests
         run: |
