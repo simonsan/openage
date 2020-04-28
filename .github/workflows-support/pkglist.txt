@@ -3,8 +3,6 @@ gcc-libs
 git
 gzip
 make
-mingw-w64-x86_64-SDL2
-mingw-w64-x86_64-SDL2_image
 mingw-w64-x86_64-ccache
 mingw-w64-x86_64-clang
 mingw-w64-x86_64-clang-analyzer
@@ -31,5 +29,7 @@ mingw-w64-x86_64-python-pip
 mingw-w64-x86_64-python-pygments
 mingw-w64-x86_64-python-pyreadline
 mingw-w64-x86_64-qt5
+mingw-w64-x86_64-SDL2
+mingw-w64-x86_64-SDL2_image
 mingw-w64-x86_64-ttf-dejavu
 ncurses

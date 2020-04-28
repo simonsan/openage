@@ -19,10 +19,10 @@ jobs:
       fail-fast: false
       matrix:
         conf:
-          - compiler: Clang
-            bits: 64
-            arch: x86_64
-            max_warnings: 0
+#          - compiler: Clang
+#            bits: 64
+#            arch: x86_64
+#            max_warnings: 0
           - compiler: GCC
             bits: 64
             arch: x86_64
@@ -36,242 +36,64 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
 
-      - name: Get Date
-        id:   get-date
-        shell: bash
-        run: echo "::set-output name=date::$(date +%Y-%W)"
+      - uses: eine/setup-msys2@v0
+        with:
+          msystem: MINGW64
+          update: true
+
+#      - name: Get Date
+#        id:   get-date
+#        shell: bash
+#        run: echo "::set-output name=date::$(date +%Y-%W)"
 
       - name: Cache (msys)
         uses: actions/cache@v1.1.2
         id:    cache-msys2
         with:
-          path: 'C:/tools/msys64'
-          key: msys2-${{ matrix.conf.bits }}-${{ steps.get-date.outputs.date }}
+#          path: 'C:/tools/msys64'
+          path: '${{ runner.temp }}/msys'
+          key: ${{ runner.os }}-msys2-cache-${{ hashFiles('.github/workflows-support/pkglist.txt') }}
 
-      - name:  Install MSYS2
-        run:   choco install msys2 --no-progress
-        if:    steps.cache-msys2.outputs.cache-hit != 'true'
+#      - name:  Install MSYS2
+#        run:   choco install msys2 --no-progress
+#        if:    steps.cache-msys2.outputs.cache-hit != 'true'
 
 #      - name:  Install C++ compiler and libraries
 #        shell: python .github/workflows-support/msys-bash.py {0}
-#        run:   pacman -S --needed - < .github/workflows-support/pkglist.txt
+#        run:   echo "pacman -S --needed - < .github/workflows-support/pkglist.txt"
 #        if:    steps.cache-msys2.outputs.cache-hit != 'true'
-#
+
+#flex gcc-libs git gzip make mingw-w64-x86_64-ccache mingw-w64-x86_64-clang mingw-w64-x86_64-clang-analyzer mingw-w64-x86_64-clang-tools-extra mingw-w64-x86_64-cmake mingw-w64-x86_64-cython mingw-w64-x86_64-dlfcn mingw-w64-x86_64-eigen3 mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-gdb mingw-w64-x86_64-harfbuzz mingw-w64-x86_64-libepoxy mingw-w64-x86_64-libogg mingw-w64-x86_64-libpng mingw-w64-x86_64-make mingw-w64-x86_64-opus mingw-w64-x86_64-opusfile mingw-w64-x86_64-python mingw-w64-x86_64-python-jinja mingw-w64-x86_64-python-numpy mingw-w64-x86_64-python-pillow mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-pygments mingw-w64-x86_64-python-pyreadline mingw-w64-x86_64-qt5 mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-ttf-dejavu ncurses
+
+#      - name:  Install C++ compiler and libraries
+#        shell: C:\tools\msys64\usr\bin\bash.exe -lc {0}
+#        run: pacman -S --needed - < .github/workflows-support/pkglist.txt
+#        if:    steps.cache-msys2.outputs.cache-hit != 'true'
+
 #      - name:  Shrink MSYS2 for cache
 #        shell: python .github/workflows-support/msys-bash.py {0}
 #        run:   ./.github/workflows-support/shrink-msys2.sh
 #        if:    steps.cache-msys2.outputs.cache-hit != 'true'
-
-  build_windows_msvc:
-    name: Win10${{ matrix.arch }}, Python ${{ matrix.python-version }}
-    strategy:
-      fail-fast: false
-      matrix:
-          arch: [x64] #[Win32, x64]
-          qt64: [win64_msvc2017_64] # [win64_mingw73, win64_msvc2017_64]
-          env-bit: [64] #[64, 32]
-          triplet: [x64-windows] #[x64-windows, x86-windows]
-          python-version: [3.8.2, 3.7.7]
-          python-platform: [amd64] #[amd64, ""]
-    runs-on: windows-latest
-    steps:
-      - name: Export shell environment variables
-        uses: lukka/set-shell-env@v1.0
-        with:
-          PreferredToolArchitecture: '${{matrix.arch}}'
-          PYTHON_INSTALL_DIR: '${{ runner.workspace }}\deps\Python${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg'
-          NOWARN_FLAGS: '-noWarn:C4251;C4101;C4275;D9002'
-
-#         -noWarn
-#         C4251 - dll-interface
-#         C4275 - non dll-interface class used as base for dll-interface class
-#         C4101 - unreferenced local variable
-#         D9002 - ignoring unknown option '-fwrapv' (cl.exe)
-
-      - name: Checkout sources
-        uses: actions/checkout@v2
-
-      - name: Cache (Qt)
-        uses: actions/cache@v1.1.2
-        id: cache-qt
-        with:
-          path: '../Qt'
-          key: '${{ runner.os }}-QtCache-${{ env.QT_INSTALL_VERSION }}'
-
-      - name: Cache (Python)
-        uses: actions/cache@v1.1.2
-        id: cache-python
-        with:
-          path: '${{ env.PYTHON_INSTALL_DIR }}\'
-          key: '${{ runner.os }}-PythonCache-v${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg'
-
-      # TODO: Set hashFiles to: .github/workflows/windows-ci.yml
-      - name: Cache (Choco)
-        uses: actions/cache@v1.1.2
-        id: cache-choco
-        with:
-          path: 'C:\ProgramData\chocolatey\lib\winflexbison3'
-          key: ${{ runner.os }}-ChocoCache-${{ hashFiles('.github/workflows-support/response_file.txt') }}
-
-      - name: Cache (Nyan)
-        uses: actions/cache@v1.1.2
-        id: cache-nyan
-        with:
-          path: '${{ runner.workspace }}\deps\nyan\'
-          key: ${{ runner.os }}-NyanCache-CommitHash${{ env.nyanGitCommitID }}
-
-#      - name: Checkout nyan repository
-#        uses: actions/checkout@v2
-#        with:
-#          repository: SFTtech/nyan
-#          path: ${{ runner.workspace }}\deps\nyan
-#          ref: '${{ env.nyanGitCommitID }}'
-#        if: steps.cache-nyan.outputs.cache-hit != 'true'
-
-      # Pinned CMake here
-      - name: Install pinned CMake Version
-        uses: lukka/get-cmake@v3.17.1
-
-      - name: Prepare Environment
+#
+      - name: Update
+        shell: msys2 {0}
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars${{ matrix.env-bit }}.bat"
-        shell: cmd
+          uname -a
+          pacman -Syu --noconfirm
 
-#       TODO: Waiting for Upstream Issue: https://github.com/actions/setup-python/issues/86
-#       To pull in debug binaries and stdlib
-#       TODO: Added another Upstream issue: https://github.com/actions/virtual-environments/issues/786
-#       To add it directly to the `hostedtoolcache` of github workflow environments
-#      - name: Set up Python
-#        uses: actions/setup-python@v1.2.0
-#        with:
-#          python-version: ${{ matrix.python-version }}
-
-      - name: Download Python
-        uses: carlosperate/download-file-action@v1.0.3
-        id: download-python
-        with:
-         file-url: 'https://www.python.org/ftp/python/${{ matrix.python-version }}/python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe'
-         file-name: 'python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe'
-         location: '${{ runner.workspace }}\dl\'
-        if: steps.cache-python.outputs.cache-hit != 'true'
-
-#      - name: Print downloaded the file path
-#        run: echo "The file was downloaded to ${{ steps.download-python.outputs.file-path }}"
-#        shell: cmd
-#        if: steps.cache-python.outputs.cache-hit != 'true'
-
-      - name: Install Python debug (x64) # we need debug binaries and precompiled standard libraries
+      - name: Install dependencies
+        shell: msys2 {0}
         run: |
-          Start-Process -FilePath "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" -ArgumentList "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir=${{ env.PYTHON_INSTALL_DIR }}\" -Verb runas -Wait
-        if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
-        shell: pwsh
+          pacman -Syu --noconfirm --needed flex gcc-libs git gzip make mingw-w64-x86_64-ccache \
+          mingw-w64-x86_64-clang mingw-w64-x86_64-clang-analyzer mingw-w64-x86_64-clang-tools-extra \
+          mingw-w64-x86_64-cmake mingw-w64-x86_64-cython mingw-w64-x86_64-dlfcn mingw-w64-x86_64-eigen3 \
+          mingw-w64-x86_64-fontconfig mingw-w64-x86_64-freetype mingw-w64-x86_64-gdb mingw-w64-x86_64-harfbuzz \
+          mingw-w64-x86_64-libepoxy mingw-w64-x86_64-libogg mingw-w64-x86_64-libpng mingw-w64-x86_64-make \
+          mingw-w64-x86_64-opus mingw-w64-x86_64-opusfile mingw-w64-x86_64-python mingw-w64-x86_64-python-jinja \
+          mingw-w64-x86_64-python-numpy mingw-w64-x86_64-python-pillow mingw-w64-x86_64-python-pip \
+          mingw-w64-x86_64-python-pygments mingw-w64-x86_64-python-pyreadline mingw-w64-x86_64-qt5 \
+          mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-ttf-dejavu ncurses
 
-#      - name: Show directory tree (DEBUG)
-#        run: Get-ChildItem -Path "${{ env.PYTHON_INSTALL_DIR }}\"
-#        shell: pwsh
 
-      - name: Display Python version
-        run: ${{ env.PYTHON_INSTALL_DIR }}\python.exe -c "import sys; print(sys.version)"
-        shell: cmd
-
-      - name: Upgrade Python pip
-        run: |
-          ${{ env.PYTHON_INSTALL_DIR }}\python.exe -m pip install --upgrade pip
-        shell: cmd
-
-      - name: Install Python dependencies
-        run: ${{ env.PYTHON_INSTALL_DIR }}\Scripts\pip.exe install -r ".github/workflows-support/requirements.txt"
-        if: steps.cache-python.outputs.cache-hit != 'true'
-
-      - name: Install Qt (x64)
-        uses: jurplel/install-qt-action@v2.6.2
-        with:
-          host: 'windows'
-          version: '${{ env.QT_INSTALL_VERSION }}'
-          mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
-          arch: ${{ matrix.qt64 }}
-          cached: ${{ steps.cache-qt.outputs.cache-hit }}
-        if: matrix.arch == 'x64'
-
-      - name: Install Qt (x86)
-        uses: jurplel/install-qt-action@v2.6.2
-        with:
-          host: 'windows'
-          version: '${{ env.QT_INSTALL_VERSION }}'
-          mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
-          arch: ${{ matrix.qt32 }}
-          cached: ${{ steps.cache-qt.outputs.cache-hit }}
-        if: matrix.arch == 'Win32'
-
-      - name: Install Vcpkg dependencies
-        uses: lukka/run-vcpkg@v2.1
-        with:
-          vcpkgArguments: '@${{ env.vcpkgResponseFile }}'
-          vcpkgTriplet: '${{ matrix.triplet }}'
-          vcpkgGitCommitId: '${{ env.vcpkgGitCommitID }}'
-          vcpkgDirectory: '${{ runner.workspace }}\deps\vcpkg'
-          cleanAfterBuild: 'true'
-          appendedCacheKey: '${{ hashFiles(env.vcpkgResponseFile) }}'
-
-      - name: Install dependencies with Chocolatey
-        uses: crazy-max/ghaction-chocolatey@v1.1.0
-        with:
-          args: install winflexbison3
-        if: steps.cache-choco.outputs.cache-hit != 'true'
-
-#      - name:  Show environment settings
-#        run: |
-#          Set-PSDebug -Trace 1
-#          systeminfo
-#          gci env:
-#          Set-PSDebug -Trace 0
-#        shell: pwsh
-
-      - name: Clone nyan repository
-        run: |
-          git clone https://github.com/SFTtech/nyan.git ${{ runner.workspace }}\deps\nyan
-          cd ${{ runner.workspace }}\deps\nyan
-          git reset --hard ${{ env.nyanGitCommitID }}
-        if: steps.cache-nyan.outputs.cache-hit != 'true'
-
-      - name: 'nyan: Generate build files & run build procedure'
-        uses: lukka/run-cmake@v2.3
-        env:
-          CMAKE_VERBOSE_MAKEFILE: TRUE
-          PATH: '${{ env.PYTHON_INSTALL_DIR }}; ${{ env.PYTHON_INSTALL_DIR }}\Scripts; ${env:PATH}'
-        with:
-          useVcpkgToolchainFile: True
-          cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
-          cmakeListsTxtPath: '${{ runner.workspace }}\deps\nyan\CMakeLists.txt'
-          buildDirectory: '${{ runner.workspace }}\deps\nyan\build\'
-          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
-          buildWithCMake: true
-          buildWithCMakeArgs: '--config RelWithDebInfo -- -nologo -m -v:m ${{ env.NOWARN_FLAGS }}'
-        if: steps.cache-nyan.outputs.cache-hit != 'true'
-
-      - name: 'openage: Generate build files & run build procedure'
-        uses: lukka/run-cmake@v2.3
-        env:
-          CMAKE_VERBOSE_MAKEFILE: TRUE
-          PATH: '${{ env.PYTHON_INSTALL_DIR }}; ${{ env.PYTHON_INSTALL_DIR }}\Scripts; ${env:PATH}'
-        with:
-          useVcpkgToolchainFile: True
-          cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
-          cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
-          buildDirectory: '${{ runner.workspace }}\build-openage\'
-          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DPYTHON_DIR=${{ env.PYTHON_INSTALL_DIR }}\ -DCMAKE_PREFIX_PATH=${Qt5_DIR} -Dnyan_DIR=${{ runner.workspace }}\deps\nyan\build\'
-          buildWithCMake: true
-          buildWithCMakeArgs: '--config RelWithDebInfo -- -nologo -m -v:m ${{ env.NOWARN_FLAGS }}'
-
-      # Toolchain file for CMake could be also taken from here
-      # -DCMAKE_TOOLCHAIN_FILE="${{ env.RUNVCPKG_VCPKG_ROOT }}\scripts\buildsystems\vcpkg.cmake"
-      # if useVcpkgToolchainFile is set to 'False'
-
-#      - name: Show directory tree (DEBUG)
-#        run: Get-ChildItem -Path "${{ runner.workspace }}\build-openage"
-#        shell: pwsh
-
-      - name: Tests
-        run: |
-          Start-Process -FilePath "${{ runner.workspace }}\build-openage\run.exe" -ArgumentList "tests -a"  -NoNewWindow -Wait
-        shell: pwsh
+#      - run: msys2do pacman -S --needed - < ../../openage/openage/.github/workflows-support/pkglist.txt
+#      - run: msys2do ls -als
