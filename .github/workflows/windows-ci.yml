@@ -2,7 +2,6 @@ name: Windows-CI
 on: [push, pull_request]
 env:
   QT_INSTALL_VERSION: '5.14.2'
-  PYTHON_VERSIONS: '3.8.2, 3.7.7'
   vcpkgResponseFile: '${{ github.workspace }}\.github\workflows-support\response_file.txt'
   vcpkgGitCommitID: '28ab0b15cd7cdc1004cac9a28a5ecab198c161b9'      # Updated 26/04/2020
   nyanGitCommitID: '03a996994b87803b5a8ff6ed0e85ab730163aa2d'       # Updated 27/04/2020
@@ -17,7 +16,7 @@ jobs:
           qt64: [win64_msvc2017_64] # [win64_mingw73, win64_msvc2017_64]
           env-bit: [64] #[64, 32]
           triplet: [x64-windows] #[x64-windows, x86-windows]
-          python-version: '[${{ env.PYTHON_VERSIONS }}]'
+          python-version: [3.8.2, 3.7.7]
           python-platform: [amd64] #[amd64, ""]
     runs-on: windows-latest
     steps:
