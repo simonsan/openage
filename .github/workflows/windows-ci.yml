@@ -8,6 +8,49 @@ env:
   CI_CFG_VERSION: 'github-0.1.0-dev'
 
 jobs:
+  build_windows_msys2:
+    name: ${{ matrix.conf.compiler }} ${{ matrix.conf.bits }}-bit
+    runs-on: windows-latest
+    strategy:
+      # Because Clang depends on GCC, we run the Clang-64bit job
+      # first to create combined caches that include both Clang and GCC.
+      # Running 1-job at once ensure the GCC jobs start after Clang.
+      max-parallel: 1
+      matrix:
+        conf:
+          - compiler: Clang
+            bits: 64
+            arch: x86_64
+            max_warnings: 0
+          - compiler: GCC
+            bits: 64
+            arch: x86_64
+            max_warnings: 0
+    env:
+      CHERE_INVOKING:  yes
+      CCACHE_DIR:      "${{ github.workspace }}/.ccache"
+      CCACHE_MAXSIZE:  "64M"
+      CCACHE_COMPRESS: "true"
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Get Date
+        id:   get-date
+        shell: bash
+        run: echo "::set-output name=date::$(date +%Y-%W)"
+
+      - name: Cache (msys)
+        uses: actions/cache@v1.1.2
+        id:    cache-msys2
+        with:
+          path: 'C:/tools/msys64'
+          key: msys2-${{ matrix.conf.bits }}-${{ steps.get-date.outputs.date }}
+
+      - name:  Install MSYS2
+        run:   choco install msys2 --no-progress
+        if:    steps.cache-msys2.outputs.cache-hit != 'true'
+
   build_windows_msvc:
     name: Win10${{ matrix.arch }}, Python ${{ matrix.python-version }}
     strategy:
@@ -58,13 +101,12 @@ jobs:
           path: 'C:\ProgramData\chocolatey\lib\winflexbison3'
           key: ${{ runner.os }}-ChocoCache-${{ hashFiles('.github/workflows-support/response_file.txt') }}
 
-# TODO: Activate nyan cache again
-#      - name: Cache (Nyan)
-#        uses: actions/cache@v1.1.2
-#        id: cache-nyan
-#        with:
-#          path: '${{ runner.workspace }}\deps\nyan\'
-#          key: ${{ runner.os }}-NyanCache-${{ env.nyanGitCommitID }}
+      - name: Cache (Nyan)
+        uses: actions/cache@v1.1.2
+        id: cache-nyan
+        with:
+          path: '${{ runner.workspace }}\deps\nyan\'
+          key: ${{ runner.os }}-NyanCache-CommitHash${{ env.nyanGitCommitID }}
 
 #      - name: Checkout nyan repository
 #        uses: actions/checkout@v2
@@ -193,7 +235,7 @@ jobs:
           cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
           buildWithCMake: true
           buildWithCMakeArgs: '--config RelWithDebInfo -- -nologo -m -v:m ${{ env.NOWARN_FLAGS }}'
-#        if: steps.cache-nyan.outputs.cache-hit != 'true' # TODO: Uncomment for nyan caching, check if RelWithDebInfo is cached
+        if: steps.cache-nyan.outputs.cache-hit != 'true'
 
       - name: 'openage: Generate build files & run build procedure'
         uses: lukka/run-cmake@v2.3
