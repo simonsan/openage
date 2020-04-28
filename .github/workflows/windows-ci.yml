@@ -89,10 +89,11 @@ jobs:
 #          mingw-w64-x86_64-python-pygments mingw-w64-x86_64-python-pyreadline mingw-w64-x86_64-qt5 \
 #          mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-ttf-dejavu ncurses
 
-      - name:  Shrink MSYS2 for cache
+      - name:  Shrink MSYS2 for caching
         shell: msys2 {0}
-        run:   ./.github/workflows-support/shrink-msys2.sh
-        if:    steps.cache-msys2.outputs.cache-hit != 'true'
+        run: |
+          ./.github/workflows-support/shrink-msys2.sh
+# TODO: if:    steps.cache-msys2.outputs.cache-hit != 'true'
 
 #      - name: Configure nyan
 #        shell: msys2 {0}
