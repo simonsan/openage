@@ -2,6 +2,7 @@ name: Windows-CI
 on: [push, pull_request]
 env:
   QT_INSTALL_VERSION: '5.14.2'
+  PYTHON_VERSIONS: '3.8.2, 3.7.7'
   vcpkgResponseFile: '${{ github.workspace }}\.github\workflows-support\response_file.txt'
   vcpkgGitCommitID: '28ab0b15cd7cdc1004cac9a28a5ecab198c161b9'      # Updated 26/04/2020
   nyanGitCommitID: '03a996994b87803b5a8ff6ed0e85ab730163aa2d'       # Updated 27/04/2020
@@ -94,25 +95,22 @@ jobs:
           run:   python scripts\count-warnings.py build.log
 
   build_windows_msvc:
-    name: ${{ matrix.conf.compiler }} ${{ matrix.conf.bits }}-bit
+    name: Win10${{ matrix.arch }}, Python ${{ matrix.python-version }}, Qt ${{ env.QT_INSTALL_VERSION }}
     strategy:
       matrix:
-        conf:
-          - arch: [x64] #[Win32, x64]
-          - qt64: [win64_msvc2017_64] # [win64_mingw73, win64_msvc2017_64]
-          - env-bit: [64] #[64, 32]
-          - triplet: [x64-windows] #[x64-windows, x86-windows]
-  #       - qt32: [win32_msvc2015, win32_mingw53] // For now we don't build on Win32
-  #       - platforms: [x64] #[x64, x86]
-          - python-version: [3.8.0] #[3.6, 3.7]
-          - python-platform: [amd64] #[amd64, ""]
+          arch: [x64] #[Win32, x64]
+          qt64: [win64_msvc2017_64] # [win64_mingw73, win64_msvc2017_64]
+          env-bit: [64] #[64, 32]
+          triplet: [x64-windows] #[x64-windows, x86-windows]
+          python-version: '[${{ env.PYTHON_VERSIONS }}]'
+          python-platform: [amd64] #[amd64, ""]
     runs-on: windows-latest
     steps:
       - name: Export shell environment variables
         uses: lukka/set-shell-env@v1.0
         with:
-          PreferredToolArchitecture: '${{matrix.conf.arch}}'
-          PYTHON_INSTALL_DIR: '${{ runner.workspace }}\deps\Python${{ matrix.conf.python-version }}-${{ matrix.conf.python-platform }}-dbg'
+          PreferredToolArchitecture: '${{matrix.arch}}'
+          PYTHON_INSTALL_DIR: '${{ runner.workspace }}\deps\Python${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg'
           NOWARN_FLAGS: '-noWarn:C4251;C4101;C4275;D9002'
 
 #         -noWarn
@@ -136,7 +134,7 @@ jobs:
         id: cache-python
         with:
           path: '${{ env.PYTHON_INSTALL_DIR }}\'
-          key: '${{ runner.os }}-PythonCache-v${{ matrix.conf.python-version }}-${{ matrix.conf.python-platform }}-dbg'
+          key: '${{ runner.os }}-PythonCache-v${{ matrix.python-version }}-${{ matrix.python-platform }}-dbg'
 
       # TODO: Set hashFiles to: .github/workflows/windows-ci.yml
       - name: Cache (Choco)
@@ -146,12 +144,13 @@ jobs:
           path: 'C:\ProgramData\chocolatey\lib\winflexbison3'
           key: ${{ runner.os }}-ChocoCache-${{ hashFiles('.github/workflows-support/response_file.txt') }}
 
-      - name: Cache (Nyan)
-        uses: actions/cache@v1.1.2
-        id: cache-nyan
-        with:
-          path: '${{ runner.workspace }}\deps\nyan\'
-          key: ${{ runner.os }}-NyanCache-${{ env.nyanGitCommitID }}
+# TODO: Activate nyan cache again
+#      - name: Cache (Nyan)
+#        uses: actions/cache@v1.1.2
+#        id: cache-nyan
+#        with:
+#          path: '${{ runner.workspace }}\deps\nyan\'
+#          key: ${{ runner.os }}-NyanCache-${{ env.nyanGitCommitID }}
 
 #      - name: Checkout nyan repository
 #        uses: actions/checkout@v2
@@ -167,7 +166,7 @@ jobs:
 
       - name: Prepare Environment
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars${{ matrix.conf.env-bit }}.bat"
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars${{ matrix.env-bit }}.bat"
         shell: cmd
 
 #       TODO: Waiting for Upstream Issue: https://github.com/actions/setup-python/issues/86
@@ -177,14 +176,14 @@ jobs:
 #      - name: Set up Python
 #        uses: actions/setup-python@v1.2.0
 #        with:
-#          python-version: ${{ matrix.conf.python-version }}
+#          python-version: ${{ matrix.python-version }}
 
       - name: Download Python
         uses: carlosperate/download-file-action@v1.0.3
         id: download-python
         with:
-         file-url: 'https://www.python.org/ftp/python/${{ matrix.conf.python-version }}/python-${{ matrix.conf.python-version }}-${{ matrix.conf.python-platform }}.exe'
-         file-name: 'python-${{ matrix.conf.python-version }}-${{ matrix.conf.python-platform }}.exe'
+         file-url: 'https://www.python.org/ftp/python/${{ matrix.python-version }}/python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe'
+         file-name: 'python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe'
          location: '${{ runner.workspace }}\dl\'
         if: steps.cache-python.outputs.cache-hit != 'true'
 
@@ -195,8 +194,8 @@ jobs:
 
       - name: Install Python debug (x64) # we need debug binaries and precompiled standard libraries
         run: |
-          Start-Process -FilePath "${{ runner.workspace }}\dl\python-${{ matrix.conf.python-version }}-${{ matrix.conf.python-platform }}.exe" -ArgumentList "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir=${{ env.PYTHON_INSTALL_DIR }}\" -Verb runas -Wait
-        if: matrix.conf.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
+          Start-Process -FilePath "${{ runner.workspace }}\dl\python-${{ matrix.python-version }}-${{ matrix.python-platform }}.exe" -ArgumentList "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=1 CompileAll=1 InstallAllUsers=0 TargetDir=${{ env.PYTHON_INSTALL_DIR }}\" -Verb runas -Wait
+        if: matrix.arch == 'x64' && steps.cache-python.outputs.cache-hit != 'true'
         shell: pwsh
 
 #      - name: Show directory tree (DEBUG)
@@ -222,9 +221,9 @@ jobs:
           host: 'windows'
           version: '${{ env.QT_INSTALL_VERSION }}'
           mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
-          arch: ${{ matrix.conf.qt64 }}
+          arch: ${{ matrix.qt64 }}
           cached: ${{ steps.cache-qt.outputs.cache-hit }}
-        if: matrix.conf.arch == 'x64'
+        if: matrix.arch == 'x64'
 
       - name: Install Qt (x86)
         uses: jurplel/install-qt-action@v2.6.2
@@ -232,15 +231,15 @@ jobs:
           host: 'windows'
           version: '${{ env.QT_INSTALL_VERSION }}'
           mirror: 'http://mirrors.ocf.berkeley.edu/qt/'
-          arch: ${{ matrix.conf.qt32 }}
+          arch: ${{ matrix.qt32 }}
           cached: ${{ steps.cache-qt.outputs.cache-hit }}
-        if: matrix.conf.arch == 'Win32'
+        if: matrix.arch == 'Win32'
 
       - name: Install Vcpkg dependencies
         uses: lukka/run-vcpkg@v2.1
         with:
           vcpkgArguments: '@${{ env.vcpkgResponseFile }}'
-          vcpkgTriplet: '${{ matrix.conf.triplet }}'
+          vcpkgTriplet: '${{ matrix.triplet }}'
           vcpkgGitCommitId: '${{ env.vcpkgGitCommitID }}'
           vcpkgDirectory: '${{ runner.workspace }}\deps\vcpkg'
           cleanAfterBuild: 'true'
@@ -277,7 +276,7 @@ jobs:
           cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
           cmakeListsTxtPath: '${{ runner.workspace }}\deps\nyan\CMakeLists.txt'
           buildDirectory: '${{ runner.workspace }}\deps\nyan\build\'
-          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 16 2019" -A ${{ matrix.conf.arch }} -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
+          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
           buildWithCMake: true
           buildWithCMakeArgs: '--config RelWithDebInfo -- -nologo -m -v:m ${{ env.NOWARN_FLAGS }}'
 #        if: steps.cache-nyan.outputs.cache-hit != 'true' # TODO: Uncomment for nyan caching, check if RelWithDebInfo is cached
@@ -292,7 +291,7 @@ jobs:
           cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
           cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
           buildDirectory: '${{ runner.workspace }}\build-openage\'
-          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 16 2019" -A ${{ matrix.conf.arch }} -DPYTHON_DIR=${{ env.PYTHON_INSTALL_DIR }}\ -DCMAKE_PREFIX_PATH=${Qt5_DIR} -Dnyan_DIR=${{ runner.workspace }}\deps\nyan\build\'
+          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DPYTHON_DIR=${{ env.PYTHON_INSTALL_DIR }}\ -DCMAKE_PREFIX_PATH=${Qt5_DIR} -Dnyan_DIR=${{ runner.workspace }}\deps\nyan\build\'
           buildWithCMake: true
           buildWithCMakeArgs: '--config RelWithDebInfo -- -nologo -m -v:m ${{ env.NOWARN_FLAGS }}'
 
