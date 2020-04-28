@@ -10,7 +10,7 @@ env:
 
 jobs:
   build_windows_msvc:
-    name: Win10${{ matrix.arch }}, Python ${{ matrix.python-version }}, Qt ${{ env.QT_INSTALL_VERSION }}
+    name: Win10${{ matrix.arch }}, Python ${{ matrix.python-version }}
     strategy:
       matrix:
           arch: [x64] #[Win32, x64]
