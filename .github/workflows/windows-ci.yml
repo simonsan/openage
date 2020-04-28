@@ -52,15 +52,15 @@ jobs:
         run:   choco install msys2 --no-progress
         if:    steps.cache-msys2.outputs.cache-hit != 'true'
 
-      - name:  Install C++ compiler and libraries
-        shell: python .github/workflows-support/msys-bash.py {0}
-        run:   pacman -S --needed - < .github/workflows-support/pkglist.txt
-        if:    steps.cache-msys2.outputs.cache-hit != 'true'
-
-      - name:  Shrink MSYS2 for cache
-        shell: python .github/workflows-support/msys-bash.py {0}
-        run:   ./.github/workflows-support/shrink-msys2.sh
-        if:    steps.cache-msys2.outputs.cache-hit != 'true'
+#      - name:  Install C++ compiler and libraries
+#        shell: python .github/workflows-support/msys-bash.py {0}
+#        run:   pacman -S --needed - < .github/workflows-support/pkglist.txt
+#        if:    steps.cache-msys2.outputs.cache-hit != 'true'
+#
+#      - name:  Shrink MSYS2 for cache
+#        shell: python .github/workflows-support/msys-bash.py {0}
+#        run:   ./.github/workflows-support/shrink-msys2.sh
+#        if:    steps.cache-msys2.outputs.cache-hit != 'true'
 
   build_windows_msvc:
     name: Win10${{ matrix.arch }}, Python ${{ matrix.python-version }}
