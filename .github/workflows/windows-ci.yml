@@ -219,5 +219,5 @@ jobs:
 
       - name: Tests
         run: |
-          Start-Process -FilePath "${{ runner.workspace }}/build-openage/run.exe" -ArgumentList "tests -a"
+          Start-Process -FilePath "${{ runner.workspace }}\build-openage\run.exe" -ArgumentList "tests -a"  -NoNewWindow -Wait
         shell: pwsh
