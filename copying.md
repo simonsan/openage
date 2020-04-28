@@ -209,10 +209,15 @@ cmake modules ([3-clause BSD license](/legal/BSD-3-clause))
  - `buildsystem/modules/FindOpusfile.cmake` (taken from [Unvanquished](https://github.com/Unvanquished/Unvanquished))
 
 From [Kevin R Croft <krcroft@gmail.com>](https://github.com/kcgen) ([GPL 2.0+](/legal/GPLv2))
- - `buildsystem/scripts/ci/install-tar-wrapper.sh`
- - `buildsystem/scripts/ci/reset-brew.sh`
- - `buildsystem/scripts/ci/shrink-brew.sh`
+ - `.github/workflows-support/install-tar-wrapper.sh` (taken from [dosbox-staging](https://github.com/dosbox-staging/dosbox-staging/))
+ - `.github/workflows-support/reset-brew.sh` (taken from [dosbox-staging](https://github.com/dosbox-staging/dosbox-staging/))
+ - `.github/workflows-support/shrink-brew.sh` (taken from [dosbox-staging](https://github.com/dosbox-staging/dosbox-staging/))
+ - `.github/workflows-support/shrink-msys2.sh` (taken from [dosbox-staging](https://github.com/dosbox-staging/dosbox-staging/))
  
+From [Patryk Obara <patryk.obara@gmail.com>](https://github.com/dreamer) ([GPL 2.0+](/legal/GPLv2))
+ - `.github/workflows-support/msys-bash.py` (taken from [dosbox-staging](https://github.com/dosbox-staging/dosbox-staging/))
+
+
 #### Disclaimer
 
 Notes about this file:
