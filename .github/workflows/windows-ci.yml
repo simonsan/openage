@@ -211,9 +211,9 @@ jobs:
           cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
           cmakeListsTxtPath: '${{ github.workspace }}\CMakeLists.txt'
           buildDirectory: '${{ runner.workspace }}\build-openage\'
-          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=Debug -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DPYTHON_DIR=${{ env.PYTHON_INSTALL_DIR }}\ -DCMAKE_PREFIX_PATH=${Qt5_DIR} -Dnyan_DIR=${{ runner.workspace }}\deps\nyan\build\'
+          cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DPYTHON_DIR=${{ env.PYTHON_INSTALL_DIR }}\ -DCMAKE_PREFIX_PATH=${Qt5_DIR} -Dnyan_DIR=${{ runner.workspace }}\deps\nyan\build\'
           buildWithCMake: true
-          buildWithCMakeArgs: '--config Debug -- -nologo -v:m ${{ env.NOWARN_FLAGS }}'
+          buildWithCMakeArgs: '--config RelWithDebInfo -- -nologo -m -v:m ${{ env.NOWARN_FLAGS }}'
 
 #      - name: Run tests
 #        run: |
