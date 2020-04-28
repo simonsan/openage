@@ -193,7 +193,7 @@ jobs:
           cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -G "Visual Studio 16 2019" -A ${{ matrix.arch }} -DFLEX_EXECUTABLE=C:\ProgramData\chocolatey\lib\winflexbison3\tools\win_flex.exe'
           buildWithCMake: true
           buildWithCMakeArgs: '-- -nologo -m -v:m ${{ env.NOWARN_FLAGS }}'
-        if: steps.cache-nyan.outputs.cache-hit != 'true'
+#        if: steps.cache-nyan.outputs.cache-hit != 'true'
 
 #      - name: Show directory tree (DEBUG)
 #        run: Get-ChildItem -Path "${{ runner.workspace }}\deps\nyan\build\"
