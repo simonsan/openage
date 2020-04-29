@@ -46,9 +46,16 @@ jobs:
 #        shell: bash
 #        run: echo "::set-output name=date::$(date +%Y-%W)"
 
+      - name: Cache (Nyan)
+        uses: actions/cache@v1.1.2
+        id: cache-nyan-msys
+        with:
+          path: '${{ runner.workspace }}\msys-deps\nyan\'
+          key: ${{ runner.os }}-NyanCache-msys-CommitHash${{ env.nyanGitCommitID }}
+
       - name: Cache (msys)
         uses: actions/cache@v1.1.2
-        id:    cache-msys2
+        id: cache-msys2
         with:
 #          path: 'C:/tools/msys64'
           path: '${{ runner.temp }}/msys'
@@ -102,14 +109,29 @@ jobs:
           ./shrink-msys2.sh
         if: steps.cache-msys2.outputs.cache-hit != 'true'
 
-#      - name: Configure nyan
-#        shell: msys2 {0}
-#        run: |
-#
-#      - name: Build nyan
-#        shell: cmd
-#        run: |
-#
+      - name: Clone nyan repository
+        run: |
+          git clone https://github.com/SFTtech/nyan.git ${{ runner.workspace }}\msys-deps\nyan\
+          cd ${{ runner.workspace }}\msys-deps\nyan\
+          git reset --hard ${{ env.nyanGitCommitID }}
+        if: steps.cache-nyan-msys.outputs.cache-hit != 'true'
+
+      - name: Configure nyan
+        run: |
+          msys2do cd nyan
+          msys2do mkdir build
+          msys2do cd build
+          msys2do cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_MAKE_PROGRAM=mingw32-make -DFLEX_EXECUTABLE=/usr/bin/flex.exe -G "CodeBlocks - MinGW Makefiles" ..
+        env:
+          MSYS2_PATH_TYPE: inherit
+
+      - name: Build nyan
+        shell: cmd
+        run: |
+          cd nyan
+          cd build
+          cmake --build . -- -j2 VERBOSE=1
+
 #      - name: Configure openage
 #        shell: msys2 {0}
 #        run: |
