@@ -46,7 +46,7 @@ jobs:
 #        shell: bash
 #        run: echo "::set-output name=date::$(date +%Y-%W)"
 
-      - name: Cache (Nyan)
+      - name: Cache (nyan)
         uses: actions/cache@v1.1.2
         id: cache-nyan-msys
         with:
@@ -82,6 +82,7 @@ jobs:
         run: |
           uname -a
           pacman -Syu --noconfirm
+        if: steps.cache-msys2.outputs.cache-hit != 'true'
 
       - name: Install dependencies
         shell: msys2 {0}
@@ -95,12 +96,14 @@ jobs:
           mingw-w64-x86_64-python-numpy mingw-w64-x86_64-python-pillow mingw-w64-x86_64-python-pip \
           mingw-w64-x86_64-python-pygments mingw-w64-x86_64-python-pyreadline mingw-w64-x86_64-qt5 \
           mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-ttf-dejavu ncurses
+        if: steps.cache-msys2.outputs.cache-hit != 'true'
 
       # TODO: Make second path dynamic + linux style paths
       - name: Copy Script to MSYS2
         shell: bash
         run: |
           cp .github/workflows-support/shrink-msys2.sh d:/a/_temp/msys/msys64/shrink-msys2.sh
+        if: steps.cache-msys2.outputs.cache-hit != 'true'
 
       - name:  Shrink MSYS2 for caching
         shell: msys2 {0}
