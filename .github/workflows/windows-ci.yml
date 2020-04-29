@@ -92,7 +92,7 @@ jobs:
       - name:  Shrink MSYS2 for caching
         shell: msys2 {0}
         run: |
-          ./.github/workflows-support/shrink-msys2.sh
+          ./../../openage/openage/.github/workflows-support/shrink-msys2.sh
 # TODO: if:    steps.cache-msys2.outputs.cache-hit != 'true'
 
 #      - name: Configure nyan
