@@ -51,11 +51,6 @@ jobs:
           path: '${{ runner.workspace }}\msys-deps\nyan\'
           key: ${{ runner.os }}-NyanCache-msys-CommitHash${{ env.nyanGitCommitID }}
 
-      - uses: eine/setup-msys2@v0
-        with:
-          msystem: MINGW64
-          update: true
-
 #      - name: Get Date
 #        id:   get-date
 #        shell: bash
@@ -76,6 +71,12 @@ jobs:
 #        shell: C:\tools\msys64\usr\bin\bash.exe -lc {0}
 #        run: pacman -S --needed - < .github/workflows-support/pkglist.txt
 #        if:    steps.cache-msys2.outputs.cache-hit != 'true'
+
+      - uses: eine/setup-msys2@v0
+        with:
+          msystem: MINGW64
+          update: true
+        if: steps.cache-msys2.outputs.cache-hit != 'true'
 
       - name: Update
         shell: msys2 {0}
