@@ -92,7 +92,7 @@ jobs:
       - name: Copy Script to MSYS2
         shell: bash
         run: |
-          cp .github/workflows-support/shrink-msys2.sh d:/a//msys/msys64/shrink-msys2.sh
+          cp .github/workflows-support/shrink-msys2.sh d:/a/_temp/msys/msys64/shrink-msys2.sh
 
       - name:  Shrink MSYS2 for caching
         shell: msys2 {0}
