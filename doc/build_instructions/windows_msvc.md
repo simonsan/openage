@@ -30,6 +30,20 @@ __NOTE:__ You need to manually make sure and doublecheck if the system you are b
    - You are going to need the 64-bit version of python if you are planning to build the 64-bit version of openage, and vice versa.
  - [CMake](https://cmake.org/download/)
 
+### Python Virtual environment
+
+Install Python:
+`Start-Process -FilePath "<path-to-python-setup>.exe" -ArgumentList "/quiet Include_debug=1 Include_dev=1 Include_lib=1 Include_pip=1 PrependPath=0 CompileAll=1 InstallAllUsers=0 TargetDir=<python-install-dir>\" -Verb runas -Wait`
+
+Create a virtual environment with all the dependencies:
+TODO: Write that in powershell as well?
+```
+<python-install-dir>\python.exe -m pip3 install virtualenv
+<python-install-dir>\virtualenv.exe <dependency-folder\.venv
+CALL <dependency-folder\.venv\Scripts\activate.bat
+<dependency-folder>\.venv\python.exe -m pip3 install -r <repository>\.github\workflows-support\requirements.txt 
+```
+
 ### Python Modules
  Open a command prompt at `<Python 3 installation directory>/Scripts`
 
