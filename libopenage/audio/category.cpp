@@ -2,12 +2,11 @@
 
 #include "category.h"
 
-#include "../log/log.h"
 #include "../error/error.h"
+#include "../log/log.h"
 #include "../util/strings.h"
 
-namespace openage {
-namespace audio {
+namespace openage::audio {
 
 
 const char *category_t_to_str(category_t val) {
@@ -27,4 +26,4 @@ std::ostream &operator <<(std::ostream &os, const category_t val) {
 }
 
 
-}} // openage::audio
+} // openage::audio

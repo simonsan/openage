@@ -3,9 +3,7 @@
 #include "texture_subinfo.h"
 
 
-namespace openage {
-namespace renderer {
-namespace resources {
+namespace openage::renderer::resources {
 
 Texture2dSubInfo::Texture2dSubInfo(const std::string& line) {
 	constexpr size_t member_count = 6;
@@ -48,4 +46,4 @@ int Texture2dSubInfo::fill(const std::string& line) {
 	return -1;
 }
 
-}}}
+} // namespace openage::renderer::resources

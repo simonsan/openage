@@ -54,4 +54,4 @@ void UniformInput::update(const char* unif, Eigen::Matrix4f const& val) {
 }
 
 
-}
+} // namespace openage::renderer

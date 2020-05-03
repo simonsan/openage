@@ -6,17 +6,14 @@
 #include <SDL2/SDL.h>
 #include <sstream>
 
+#include "../log/log.h"
+#include "../util/misc.h"
 #include "error.h"
 #include "hash_functions.h"
 #include "resource.h"
-#include "../log/log.h"
-#include "../util/misc.h"
 
 
-namespace openage {
-namespace audio {
-
-
+namespace openage::audio {
 
 
 /**
@@ -126,7 +123,7 @@ void AudioManager::load_resources(const std::vector<resource_def> &sound_files) 
 		return;
 	}
 
-	for (auto &sound_file : sound_files) {
+	for (const auto &sound_file : sound_files) {
 		auto key = std::make_tuple(sound_file.category, sound_file.id);
 
 		if (this->resources.find(key) != std::end(this->resources)) {
@@ -256,4 +253,4 @@ std::string AudioManager::get_current_driver() {
 	}
 }
 
-}} // openage::audio
+} // openage::audio

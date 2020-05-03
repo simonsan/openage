@@ -129,4 +129,4 @@ std::ostream &operator <<(std::ostream &os, const Error &e) {
 }
 
 
-} // openage::error
+} // namespace openage::error

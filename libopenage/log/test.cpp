@@ -1,13 +1,13 @@
 // Copyright 2014-2019 the openage authors. See copying.md for legal info.
 
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 #include <thread>
 #include <vector>
 
 #include "log.h"
-#include "logsource.h"
 #include "logsink.h"
+#include "logsource.h"
 
 #include "../util/strings.h"
 
@@ -62,4 +62,4 @@ void demo() {
 	t1.join();
 }
 
-} // openage::log::tests
+} // namespace openage::log::tests

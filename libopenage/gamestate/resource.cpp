@@ -1,6 +1,5 @@
 // Copyright 2015-2019 the openage authors. See copying.md for legal info.
 
-#include <string>
 #include <cmath>
 #include <string>
 
@@ -186,7 +185,7 @@ int ResourceBundle::min_count(const ResourceBundle &other) {
 	return this->count <= other.count ? this->count : other.count;
 }
 
-} // openage
+} // namespace openage
 
 namespace std {
 

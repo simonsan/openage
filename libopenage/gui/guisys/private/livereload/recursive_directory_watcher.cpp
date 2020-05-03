@@ -2,8 +2,8 @@
 
 #include "recursive_directory_watcher.h"
 
-#include <QSemaphore>
 #include <QEventLoop>
+#include <QSemaphore>
 
 #include "recursive_directory_watcher_worker.h"
 

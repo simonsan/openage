@@ -4,8 +4,8 @@
 
 #include <QtQml>
 
-#include "../gamestate/game_save.h"
 #include "../gamestate/game_main.h"
+#include "../gamestate/game_save.h"
 #include "../gamestate/generator.h"
 
 #include "game_main_link.h"
@@ -15,7 +15,7 @@ namespace openage::gui {
 
 namespace {
 const int registration = qmlRegisterType<GameSaver>("yay.sfttech.openage", 1, 0, "GameSaver");
-}
+} // namespace
 
 GameSaver::GameSaver(QObject *parent)
 	:

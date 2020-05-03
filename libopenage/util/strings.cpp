@@ -2,16 +2,16 @@
 
 #include "strings.h"
 
-#include <cstdlib>
 #include <cstdio>
+#include <cstdlib>
 #include <cstring>
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "config.h"
 #include "../error/error.h"
 #include "compiler.h"
+#include "config.h"
 
 namespace openage::util {
 
@@ -210,4 +210,4 @@ std::vector<std::string> split_escape(const std::string &txt, char delim, size_t
 	return items;
 }
 
-} // openage::util
+} // namespace openage::util

@@ -26,4 +26,4 @@ const std::vector<PongEvent> &AIInput::get_inputs(const std::shared_ptr<PongPlay
 	return this->commands;
 }
 
-} // openage::event::demo
+} // namespace openage::event::demo

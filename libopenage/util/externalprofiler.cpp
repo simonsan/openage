@@ -10,13 +10,12 @@
 #include <gperftools/profiler.h>
 #endif
 
-#include "subprocess.h"
-#include "os.h"
 #include "../log/log.h"
+#include "os.h"
+#include "subprocess.h"
 
 
-namespace openage {
-namespace util {
+namespace openage::util {
 
 
 ExternalProfiler::ExternalProfiler()
@@ -120,5 +119,4 @@ void ExternalProfiler::show_results() {
 #endif
 }
 
-} // namespace util
-} // namespace openage
+} // namespace openage::util

@@ -5,14 +5,12 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#include "../../log/log.h"
 #include "../../error/error.h"
+#include "../../log/log.h"
 #include "../../util/csv.h"
 
 
-namespace openage {
-namespace renderer {
-namespace resources {
+namespace openage::renderer::resources {
 
 /// Tries to guess the alignment of image rows based on image parameters. Kinda
 /// black magic and might not actually work.
@@ -136,7 +134,7 @@ Texture2dData Texture2dData::flip_y() {
 
 	Texture2dInfo new_info(this->info);
 
-	return Texture2dData(std::move(new_info), std::move(new_data));
+	return Texture2dData(new_info, std::move(new_data));
 }
 
 const Texture2dInfo& Texture2dData::get_info() const {
@@ -158,7 +156,7 @@ void Texture2dData::store(const util::Path& file) const {
 
 // If an older SDL2 is used, we have to specify the format manually.
 #ifndef SDL_PIXELFORMAT_RGBA32
-	uint32_t rmask, gmask, bmask, amask;
+	uint32_t rmask = 0, gmask = 0, bmask = 0, amask = 0;
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 	rmask = 0xff000000;
 	gmask = 0x00ff0000;
@@ -203,4 +201,4 @@ void Texture2dData::store(const util::Path& file) const {
 	IMG_SavePNG(surf.get(), path.c_str());
 }
 
-}}}
+} // namespace openage::renderer::resources

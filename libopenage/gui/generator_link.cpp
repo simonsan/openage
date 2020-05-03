@@ -11,7 +11,7 @@ namespace openage::gui {
 namespace
 {
 const int registration = qmlRegisterType<GeneratorLink>("yay.sfttech.openage", 1, 0, "GeneratorParameters");
-}
+} // namespace
 
 GeneratorLink::GeneratorLink(QObject *parent)
 	:

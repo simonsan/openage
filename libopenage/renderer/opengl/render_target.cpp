@@ -32,4 +32,4 @@ void GlRenderTarget::bind_read() const {
 	}
 }
 
-} // openage::renderer::opengl
+} // namespace openage::renderer::opengl

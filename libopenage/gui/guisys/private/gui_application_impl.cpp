@@ -2,12 +2,12 @@
 
 #include "gui_application_impl.h"
 
-#include <locale>
 #include <cassert>
+#include <locale>
 
 #include <QSurfaceFormat>
-#include <QtGlobal>
 #include <QtDebug>
+#include <QtGlobal>
 
 namespace qtsdl {
 
@@ -44,7 +44,7 @@ namespace {
 	int argc = 1;
 	char arg[] = "qtsdl";
 	char *argv = &arg[0];
-}
+} // namespace
 
 GuiApplicationImpl::GuiApplicationImpl()
 	:

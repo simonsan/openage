@@ -247,4 +247,4 @@ void quaternion() {
 	}
 }
 
-} // openage::util::tests
+} // namespace openage::util::tests

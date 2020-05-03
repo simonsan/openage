@@ -11,4 +11,4 @@ bool FileLike::is_python_native() const noexcept {
 	return false;
 }
 
-} // openage::util::filelike
+} // namespace openage::util::filelike

@@ -158,4 +158,4 @@ bool SoundImpl::mix_audio(int32_t *stream, int length) {
 	return false;
 }
 
-} // openage::audio
+} // namespace openage::audio

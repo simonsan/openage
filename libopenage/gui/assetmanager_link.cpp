@@ -14,7 +14,7 @@ namespace gui {
 
 namespace {
 const int registration = qmlRegisterType<AssetManagerLink>("yay.sfttech.openage", 1, 0, "AssetManager");
-}
+} // namespace
 
 AssetManagerLink::AssetManagerLink(QObject *parent)
 	:

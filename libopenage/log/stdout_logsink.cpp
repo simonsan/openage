@@ -2,8 +2,8 @@
 
 #include "stdout_logsink.h"
 
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 
 #ifdef _MSC_VER
 #define WIN32_LEAN_AND_MEAN
@@ -36,7 +36,7 @@ void enable_ansi_color_codes() {
 }
 
 
-}
+} // namespace
 
 
 StdOutSink::StdOutSink() {

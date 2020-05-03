@@ -2,8 +2,8 @@
 
 #include "gui_dedicated_thread.h"
 
-#include <mutex>
 #include <condition_variable>
+#include <mutex>
 
 #include <QCoreApplication>
 

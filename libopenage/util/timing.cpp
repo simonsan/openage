@@ -7,8 +7,7 @@
 
 #include "../error/error.h"
 
-namespace openage {
-namespace timing {
+namespace openage::timing {
 
 time_nsec_t get_real_time() {
 	std::chrono::system_clock::time_point t;
@@ -24,4 +23,4 @@ time_nsec_t get_monotonic_time() {
 	return static_cast<time_nsec_t>(ns);
 }
 
-}} // namespace openage::timing
+} // namespace openage::timing

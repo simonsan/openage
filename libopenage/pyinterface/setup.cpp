@@ -124,4 +124,4 @@ void check() {
 }
 
 
-} // openage::pyinterface
+} // namespace openage::pyinterface

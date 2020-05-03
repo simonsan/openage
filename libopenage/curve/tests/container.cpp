@@ -1,11 +1,11 @@
 // Copyright 2017-2019 the openage authors. See copying.md for legal info.
 
 #include "../../testing/testing.h"
-#include "../curve.h"
 #include "../continuous.h"
+#include "../curve.h"
 #include "../discrete.h"
-#include "../queue.h"
 #include "../map.h"
+#include "../queue.h"
 
 #include <unordered_map>
 #include <unordered_set>
@@ -209,4 +209,4 @@ void container() {
 }
 
 
-} // openage::curve::tests
+} // namespace openage::curve::tests

@@ -68,7 +68,7 @@ uint64_t hash(const uint64_t key[2], const uint8_t *data, size_t len_data) {
 	{
 		size_t rem_bytes{len_data};
 		const uint8_t *idx{data}; // Points to the start of the current block being copied
-		uint64_t block;
+		uint64_t block = 0;
 		bool finished{false};
 
 		do {
@@ -114,4 +114,4 @@ uint64_t Siphash::digest(uint64_t value) {
 }
 
 
-} // openage::util
+} // namespace openage::util

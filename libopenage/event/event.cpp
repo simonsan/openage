@@ -4,8 +4,8 @@
 
 #include <utility>
 
-#include "eventtarget.h"
 #include "eventclass.h"
+#include "eventtarget.h"
 
 #include "../log/log.h"
 #include "../util/hash.h"
@@ -40,4 +40,4 @@ bool Event::operator <(const Event &other) const {
 	return this->time < other.time;
 }
 
-} // openage::event
+} // namespace openage::event

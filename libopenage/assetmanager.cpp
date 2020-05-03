@@ -8,10 +8,10 @@
 #include <unistd.h>
 #endif
 
-#include "util/compiler.h"
-#include "util/file.h"
 #include "error/error.h"
 #include "log/log.h"
+#include "util/compiler.h"
+#include "util/file.h"
 
 #include "texture.h"
 
@@ -134,7 +134,7 @@ void AssetManager::check_updates() {
 #if WITH_INOTIFY
 	// buffer for at least 4 inotify events
 	char buf[4 * (sizeof(struct inotify_event) + NAME_MAX + 1)];
-	ssize_t len;
+	ssize_t len = 0;
 
 	while (true) {
 		// fetch all events, the kernel won't write "half" structs.
@@ -196,4 +196,4 @@ void AssetManager::clear() {
 	this->textures.clear();
 }
 
-} // openage
+} // namespace openage

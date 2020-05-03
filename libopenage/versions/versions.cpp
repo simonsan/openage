@@ -6,16 +6,16 @@
 #include <gnu/libc-version.h>
 #endif
 
+#include <QtGlobal>
+#include <SDL2/SDL.h>
 #include <eigen3/Eigen/Dense>
 #include <epoxy/gl.h>
 #include <harfbuzz/hb.h>
 #include <opus_defines.h>
-#include <QtGlobal>
-#include <SDL2/SDL.h>
 #include <sstream>
 
-#include "versions/compiletime.h"
 #include "../util/strings.h"
+#include "versions/compiletime.h"
 
 namespace openage::versions {
 

@@ -6,8 +6,8 @@
 
 #include "event.h"
 
-#include "../util/compiler.h"
 #include "../error/error.h"
+#include "../util/compiler.h"
 
 
 namespace openage::event {
@@ -121,4 +121,4 @@ std::vector<std::shared_ptr<Event>> EventStore::get_sorted_events() const {
 	return ret;
 }
 
-} // openage::event
+} // namespace openage::event

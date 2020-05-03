@@ -4,11 +4,11 @@
 
 #include <cassert>
 
+#include <QCoreApplication>
 #include <QOpenGLContext>
 #include <QOpenGLFramebufferObject>
-#include <QQuickRenderControl>
 #include <QQuickItem>
-#include <QCoreApplication>
+#include <QQuickRenderControl>
 #include <QThread>
 
 #include "../public/gui_renderer.h"
@@ -18,7 +18,7 @@ namespace qtsdl {
 
 namespace {
 const int registration = qRegisterMetaType<std::atomic<bool>*>("atomic_bool_ptr");
-}
+} // namespace
 
 EventHandlingQuickWindow::EventHandlingQuickWindow(QQuickRenderControl *render_control)
 	:

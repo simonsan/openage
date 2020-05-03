@@ -3,11 +3,11 @@
 #include "gui_property_map.h"
 
 #include <algorithm>
-#include <typeinfo>
 #include <cassert>
+#include <typeinfo>
 
-#include <QVariant>
 #include <QRegExp>
+#include <QVariant>
 
 #include <QCoreApplication>
 
@@ -63,7 +63,7 @@ QStringList vector_to_strings(const std::vector<std::string> &v) {
 
 	return strings;
 }
-}
+} // namespace
 
 template<>
 bool GuiPropertyMap::getv<bool>(const char *name) const {

@@ -2,13 +2,13 @@
 
 #include "main.h"
 
+#include <SDL.h>
 #include <chrono>
 #include <ratio>
-#include <SDL.h>
 
-#include "config.h"
 #include "../event.h"
 #include "aicontroller.h"
+#include "config.h"
 #include "gamestate.h"
 #include "gui.h"
 #include "physics.h"
@@ -206,4 +206,4 @@ void curvepong(bool disable_gui, bool no_human) {
 }
 
 
-} // openage::event::demo
+} // namespace openage::event::demo

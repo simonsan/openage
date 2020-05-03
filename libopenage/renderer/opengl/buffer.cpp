@@ -13,7 +13,7 @@ GlBuffer::GlBuffer(const std::shared_ptr<GlContext> &context,
                    size_t size, GLenum usage)
 	: GlSimpleObject(context, [] (GLuint handle) { glDeleteBuffers(1, &handle); } )
 	, size(size) {
-	GLuint handle;
+	GLuint handle = 0;
 	glGenBuffers(1, &handle);
 	this->handle = handle;
 
@@ -25,7 +25,7 @@ GlBuffer::GlBuffer(const std::shared_ptr<GlContext> &context,
                    const uint8_t *data, size_t size, GLenum usage)
 	: GlSimpleObject(context, [] (GLuint handle) { glDeleteBuffers(1, &handle); } )
 	, size(size) {
-	GLuint handle;
+	GLuint handle = 0;
 	glGenBuffers(1, &handle);
 	this->handle = handle;
 

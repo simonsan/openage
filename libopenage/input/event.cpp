@@ -166,4 +166,4 @@ Event sdl_wheel(int direction, SDL_Keymod mod) {
 }
 
 
-} // openage::input
+} // namespace openage::input

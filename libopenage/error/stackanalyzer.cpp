@@ -2,11 +2,10 @@
 
 #include "stackanalyzer.h"
 
-#include "config.h"
 #include "../log/log.h"
 #include "../util/compiler.h"
 #include "../util/init.h"
-
+#include "config.h"
 
 
 namespace openage::error {
@@ -23,8 +22,7 @@ constexpr uint64_t skip_entry_frames = 1;
  */
 constexpr uint64_t base_skip_frames = 1;
 
-} // openage::error
-
+} // namespace openage::error
 
 
 #if WITH_BACKTRACE
@@ -255,7 +253,7 @@ void StackAnalyzer::analyze() {
 	}
 }
 
-} // openage::error
+} // namespace openage::error
 
 #endif // for _MSC_VER or GNU execinfo
 
@@ -290,7 +288,7 @@ void StackAnalyzer::get_symbols(std::function<void (const backtrace_symbol *)> c
 }
 
 
-} // openage::error
+} // namespace openage::error
 
 #endif // WITHOUT_BACKTRACE
 
@@ -313,4 +311,4 @@ void StackAnalyzer::trim_to_current_stack_frame() {
 }
 
 
-} // openage::error
+} // namespace openage::error

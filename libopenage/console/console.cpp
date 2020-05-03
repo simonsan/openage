@@ -2,16 +2,15 @@
 
 #include "console.h"
 
-#include "../log/log.h"
+#include "../engine.h"
 #include "../error/error.h"
+#include "../log/log.h"
 #include "../util/strings.h"
 #include "../util/unicode.h"
-#include "../engine.h"
 
 #include "draw.h"
 
-namespace openage {
-namespace console {
+namespace openage::console {
 
 /*
  * TODO:
@@ -198,4 +197,4 @@ bool Console::on_resize(coord::viewport_delta new_size) {
 	return true;
 }
 
-}} // openage::console
+} // openage::console

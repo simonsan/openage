@@ -6,8 +6,8 @@
 
 #include <QOpenGLDebugLogger>
 
-#include "platforms/context_extraction.h"
 #include "opengl_debug_logger.h"
+#include "platforms/context_extraction.h"
 
 namespace qtsdl {
 
@@ -25,7 +25,7 @@ GuiUniqueRenderingContext::GuiUniqueRenderingContext(SDL_Window *window)
 	CtxExtractionMode{} {
 
 	QVariant handle;
-	WId id;
+	WId id = 0;
 
 	std::tie(handle, id) = extract_native_context(window);
 

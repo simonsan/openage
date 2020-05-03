@@ -1,9 +1,9 @@
 // Copyright 2018-2019 the openage authors. See copying.md for legal info.
 
+#include "../error/error.h"
+#include "../log/log.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-#include "../log/log.h"
-#include "../error/error.h"
 
 
 namespace openage {

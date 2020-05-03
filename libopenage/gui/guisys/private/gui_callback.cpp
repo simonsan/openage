@@ -8,7 +8,7 @@ namespace qtsdl {
 
 namespace {
 const int registration = qRegisterMetaType<std::function<void()>>("function");
-}
+} // namespace
 
 GuiCallback::GuiCallback()
 	:

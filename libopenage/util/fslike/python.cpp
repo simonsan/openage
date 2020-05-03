@@ -138,4 +138,4 @@ pyinterface::PyIfFunc<int, PyObject *, const std::vector<std::string>&> pyx_fs_g
 pyinterface::PyIfFunc<uint64_t, PyObject *, const std::vector<std::string>&> pyx_fs_get_filesize;
 pyinterface::PyIfFunc<bool, PyObject *> pyx_fs_is_fslike_directory;
 
-} // openage::util::fslike
+} // namespace openage::util::fslike

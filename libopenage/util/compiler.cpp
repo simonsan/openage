@@ -15,11 +15,10 @@
 
 #include <array>
 #include <iostream>
-#include <optional>
 #include <mutex>
+#include <optional>
 
-namespace openage {
-namespace util {
+namespace openage::util {
 
 
 std::string demangle(const char *symbol) {
@@ -29,7 +28,7 @@ std::string demangle(const char *symbol) {
 	// Could it be that MSVC's typeid(T).name() already returns a demangled name? It seems that .raw_name() returns the mangled name
 	return symbol;
 #else
-	int status;
+	int status = 0;
 	char *buf = abi::__cxa_demangle(symbol, nullptr, nullptr, &status);
 
 	if (status != 0) {
@@ -154,4 +153,4 @@ bool is_symbol(const void *addr) {
 }
 
 
-}} // openage::util
+} // openage::util

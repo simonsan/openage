@@ -10,8 +10,7 @@
 #include <thread>
 #endif
 
-namespace openage {
-namespace util {
+namespace openage::util {
 
 #if HAVE_THREAD_LOCAL_STORAGE
 
@@ -50,4 +49,4 @@ size_t get_current_thread_id() {
 	#endif
 }
 
-}} // namespace openage::util
+} // namespace openage::util

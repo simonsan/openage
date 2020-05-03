@@ -12,7 +12,7 @@ GlFramebuffer::GlFramebuffer(const std::shared_ptr<GlContext> &context,
 	: GlSimpleObject(context,
 	                 [] (GLuint handle) { glDeleteFramebuffers(1, &handle); } )
 {
-	GLuint handle;
+	GLuint handle = 0;
 	glGenFramebuffers(1, &handle);
 	this->handle = handle;
 
@@ -47,4 +47,4 @@ void GlFramebuffer::bind_write() const {
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, *this->handle);
 }
 
-} // openage::renderer::opengl
+} // namespace openage::renderer::opengl

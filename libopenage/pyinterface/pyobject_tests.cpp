@@ -4,9 +4,9 @@
 
 #include <unordered_set>
 
-#include "pyobject.h"
-#include "pyexception.h"
 #include "../testing/testing.h"
+#include "pyexception.h"
+#include "pyobject.h"
 
 
 namespace openage {

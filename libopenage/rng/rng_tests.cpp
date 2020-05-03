@@ -2,13 +2,13 @@
 
 #include "rng.h"
 
-#include "../log/log.h"
 #include "../error/error.h"
+#include "../log/log.h"
 #include "../testing/testing.h"
 
+#include <cmath>
 #include <limits>
 #include <vector>
-#include <cmath>
 
 namespace openage::rng::tests {
 
@@ -33,7 +33,7 @@ constexpr float difference_factor = 0.1;
  */
 void freq_dist() {
 	// one random sample from the generator.
-	uint64_t sample;
+	uint64_t sample = 0;
 
 	// number of possible chars, likely 256.
 	// this is bucket_count.

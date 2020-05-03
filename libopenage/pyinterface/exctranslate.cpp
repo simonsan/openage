@@ -2,22 +2,21 @@
 
 #include "exctranslate.h"
 
+#include <ios>
 #include <new>
-#include <typeinfo>
 #include <stdexcept>
 #include <string>
-#include <ios>
+#include <typeinfo>
 
-#include "../util/timing.h"
 #include "../error/error.h"
+#include "../log/level.h"
 #include "../util/compiler.h"
 #include "../util/thread_id.h"
-#include "../log/level.h"
+#include "../util/timing.h"
 
 #include "pyexception.h"
 
-namespace openage {
-namespace pyinterface {
+namespace openage::pyinterface {
 
 
 // python exception translation function pointers
@@ -148,4 +147,4 @@ void init_exc_message(log::message *msg, const std::string &filename, unsigned i
 }
 
 
-}} // openage::pyinterface
+} // namespace openage::pyinterface

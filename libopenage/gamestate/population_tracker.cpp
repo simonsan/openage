@@ -73,4 +73,4 @@ bool PopulationTracker::is_capacity_maxed() const {
 	return this->capacity >= this->capacity_max;
 }
 
-} // openage
+} // namespace openage

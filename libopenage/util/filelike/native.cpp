@@ -164,4 +164,4 @@ std::ostream &Native::repr(std::ostream &stream) {
 	return stream;
 }
 
-} // openage::util::filelike
+} // namespace openage::util::filelike

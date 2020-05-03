@@ -4,9 +4,7 @@
 
 #include "../testing/testing.h"
 
-namespace openage {
-namespace util {
-namespace tests {
+namespace openage::util::tests {
 
 // those test variables need no linkage.
 namespace {
@@ -15,7 +13,7 @@ namespace {
 	OnInit init_testval([]() {
 		testval = 5;
 	});
-}
+} // namespace
 
 void init() {
 	TESTEQUALS(testval, 5);
@@ -39,4 +37,4 @@ void init() {
 	TESTEQUALS(i, 8);
 }
 
-}}} // openage::util::tests
+} // namespace openage::util::tests

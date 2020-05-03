@@ -4,13 +4,13 @@
 
 #include <cmath>
 
-#include "../error/error.h"
-#include "../log/log.h"
-#include "../engine.h"
-#include "../texture.h"
-#include "../coord/tile.h"
 #include "../coord/phys.h"
 #include "../coord/pixel.h"
+#include "../coord/tile.h"
+#include "../engine.h"
+#include "../error/error.h"
+#include "../log/log.h"
+#include "../texture.h"
 #include "../util/misc.h"
 
 #include "terrain.h"

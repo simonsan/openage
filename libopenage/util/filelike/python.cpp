@@ -99,4 +99,4 @@ pyinterface::PyIfFunc<void, PyObject *> pyx_file_flush;
 pyinterface::PyIfFunc<ssize_t, PyObject *> pyx_file_size;
 
 
-} // openage::util::filelike
+} // namespace openage::util::filelike

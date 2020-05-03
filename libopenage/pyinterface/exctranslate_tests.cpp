@@ -126,4 +126,4 @@ PyIfFunc<void> err_py_to_cpp_helper;
 PyIfFunc<void, Func<void>, int> bounce_call_py;
 
 
-} // openage::pyinterface::tests
+} // namespace openage::pyinterface::tests

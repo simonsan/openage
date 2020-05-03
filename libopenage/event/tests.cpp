@@ -4,12 +4,12 @@
 #include <iostream>
 #include <utility>
 
-#include "../testing/testing.h"
 #include "../log/log.h"
+#include "../testing/testing.h"
 
-#include "loop.h"
 #include "event.h"
 #include "eventtarget.h"
+#include "loop.h"
 #include "state.h"
 
 

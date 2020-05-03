@@ -2,10 +2,10 @@
 
 #include "gui_texture_factory.h"
 
-#include "gui_game_spec_image_provider_impl.h"
 #include "../../../texture.h"
-#include "gui_texture.h"
 #include "gui_filled_texture_handles.h"
+#include "gui_game_spec_image_provider_impl.h"
+#include "gui_texture.h"
 
 namespace openage::gui {
 

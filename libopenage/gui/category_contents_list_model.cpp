@@ -6,12 +6,11 @@
 
 #include "game_control_link.h"
 
-namespace openage {
-namespace gui {
+namespace openage::gui {
 
 namespace {
 const int registration = qmlRegisterType<CategoryContentsListModel>("yay.sfttech.openage", 1, 0, "Category");
-}
+} // namespace
 
 CategoryContentsListModel::CategoryContentsListModel(QObject *parent)
 	:
@@ -94,4 +93,4 @@ QVariant CategoryContentsListModel::data(const QModelIndex &index, int role) con
 	return QVariant{};
 }
 
-}} // namespace openage::gui
+} // namespace openage::gui

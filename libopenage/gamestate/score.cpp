@@ -2,10 +2,10 @@
 
 #include <cmath>
 
+#include "../log/log.h"
 #include "player.h"
 #include "score.h"
 #include "team.h"
-#include "../log/log.h"
 
 namespace openage {
 
@@ -87,7 +87,7 @@ void TeamScore::update_score() {
 	Score::update_score();
 }
 
-} // openage
+} // namespace openage
 
 namespace std {
 

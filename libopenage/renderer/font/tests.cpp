@@ -2,12 +2,10 @@
 
 #include "../../testing/testing.h"
 
-#include "font_manager.h"
 #include "font.h"
+#include "font_manager.h"
 
-namespace openage {
-namespace renderer {
-namespace tests {
+namespace openage::renderer::tests {
 
 void font_manager_test_get_font() {
 	FontManager font_manager;
@@ -60,4 +58,4 @@ void font() {
 	font_test_font_description();
 }
 
-}}} // openage::renderer::tests
+} // namespace openage::renderer::tests

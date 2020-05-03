@@ -115,4 +115,4 @@ void GameMainHandle::announce_running() {
 	emit this->gui_signals.game_running(this->game);
 }
 
-} // openage
+} // namespace openage

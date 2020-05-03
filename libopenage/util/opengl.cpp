@@ -6,8 +6,7 @@
 
 #include "../error/error.h"
 
-namespace openage {
-namespace util {
+namespace openage::util {
 
 void gl_check_error() {
 	int glerrorstate = 0;
@@ -15,7 +14,7 @@ void gl_check_error() {
 	glerrorstate = glGetError();
 	if (glerrorstate != GL_NO_ERROR) {
 
-		const char *errormsg;
+		const char *errormsg = nullptr;
 
 		//generate error message
 		switch (glerrorstate) {
@@ -70,4 +69,4 @@ void gl_check_error() {
 	}
 }
 
-}} // openage::util
+} // openage::util

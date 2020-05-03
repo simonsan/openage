@@ -4,15 +4,13 @@
 
 #include <epoxy/gl.h>
 
-#include "../../error/error.h"
 #include "../../datastructure/constexpr_map.h"
+#include "../../error/error.h"
 
 #include "lookup.h"
 
 
-namespace openage {
-namespace renderer {
-namespace opengl {
+namespace openage::renderer::opengl {
 
 GlGeometry::GlGeometry()
 	:
@@ -79,4 +77,4 @@ void GlGeometry::draw() const {
 	}
 }
 
-}}} //openage::renderer::opengl
+} //namespace openage::renderer::opengl

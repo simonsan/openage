@@ -81,4 +81,4 @@ double Market::get_multiplier(const Player &/*player*/, const bool is_buy) const
 	return mult;
 }
 
-} // openage
+} // namespace openage

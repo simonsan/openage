@@ -129,4 +129,4 @@ bool ScreenshotManager::encode_png(std::shared_ptr<uint8_t> pxdata,
 	return true;
 }
 
-} // openage
+} // namespace openage

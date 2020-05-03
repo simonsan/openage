@@ -19,7 +19,7 @@ const int registration = qmlRegisterType<ResourcesListModel>("yay.sfttech.openag
 
 const auto resource_type_count = static_cast<std::underlying_type<game_resource>::type>(game_resource::RESOURCE_TYPE_COUNT);
 
-}
+} // namespace
 
 ResourcesListModel::ResourcesListModel(QObject *parent)
 	:

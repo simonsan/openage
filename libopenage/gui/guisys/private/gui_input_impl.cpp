@@ -2,9 +2,9 @@
 
 #include "gui_input_impl.h"
 
+#include <QCoreApplication>
 #include <QMouseEvent>
 #include <QThread>
-#include <QCoreApplication>
 
 #include <SDL2/SDL_mouse.h>
 
@@ -77,7 +77,7 @@ int sdl_key_to_qt(SDL_Keycode sym) {
 		return 0;
 	}
 }
-}
+} // namespace
 
 bool GuiInputImpl::process(SDL_Event *e) {
 

@@ -12,10 +12,10 @@
 
 #include "handlers.h"
 
+#include <cstring>
 #include <exception>
 #include <iostream>
 #include <typeinfo>
-#include <cstring>
 
 #ifdef _MSC_VER
 #include <io.h>
@@ -23,9 +23,9 @@
 #include <unistd.h>
 #endif
 
-#include "../util/signal.h"
 #include "../util/init.h"
 #include "../util/language.h"
+#include "../util/signal.h"
 
 #include "error.h"
 #include "stackanalyzer.h"

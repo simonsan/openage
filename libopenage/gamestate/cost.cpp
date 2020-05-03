@@ -45,4 +45,4 @@ const ResourceBundle ResourceCost::get(const Player& player) const {
 	return resources;
 }
 
-} // openage
+} // namespace openage

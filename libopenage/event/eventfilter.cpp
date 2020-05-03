@@ -16,4 +16,4 @@ bool EventFilter::apply(const std::shared_ptr<EventTarget> &target) const {
 	return this->filter(target);
 }
 
-} // openage::event
+} // namespace openage::event

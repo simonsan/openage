@@ -11,8 +11,7 @@
 #include "engine_info.h"
 
 
-namespace openage {
-namespace gui {
+namespace openage::gui {
 
 
 GUI::GUI(SDL_Window *window,
@@ -156,7 +155,7 @@ private:
 	GLint dst;
 };
 
-}
+} // namespace
 
 bool GUI::on_drawhud() {
 	this->render_updater.process_callbacks();
@@ -196,4 +195,4 @@ bool GUI::on_drawhud() {
 	return true;
 }
 
-}} // namespace openage::gui
+} // namespace openage::gui

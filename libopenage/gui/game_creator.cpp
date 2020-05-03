@@ -16,7 +16,7 @@ namespace openage::gui {
 
 namespace {
 const int registration = qmlRegisterType<GameCreator>("yay.sfttech.openage", 1, 0, "GameCreator");
-}
+} // namespace
 
 GameCreator::GameCreator(QObject *parent)
 	:

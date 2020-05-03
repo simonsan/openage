@@ -8,10 +8,10 @@
 #include <cmath>
 #include <cstdio>
 
-#include "log/log.h"
-#include "error/error.h"
-#include "util/csv.h"
 #include "coord/phys.h"
+#include "error/error.h"
+#include "log/log.h"
+#include "util/csv.h"
 
 namespace openage {
 
@@ -21,18 +21,18 @@ namespace openage {
 namespace texture_shader {
 shader::Program *program;
 GLint texture, tex_coord;
-}
+} // namespace texture_shader
 
 namespace teamcolor_shader {
 shader::Program *program;
 GLint texture, tex_coord;
 GLint player_id_var, alpha_marker_var, player_color_var;
-}
+} // namespace teamcolor_shader
 
 namespace alphamask_shader {
 shader::Program *program;
 GLint base_texture, mask_texture, base_coord, mask_coord, show_mask;
-}
+} // namespace alphamask_shader
 
 Texture::Texture(int width, int height, std::unique_ptr<uint32_t[]> data)
 	:
@@ -444,4 +444,4 @@ GLuint Texture::get_texture_id() const {
 	return this->buffer->id;
 }
 
-} // openage
+} // namespace openage

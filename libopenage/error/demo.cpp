@@ -1,15 +1,14 @@
 // Copyright 2015-2017 the openage authors. See copying.md for legal info.
 
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "../log/log.h"
 #include "backtrace.h"
 #include "error.h"
 
 
-namespace openage {
-namespace error {
+namespace openage::error {
 
 
 // anonymous namespace to prevent linkage for exception demo helper functions.
@@ -58,4 +57,4 @@ void demo() {
 }
 
 
-}} // openage::error
+} // namespace openage::error

@@ -5,13 +5,12 @@
 #include <opus/opusfile.h>
 #include <string>
 
+#include "../log/log.h"
 #include "error.h"
 #include "opus_loading.h"
-#include "../log/log.h"
 
 
-namespace openage {
-namespace audio {
+namespace openage::audio {
 
 OpusInMemoryLoader::OpusInMemoryLoader(const util::Path &path)
 	:
@@ -69,4 +68,4 @@ pcm_data_t OpusInMemoryLoader::get_resource() {
 	return buffer;
 }
 
-}} // openage::audio
+}// namespace openage::audio

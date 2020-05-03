@@ -39,4 +39,4 @@ bool FSLike::is_python_native() const noexcept {
 }
 
 
-} // openage::util::fslike
+} // namespace openage::util::fslike

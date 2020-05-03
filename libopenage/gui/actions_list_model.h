@@ -10,8 +10,7 @@
 #include <QMap>
 #include <QUrl>
 
-namespace openage {
-namespace gui {
+namespace openage::gui {
 
 /**
  * Model used for the Action Buttons to render (e.g. for civilian units,
@@ -35,7 +34,7 @@ public:
 	void set_action_mode(ActionModeLink* action_mode);
 
 	QUrl get_icons_source() const;
-	void set_icons_source(QUrl icons_source);
+	void set_icons_source(const QUrl &icons_source);
 
 	Q_INVOKABLE void set_initial_buttons();
 
@@ -81,7 +80,7 @@ private:
 	ActionButtonsType active_buttons;
 	ActionModeLink *action_mode;
 	QUrl icons_source;
-	std::vector<QMap<int, QVariant>> buttons;
+	std::vector<QMap<int, QVariant>> buttons{};
 };
 
-}} // namespace openage::gui
+} // namespace openage::gui

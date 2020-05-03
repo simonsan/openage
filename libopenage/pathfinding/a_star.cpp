@@ -19,12 +19,11 @@
 #include "../terrain/terrain.h"
 #include "../terrain/terrain_object.h"
 #include "../util/strings.h"
-#include "path.h"
 #include "heuristics.h"
+#include "path.h"
 
 
-namespace openage {
-namespace path {
+namespace openage::path {
 
 
 Path to_point(coord::phys3 start,
@@ -150,4 +149,4 @@ Path a_star(coord::phys3 start,
 }
 
 
-}} // namespace openage::path
+} // namespace openage::path

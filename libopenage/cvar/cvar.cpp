@@ -5,8 +5,7 @@
 #include "../log/log.h"
 
 
-namespace openage {
-namespace cvar {
+namespace openage::cvar {
 
 CVarManager::CVarManager(const util::Path &path)
 	:
@@ -53,4 +52,4 @@ void CVarManager::load_all() {
 
 pyinterface::PyIfFunc<void, CVarManager *, const util::Path &> pyx_load_config_file;
 
-}} // openage::cvar
+} // openage::cvar

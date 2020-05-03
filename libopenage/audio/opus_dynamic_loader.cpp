@@ -4,8 +4,8 @@
 
 #include <opus/opusfile.h>
 
-#include "error.h"
 #include "../log/log.h"
+#include "error.h"
 
 namespace openage::audio {
 
@@ -96,4 +96,4 @@ size_t OpusDynamicLoader::load_chunk(int16_t *chunk_buffer,
 	return (read_count * 2) / channels;
 }
 
-} // openage::audio
+} // namespace openage::audio

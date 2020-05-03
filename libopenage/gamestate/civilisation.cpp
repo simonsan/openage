@@ -62,4 +62,4 @@ void Civilisation::add_to_category(const std::string &c, index_t type) {
 }
 
 
-}
+} // namespace openage

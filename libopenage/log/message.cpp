@@ -5,13 +5,12 @@
 #include <mutex>
 #include <unordered_set>
 
-#include "../util/timing.h"
 #include "../util/compiler.h"
-#include "../util/thread_id.h"
 #include "../util/strings.h"
+#include "../util/thread_id.h"
+#include "../util/timing.h"
 
-namespace openage {
-namespace log {
+namespace openage::log {
 
 
 void message::init() {
@@ -59,4 +58,4 @@ std::ostream &operator <<(std::ostream &os, const message &msg) {
 }
 
 
-}} // namespace openage::log
+} // namespace openage::log

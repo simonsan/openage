@@ -122,4 +122,4 @@ int execute_file(const char *path, bool background) {
 #endif
 }
 
-} // namespace openage
+} // namespace openage::os

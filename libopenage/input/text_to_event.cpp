@@ -2,17 +2,16 @@
 
 #include "text_to_event.h"
 
+#include <SDL2/SDL.h>
 #include <regex>
 #include <stdexcept>
-#include <SDL2/SDL.h>
 
 #include "../error/error.h"
 #include "../log/log.h"
 #include "../testing/testing.h"
 
 
-namespace openage {
-namespace input {
+namespace openage::input {
 
 namespace {
 const std::vector<int> modifiers{
@@ -68,7 +67,7 @@ Event to_event(const std::string &event_type, const std::string &param, const in
 	return sdl_key(key_code, static_cast<SDL_Keymod>(mod));
 }
 
-}
+} // namespace
 
 /**
  * Convert a string to an event, throw if the string is not a valid event.
@@ -125,6 +124,6 @@ void parse_event_string() {
 	TESTTHROWS(text_to_event("WHEEL TEAR_OFF"));
 }
 
-} // tests
+} // namespace tests
 
-}} // openage::input
+} // namespace openage::input

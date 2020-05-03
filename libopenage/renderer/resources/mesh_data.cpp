@@ -6,8 +6,8 @@
 #include <cstring>
 #include <utility>
 
-#include "../../error/error.h"
 #include "../../datastructure/constexpr_map.h"
+#include "../../error/error.h"
 
 
 namespace openage::renderer::resources {
@@ -128,4 +128,4 @@ MeshData MeshData::make_quad() {
 	return MeshData(std::move(verts), info);
 }
 
-}
+} // namespace openage::renderer::resources

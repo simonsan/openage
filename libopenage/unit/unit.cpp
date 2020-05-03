@@ -4,8 +4,8 @@
 #include <cmath>
 #include <limits>
 
-#include "../terrain/terrain.h"
 #include "../engine.h"
+#include "../terrain/terrain.h"
 
 #include "ability.h"
 #include "action.h"
@@ -331,4 +331,4 @@ void Unit::erase_after(std::function<bool(std::unique_ptr<UnitAction> &)> func, 
 	}
 }
 
-} // openage
+} // namespace openage

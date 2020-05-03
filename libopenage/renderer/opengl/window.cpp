@@ -2,16 +2,14 @@
 
 #include "window.h"
 
-#include "../../log/log.h"
 #include "../../error/error.h"
+#include "../../log/log.h"
 #include "../sdl_global.h"
 
 #include "renderer.h"
 
 
-namespace openage {
-namespace renderer {
-namespace opengl {
+namespace openage::renderer::opengl {
 
 GlWindow::GlWindow(const std::string &title, size_t width, size_t height)
 	: Window(width, height)
@@ -106,4 +104,4 @@ const std::shared_ptr<opengl::GlContext> &GlWindow::get_context() const {
 	return this->context;
 }
 
-}}} // namespace openage::renderer::opengl
+} // namespace openage::renderer::opengl

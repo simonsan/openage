@@ -3,26 +3,24 @@
 #include "tests.h"
 
 #include <cstdlib>
+#include <eigen3/Eigen/Dense>
 #include <epoxy/gl.h>
 #include <functional>
-#include <unordered_map>
 #include <memory>
-#include <eigen3/Eigen/Dense>
+#include <unordered_map>
 
-#include "../log/log.h"
 #include "../error/error.h"
-#include "resources/shader_source.h"
-#include "resources/texture_data.h"
-#include "resources/mesh_data.h"
-#include "texture.h"
-#include "shader_program.h"
+#include "../log/log.h"
 #include "geometry.h"
 #include "opengl/window.h"
+#include "resources/mesh_data.h"
+#include "resources/shader_source.h"
+#include "resources/texture_data.h"
+#include "shader_program.h"
+#include "texture.h"
 
 
-namespace openage {
-namespace renderer {
-namespace tests {
+namespace openage::renderer::tests {
 
 // Macro for debugging OpenGL state.
 #define DBG_GL(txt)                    \
@@ -287,4 +285,4 @@ void renderer_demo(int demo_id, const util::Path &path) {
 	}
 }
 
-}}} // namespace openage::renderer::tests
+} // namespace openage::renderer::tests

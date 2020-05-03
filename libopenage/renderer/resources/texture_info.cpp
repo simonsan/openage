@@ -3,9 +3,7 @@
 #include "texture_info.h"
 
 
-namespace openage {
-namespace renderer {
-namespace resources {
+namespace openage::renderer::resources {
 
 Texture2dInfo::Texture2dInfo(size_t width, size_t height, pixel_format fmt, size_t row_alignment, std::vector<Texture2dSubInfo>&& subs)
 	: w(width)
@@ -81,4 +79,4 @@ std::tuple<float, float, float, float> Texture2dInfo::get_subtexture_coordinates
 	);
 }
 
-}}}
+} // namespace openage::renderer::resources

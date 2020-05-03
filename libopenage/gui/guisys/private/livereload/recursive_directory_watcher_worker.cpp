@@ -4,14 +4,14 @@
 
 #include <algorithm>
 
-#include <QDirIterator>
 #include <QDebug>
+#include <QDirIterator>
 
 namespace qtsdl {
 
 namespace {
 const int batch_ms = 100;
-}
+} // namespace
 
 RecursiveDirectoryWatcherWorker::RecursiveDirectoryWatcherWorker()
 	:
@@ -47,7 +47,7 @@ QStringList collect_entries_to_watch(const QStringList &root_dirs_paths) {
 
 	return entries_to_watch;
 }
-}
+} // namespace
 
 void RecursiveDirectoryWatcherWorker::restartWatching() {
 	this->restart_watching(collect_entries_to_watch(this->root_dirs_paths));

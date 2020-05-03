@@ -2,8 +2,8 @@
 
 #include "opus_loading.h"
 
-#include "error.h"
 #include "../log/log.h"
+#include "error.h"
 
 
 namespace openage::audio {
@@ -85,7 +85,7 @@ opus_file_t open_opus_file(const util::Path &path) {
 
 	if (op_err != 0) {
 
-		const char *reason;
+		const char *reason = nullptr;
 
 		switch (op_err) {
 		case OP_EREAD:
@@ -123,4 +123,4 @@ opus_file_t open_opus_file(const util::Path &path) {
 	return op_file;
 }
 
-} // openage::audio
+} // namespace openage::audio

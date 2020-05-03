@@ -7,8 +7,8 @@
 #include <cstdlib>
 #include <cstring>
 
-#include <fcntl.h>
 #include "pty.h"
+#include <fcntl.h>
 #ifdef _WIN32
 #include <io.h>
 #else
@@ -137,4 +137,4 @@ void FD::restoreinputmode() {
 	#endif /* _WIN32 */
 }
 
-} // openage::util
+} // namespace openage::util

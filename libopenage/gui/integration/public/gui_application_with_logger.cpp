@@ -12,7 +12,7 @@ std::shared_ptr<qtsdl::GuiApplicationImpl> create() {
 	qInstallMessageHandler(gui_log);
 	return qtsdl::GuiApplicationImpl::get();
 }
-}
+} // namespace
 
 GuiApplicationWithLogger::GuiApplicationWithLogger()
 	:

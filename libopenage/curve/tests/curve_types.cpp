@@ -145,4 +145,4 @@ void curve_types() {
 	}
 }
 
-} // openage::curve::tests
+} // namespace openage::curve::tests

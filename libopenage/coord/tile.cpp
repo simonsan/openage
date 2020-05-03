@@ -2,11 +2,10 @@
 
 #include "tile.h"
 
-#include "coordmanager.h"
 #include "../terrain/terrain.h"
+#include "coordmanager.h"
 
-namespace openage {
-namespace coord {
+namespace openage::coord {
 
 
 tile3 tile::to_tile3(const Terrain & /*terrain*/, tile_t altitude) const {
@@ -73,4 +72,4 @@ tile_delta tile::get_pos_on_chunk() const {
 }
 
 
-}} // namespace openage::coord
+} // namespace openage::coord

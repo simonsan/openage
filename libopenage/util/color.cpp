@@ -22,4 +22,4 @@ void col::use(float alpha) {
 	glColor4f(r / 255.f, g / 255.f, b / 255.f, alpha);
 }
 
-} // openage::util
+} // namespace openage::util

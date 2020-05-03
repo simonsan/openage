@@ -8,4 +8,4 @@ GlUniformInput::GlUniformInput(std::shared_ptr<ShaderProgram> const& prog)
 	:
 	UniformInput{prog} {}
 
-}
+} // namespace openage::renderer::opengl

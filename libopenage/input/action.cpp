@@ -3,15 +3,14 @@
 #include <functional>
 
 #include "../cvar/cvar.h"
-#include "action.h"
-#include "input_manager.h"
 #include "../log/log.h"
 #include "../log/message.h"
 #include "../util/repr.h"
+#include "action.h"
+#include "input_manager.h"
 
 
-namespace openage {
-namespace input {
+namespace openage::input {
 
 namespace {
 
@@ -172,4 +171,4 @@ bool ActionManager::is(const std::string &type, const action_t action) {
 }
 
 
-}} // openage::input
+} // namespace openage::input

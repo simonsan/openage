@@ -4,13 +4,12 @@
 
 #include <cstring>
 
-#include "file.h"
 #include "../error/error.h"
 #include "../log/log.h"
+#include "file.h"
 
 
-namespace openage {
-namespace util {
+namespace openage::util {
 
 
 CSVCollection::CSVCollection(const Path &entryfile_path) {
@@ -66,4 +65,4 @@ CSVCollection::CSVCollection(const Path &entryfile_path) {
 	         << this->data.size() << " sub-files");
 }
 
-}} // openage::util
+} // namespace openage::util

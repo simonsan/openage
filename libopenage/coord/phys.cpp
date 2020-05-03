@@ -2,11 +2,11 @@
 
 #include "phys.h"
 
-#include "coordmanager.h"
-#include "tile.h"
-#include "pixel.h"
 #include "../terrain/terrain.h"
 #include "../util/math.h"
+#include "coordmanager.h"
+#include "pixel.h"
+#include "tile.h"
 
 
 namespace openage::coord {

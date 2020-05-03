@@ -11,7 +11,7 @@ namespace openage::gui {
 
 namespace {
 const int registration = qmlRegisterType<GameMainLink>("yay.sfttech.openage", 1, 0, "GameMain");
-}
+} // namespace
 
 GameMainLink::GameMainLink(QObject *parent)
 	:

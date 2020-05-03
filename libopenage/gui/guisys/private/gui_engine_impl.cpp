@@ -5,8 +5,8 @@
 #include <cassert>
 
 #include <QCoreApplication>
-#include <QQuickWindow>
 #include <QDebug>
+#include <QQuickWindow>
 
 #include "../public/gui_engine.h"
 #include "gui_image_provider_impl.h"

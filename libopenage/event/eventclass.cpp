@@ -47,4 +47,4 @@ OnceEventClass::OnceEventClass(const std::string &name)
 	EventClass(name, EventClass::trigger_type::ONCE) {}
 
 
-} // openage::event
+} // namespace openage::event

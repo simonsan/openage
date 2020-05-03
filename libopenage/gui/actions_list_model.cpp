@@ -8,12 +8,11 @@
 #include <QtQml>
 #include <utility>
 
-namespace openage {
-namespace gui {
+namespace openage::gui {
 
 namespace {
 const int registration = qmlRegisterType<ActionsListModel>("yay.sfttech.openage", 1, 0, "ActionsListModel");
-}
+} // namespace
 
 ActionsListModel::ActionsListModel(QObject *parent)
 	:
@@ -145,7 +144,7 @@ QUrl ActionsListModel::get_icons_source() const {
 	return QUrl(this->icons_source);
 }
 
-void ActionsListModel::set_icons_source(QUrl icons_source) {
+void ActionsListModel::set_icons_source(const QUrl &icons_source) {
 	this->icons_source = std::move(icons_source);
 }
 
@@ -198,4 +197,4 @@ void ActionsListModel::add_button(int ico, int ico_chk, int grp_id, const char *
 	this->buttons.push_back(map);
 }
 
-}} // namespace openage::gui
+} // namespace openage::gui

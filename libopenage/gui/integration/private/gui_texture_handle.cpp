@@ -6,8 +6,7 @@
 
 #include "../../../texture.h"
 
-namespace openage {
-namespace gui {
+namespace openage::gui {
 
 SizedTextureHandle::SizedTextureHandle()
 	:
@@ -53,4 +52,4 @@ QSize aspect_fit_size(const TextureHandle &texture_handle, const QSize &requeste
 	}
 }
 
-}} // namespace openage::gui
+} // namespace openage::gui

@@ -5,11 +5,11 @@
 #include <algorithm>
 #include <utility>
 
+#include "../log/log.h"
+#include "../util/compiler.h"
 #include "event.h"
 #include "eventclass.h"
 #include "eventtarget.h"
-#include "../log/log.h"
-#include "../util/compiler.h"
 
 
 namespace openage::event {
