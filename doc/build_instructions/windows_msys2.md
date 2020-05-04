@@ -45,7 +45,7 @@ you will need to set `-Dnyan_DIR=<nyan-Directory>` to the `build`-Directory [con
 
 __**Note (automatically build nyan):**__ If you want to download and build Nyan automatically install these additional dependencies:
 
-`pacman -Syu mingw-w64-x86_64-dlfcn mingw-w64-x86_64-flex`
+`pacman -Syu mingw-w64-x86_64-dlfcn flex`
 and add `-DDOWNLOAD_NYAN=YES -DFLEX_EXECUTABLE=/usr/bin/flex.exe` to the first cmake command
 
 ## Running openage
