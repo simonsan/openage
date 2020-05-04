@@ -25,20 +25,30 @@ We set `nyan_DIR` to the build directory containing `nyan.dll` later in the buil
 
 #### Add MingW64 Binary Directory To `$PATH`
 
-Add the `/bin`-directory for the MingW-W64-Toolchain to `$PATH` by putting the following command to the shell:
-
-`echo 'export PATH=/mingw64/bin:$PATH' >> ~/.bashrc`
+Add the `bin`-directory to your `PATH` (in MSYS2 bash):
+```
+echo "export PATH=/mingw64/bin:mingw64\x86_64-w64-mingw32\bin:$PATH" >> ~/.bashrc
+source ~/.bashrc
+```
 
 ## Building openage
  Note that openage doesn't support completely out-of-source-tree builds yet.
  We will, however, use a separate `build` directory to build the binaries.
 
+__**IMPORTANT:**__ [`MinGW Makefiles`](https://cmake.org/cmake/help/v3.12/generator/MinGW%20Makefiles.html#generator:MinGW%20Makefiles) flag for the generator, means that CMake generates makefiles for use with `mingw32-make`
+under a Windows command prompt (CMD). So you need to add the path to the `<msys2-install-dir>/mingw64/bin` as well to your [Windows `PATH` environment variable](https://lmgtfy.com/?q=windows+add+folder+to+path+environment&s=d).
+ 
 ```
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_MAKE_PROGRAM=mingw32-make -Wno-dev -G "CodeBlocks - MinGW Makefiles" ..
-cmake --build . -- -j2 VERBOSE=1
 ```
+
+Navigate to the `build`-directory within your systems file explorer and put `cmd` into the adress bar. This should start up a cmd shell inside that folder.
+Now start the build process in the cmd shell with this command:
+
+`mingw32-make -j2 VERBOSE=1`
+
 
 __**Note (manually prebuilt nyan):**__ If you built nyan separately and it wasn't automatically registered with CMake
 you will need to set `-Dnyan_DIR=<nyan-Directory>` to the `build`-Directory [containing `nyan.dll`]
