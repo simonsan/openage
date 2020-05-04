@@ -41,7 +41,7 @@ under a Windows command prompt (CMD). So you need to add the path to the `<msys2
 ```
 mkdir build
 cd build
-cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_MAKE_PROGRAM=mingw32-make -Wno-dev -G "CodeBlocks - MinGW Makefiles" ..
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM=mingw32-make -Dnyan_DIR=<nyan-build-dir> -Wno-dev -G "CodeBlocks - MinGW Makefiles" ..
 ```
 
 Navigate to the `build`-directory within your systems file explorer and put `cmd` into the adress bar. This should start up a cmd shell inside that folder.
