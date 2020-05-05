@@ -114,14 +114,15 @@ jobs:
           source ~/.bashrc
         if: steps.cache-msys2.outputs.cache-hit != 'true'
 
-      - name: Shrink MSYS2 for caching
-        shell: msys2 {0}
-        run: |
-          echo "export PATH=/mingw64/bin:mingw64\x86_64-w64-mingw32\bin:$PATH" >> ~/.bashrc
-          source ~/.bashrc
-          cd /
-          ./shrink-msys2.sh
-        if: steps.cache-msys2.outputs.cache-hit != 'true'
+# TODO: Activate later, now save time
+#      - name: Shrink MSYS2 for caching
+#        shell: msys2 {0}
+#        run: |
+#          echo "export PATH=/mingw64/bin:mingw64\x86_64-w64-mingw32\bin:$PATH" >> ~/.bashrc
+#          source ~/.bashrc
+#          cd /
+#          ./shrink-msys2.sh
+#        if: steps.cache-msys2.outputs.cache-hit != 'true'
 
       - name: Clone nyan repository
         run: |
