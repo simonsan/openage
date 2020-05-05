@@ -19,14 +19,14 @@ jobs:
       fail-fast: false
       matrix:
         conf:
-#          - compiler: Clang
-#            bits: 64
-#            arch: x86_64
-#            max_warnings: 0
-          - compiler: GCC
+          - compiler: Clang
             bits: 64
             arch: x86_64
             max_warnings: 0
+#          - compiler: GCC
+#            bits: 64
+#            arch: x86_64
+#            max_warnings: 0
     env:
       CHERE_INVOKING:  yes
       CCACHE_DIR:      "${{ github.workspace }}/.ccache"
@@ -115,26 +115,26 @@ jobs:
 
       - name: Clone nyan repository
         run: |
-          git clone https://github.com/SFTtech/nyan.git ${{ runner.workspace }}\msys-deps\nyan\
+          git clone https://github.com/SFTtech/nyan.git ${{ runner.workspace }}\msys-deps\
           cd ${{ runner.workspace }}\msys-deps\nyan\
           git reset --hard ${{ env.nyanGitCommitID }}
         if: steps.cache-nyan-msys.outputs.cache-hit != 'true'
 
       - name: Configure nyan
         run: |
-          msys2do cd nyan
+          msys2do cd \msys-deps\nyan
           msys2do mkdir build
           msys2do cd build
-          msys2do cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_MAKE_PROGRAM=mingw32-make -DFLEX_EXECUTABLE=/usr/bin/flex.exe -G "CodeBlocks - MinGW Makefiles" ..
+          msys2do cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_MAKE_PROGRAM=mingw32-make -DFLEX_EXECUTABLE=/usr/bin/flex.exe -G "CodeBlocks - MinGW Makefiles" ..
         env:
           MSYS2_PATH_TYPE: inherit
 
       - name: Build nyan
         shell: cmd
         run: |
-          cd nyan
+          cd \msys-deps\nyan
           cd build
-          cmake --build . -- -j2 VERBOSE=1
+          mingw32-make -j2 VERBOSE=1
 
 #      - name: Configure openage
 #        shell: msys2 {0}
