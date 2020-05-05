@@ -82,7 +82,7 @@ jobs:
         shell: msys2 {0}
         run: |
           uname -a
-          pacman -Syu --noconfirm
+          pacman -Syuu --noconfirm
         if: steps.cache-msys2.outputs.cache-hit != 'true'
 
       - name: Install dependencies
