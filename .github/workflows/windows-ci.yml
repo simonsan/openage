@@ -96,7 +96,8 @@ jobs:
           mingw-w64-x86_64-opus mingw-w64-x86_64-opusfile mingw-w64-x86_64-python mingw-w64-x86_64-python-jinja \
           mingw-w64-x86_64-python-numpy mingw-w64-x86_64-python-pillow mingw-w64-x86_64-python-pip \
           mingw-w64-x86_64-python-pygments mingw-w64-x86_64-python-pyreadline mingw-w64-x86_64-qt5 \
-          mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-ttf-dejavu ncurses
+          mingw-w64-x86_64-SDL2 mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-ttf-dejavu ncurses \
+          mingw-w64-x86_64-libc++ mingw-w64-x86_64-libc++abi
         if: steps.cache-msys2.outputs.cache-hit != 'true'
 
       # TODO: Make second path dynamic + linux style paths
@@ -106,9 +107,18 @@ jobs:
           cp .github/workflows-support/shrink-msys2.sh d:/a/_temp/msys/msys64/shrink-msys2.sh
         if: steps.cache-msys2.outputs.cache-hit != 'true'
 
-      - name:  Shrink MSYS2 for caching
+      - name: Set mingw bin path
         shell: msys2 {0}
         run: |
+          echo "export PATH=/mingw64/bin:mingw64\x86_64-w64-mingw32\bin:$PATH" >> ~/.bashrc
+          source ~/.bashrc
+        if: steps.cache-msys2.outputs.cache-hit != 'true'
+
+      - name: Shrink MSYS2 for caching
+        shell: msys2 {0}
+        run: |
+          echo "export PATH=/mingw64/bin:mingw64\x86_64-w64-mingw32\bin:$PATH" >> ~/.bashrc
+          source ~/.bashrc
           cd /
           ./shrink-msys2.sh
         if: steps.cache-msys2.outputs.cache-hit != 'true'
