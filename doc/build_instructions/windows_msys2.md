@@ -12,7 +12,7 @@ __NOTE:__ We also have an installer for Win10 (x64), if you just want to play ar
   - Start a MSYS2-shell from `<MSYS2-directory>/msys2_shell.cmd`
   - Install the dependencies (make sure you have an up-to-date package database):
 
-For clang: `pacman -Syu --needed mingw-w64-x86_64-clang mingw-w64-x86_64-libc++ mingw-w64-x86_64-libc++abi mingw-w64-x86_64-compiler-rt`
+For clang: `pacman -Syu --needed mingw-w64-x86_64-clang mingw-w64-x86_64-libc++ mingw-w64-x86_64-libc++abi mingw-w64-x86_64-lld mingw-w64-x86_64-compiler-rt`
 
 `pacman -Syu --needed git mingw-w64-x86_64-cmake mingw-w64-x86_64-make mingw-w64-x86_64-eigen3 mingw-w64-x86_64-cython mingw-w64-x86_64-libepoxy mingw-w64-x86_64-libogg mingw-w64-x86_64-libpng mingw-w64-x86_64-ttf-dejavu mingw-w64-x86_64-freetype mingw-w64-x86_64-fontconfig mingw-w64-x86_64-harfbuzz mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2 mingw-w64-x86_64-opusfile mingw-w64-x86_64-opus mingw-w64-x86_64-python mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-pillow mingw-w64-x86_64-python-numpy mingw-w64-x86_64-cython mingw-w64-x86_64-python-pygments mingw-w64-x86_64-python-jinja mingw-w64-x86_64-python-pyreadline mingw-w64-x86_64-qt5`
 
