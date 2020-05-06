@@ -233,6 +233,12 @@ endif()
 # build configuration generation
 get_config_option_string()
 
+# collect all the paths to the
+if(WIN32 OR MINGW)
+	collect_library_paths()
+endif()
+
+
 configure_file(config.h.in config.h)
 configure_file(config.cpp.in config.cpp)
 

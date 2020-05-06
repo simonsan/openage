@@ -4,6 +4,7 @@
 Holds the game entry point for openage.
 """
 
+from os import add_dll_directory
 from ..log import err, info
 
 
@@ -26,6 +27,17 @@ def main(args, error):
     and jumps into the C++ main method.
     """
     del error  # unused
+
+    # We need to make DLL resolution for Windows here
+
+    # TODO: Test if add_dll_directory exists
+    if add_dll_directory(''):
+        info('add_dll_directory() Function exists!')
+
+    # Where are the DLLs?
+    # .\openage\**\.
+    # ..\libopenage\.
+    # nyan
 
     # we have to import stuff inside the function
     # as it depends on generated/compiled code
