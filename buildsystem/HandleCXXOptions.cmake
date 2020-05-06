@@ -108,6 +108,8 @@ elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
 
 	if(APPLE)
 		set_compiler_flags("CXX" "-stdlib=libc++")
+	elseif(MINGW)
+		set_compiler_flags("CXX" "-stdlib=libc++")
 	endif()
 
 elseif(MSVC)
@@ -162,7 +164,7 @@ elseif("${CXX_OPTIMIZATION_LEVEL}" STREQUAL "g")
 elseif("${CXX_OPTIMIZATION_LEVEL}" STREQUAL "max")
 	set_cxx_optimize_flags("-O3 -march=native")
 
-	if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+	if(("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") OR ("${CMAKE_LINKER}" MATCHES "lld"))
 		include(ProcessorCount)
 		ProcessorCount(N)
 		if(NOT N EQUAL 0)
