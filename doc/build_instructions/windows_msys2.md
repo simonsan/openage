@@ -38,7 +38,7 @@ under a Windows command prompt (CMD). So you need to add the path to the `<msys2
 ```
 mkdir build
 cd build
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_MAKE_PROGRAM=mingw32-make -Dnyan_DIR=<nyan-build-dir> -DCMAKE_CXX_FLAGS=-stdlib=libc++ -DCMAKE_LINKER=ldd -DCMAKE_EXE_LINKER_FLAGS="-Xlinker -v -v -femulated-tls -Wno-undef" -Wno-dev -G "CodeBlocks - MinGW Makefiles" ..
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_MAKE_PROGRAM=mingw32-make -Dnyan_DIR=<nyan-build-dir> -DCMAKE_CXX_FLAGS=-stdlib=libc++ -DCMAKE_LINKER=<msys2-installation-dir>/mingw64/bin/lld-link.exe -Wno-dev -G "CodeBlocks - MinGW Makefiles" ..
 ```
 
 Navigate to the `build`-directory within your systems file explorer and put `cmd` into the adress bar. This should start up a cmd shell inside that folder.
