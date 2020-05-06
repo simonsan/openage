@@ -30,6 +30,12 @@ __pycache__
 /.bin
 /build
 /deps
+/cmake-build-debug
+/cmake-build-debug-mingw-clang
+/cmake-build-release-mingw-clang
+/cmake-build-release-mingw-gcc
+/cmake-build-debug-mingw-gcc
+/bin-release
 
 # root dir run script
 /run
@@ -73,9 +79,7 @@ perf.data*
 .DS_Store
 
 # Virtual Environment
-/.venv/
 
 # copyrighted assets
 /assets/converted/
 /assets/terrain/
-

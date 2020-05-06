@@ -1,4 +1,4 @@
-# Procedure for Microsoft Windows users (Windows 10) with MSYS2
+# Procedure for building openage on Windows 10 with MSYS2
 
 __NOTE:__ We also have an installer for Win10 (x64), if you just want to play around with *openage* you can find it [here](https://github.com/SFTtech/openage/releases).
 
@@ -12,10 +12,7 @@ __NOTE:__ We also have an installer for Win10 (x64), if you just want to play ar
   - Start a MSYS2-shell from `<MSYS2-directory>/msys2_shell.cmd`
   - Install the dependencies (make sure you have an up-to-date package database):
 
-For gcc: `pacman -Syu --needed mingw-w64-x86_64-gcc`
-
-For clang (untested): `pacman -Syu --needed mingw-w64-x86_64-clang`
-
+For clang: `pacman -Syu --needed mingw-w64-x86_64-clang mingw-w64-x86_64-libc++ mingw-w64-x86_64-libc++abi mingw-w64-x86_64-compiler-rt`
 
 `pacman -Syu --needed git mingw-w64-x86_64-cmake mingw-w64-x86_64-make mingw-w64-x86_64-eigen3 mingw-w64-x86_64-cython mingw-w64-x86_64-libepoxy mingw-w64-x86_64-libogg mingw-w64-x86_64-libpng mingw-w64-x86_64-ttf-dejavu mingw-w64-x86_64-freetype mingw-w64-x86_64-fontconfig mingw-w64-x86_64-harfbuzz mingw-w64-x86_64-SDL2_image mingw-w64-x86_64-SDL2 mingw-w64-x86_64-opusfile mingw-w64-x86_64-opus mingw-w64-x86_64-python mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-pillow mingw-w64-x86_64-python-numpy mingw-w64-x86_64-cython mingw-w64-x86_64-python-pygments mingw-w64-x86_64-python-jinja mingw-w64-x86_64-python-pyreadline mingw-w64-x86_64-qt5`
 
@@ -41,7 +38,7 @@ under a Windows command prompt (CMD). So you need to add the path to the `<msys2
 ```
 mkdir build
 cd build
-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_MAKE_PROGRAM=mingw32-make -Dnyan_DIR=<nyan-build-dir> -Wno-dev -G "CodeBlocks - MinGW Makefiles" ..
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_MAKE_PROGRAM=mingw32-make -Dnyan_DIR=<nyan-build-dir> -DCMAKE_CXX_FLAGS=-stdlib=libc++ -DCMAKE_LINKER=ldd -DCMAKE_EXE_LINKER_FLAGS="-Xlinker -v -v -femulated-tls -Wno-undef" -Wno-dev -G "CodeBlocks - MinGW Makefiles" ..
 ```
 
 Navigate to the `build`-directory within your systems file explorer and put `cmd` into the adress bar. This should start up a cmd shell inside that folder.
@@ -59,7 +56,25 @@ __**Note (automatically build nyan):**__ If you want to download and build Nyan 
 and add `-DDOWNLOAD_NYAN=YES -DFLEX_EXECUTABLE=/usr/bin/flex.exe` to the first cmake command
 
 ## Running openage
-> Work in Progress
+ While this is straightforward on other platforms, there is still stuff to do to run openage on Windows:
+
+   - Install the [DejaVu Book Font](https://dejavu-fonts.github.io/Download.html).
+    - Download and extract the latest `dejavu-fonts-ttf` tarball/zip file.
+    - Select all `ttf\DejaVuSerif*.ttf` files, right click and click `Install for all users`.
+
+    _Note:_ This will require administrator rights.
+
+  - [Optional] Set the `AGE2DIR` environment variable to the AoE 2 installation directory.
+
+  - Set `QML2_IMPORT_PATH` to `<msys2-path>\mingw64\share\qt5\qml`
+
+  - Append the following to the environment `PATH`:
+    - `<openage build directory>\libopenage\` (for `libopenage.dll`)
+    - `<nyan build directory>\nyan\` (for `libnyan.dll`) (depends on the procedure chosen to get nyan)
+    - `<msys2-path>/mingw64/bin`
+
+    __Note:__ The paths above should be added to the global system variables `PATH` and not to the user specific variables.
+
 
 ## Packaging
 > Work in Progress
